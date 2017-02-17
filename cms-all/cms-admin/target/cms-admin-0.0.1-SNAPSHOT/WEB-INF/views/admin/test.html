@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Image Upload</title>
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+<script type="text/javascript">
+
+var files = [];
+var isJpg = function(name) {
+    return name.match(/jpg$/i)
+};
+    
+var isPng = function(name) {
+    return name.match(/png$/i)
+};
+    
+$(document).ready(function() {
+   
+	$(document)
+    .on(
+            "change",
+            "#file",
+            function(event) {
+             files=event.target.files;
+            })
+	
+	$(document)
+        .on(
+                "click",
+                "#btnUpload",
+                function() {
+                processUpload();
+                })
+            
+    function processUpload(){
+    	var file = $('[name="file"]');
+    	var imgContainer = $('#imgContainer');
+        var filename = $.trim(file.val());
+        
+         if (!(isJpg(filename) || isPng(filename))) {
+            alert('Please browse a JPG/PNG file to upload ...');
+            return;
+        }
+        
+         var file = $('#file').prop("files");
+         var oMyForm = new FormData();
+         oMyForm.append("file", file);
+         
+         console.log(files[0]);
+       $.ajax({
+            url: 'http://localhost:8989/cms-admin/admin/test/echofile',
+            type: "POST",
+            data: new FormData(document.getElementById("fileForm"))
+            }).done(function(data) {
+              imgContainer.html('');
+              var img = '<img src="data:' + data.contenttype + ';base64,'
+                  + data.base64 + '"/>';
+    
+              imgContainer.append(img);
+          }).fail(function(jqXHR, textStatus) {
+              alert('File upload failed ...');
+          });
+    }
+    
+    $('#btnClear').on('click', function() {
+        imgContainer.html('');
+        file.val('');
+    });
+});
+    
+</script>
+</head>
+<body style="font-family: calibri; font-size: 8pt">
+<div>
+<form id="fileForm">
+    <input type="file" name="file" id="file"   />
+    <button id="btnUpload" type="button">Upload file</button>
+    <button id="btnClear" type="button">Clear</button>
+</form>
+<div id="imgContainer"></div>
+</div>
+</body>
+</html>

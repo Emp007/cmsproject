@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>CMS Dashboard</title>
-<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+<object th:include="/fragments/header :: cms-head" th:remove="tag" ></object>
 <style>
 .mySlides {
 	display: none;
@@ -250,6 +250,9 @@
 										value="1" /> <input type="hidden" name="isContainsFooter"
 										id="isContainsFooter" value="0" /> <input type="hidden"
 										id="templetcontent" name="templetContent">
+										
+										<input type="hidden"
+										id="herosURL" name="herosURL">
 									
 									<DIV id="body-column-select_0">
 										<div class="form-group" id="hostidrow">
@@ -372,8 +375,9 @@
 												<img id="preview-img" src="#" alt="your image"
 													width="100%" height="100px" />
 											</div>
-											  <div id="img_preview" >
+											  <div id="img_preview" style="height:20%;width:100%">
                                             </div> 
+                                            
 										</div>
 										<div id="preview-body-content"
 											style="min-height: 400px; height: 70%"></div>
