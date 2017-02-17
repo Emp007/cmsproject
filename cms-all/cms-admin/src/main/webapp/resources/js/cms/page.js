@@ -1,32 +1,5 @@
 /*page.js*/
 
-	/*
-											var files = document.getElementById('img_'+sequencenumber).files;
-										    var file = files[0];
-										    var json = { "file" : file};
-										    var formData = new FormData();
-										    formData.append("file", file);
-										    console.log(formData);
-										    alert(JSON.stringify(json));
-										    $.ajax({
-										        url: imageuploadurl,
-										        data: json,
-										        type: "POST",           
-										        dataType: 'json',
-										        enctype: 'multipart/form-data',
-										        processData: false,
-										        contentType: false,
-										        cache: false,
-										        success: function(data){ 
-										            alert(data);
-										        }
-										    });
-
-										    event.preventDefault();*/
-
-
-/*=============================================================================================*/
-
 var imagepath = "http://localhost:10953/cms-rest/static/";
 var imageuploadurl = "/cms-admin/admin/page/fileupload";
 
@@ -179,7 +152,6 @@ $(document)
 											var myform = document.createElement("form");
 											myform.setAttribute("method","POST");
 											myform.setAttribute("id","vedioForm_adminsave" + btncnt);
-											myform.setAttribute("action","http://localhost:8989/cms-admin/admin/page/fileupload");
 											myform.setAttribute("enctype","multipart/form-data");
 											
 											var vediofilechooser = document.createElement("input");
@@ -252,11 +224,9 @@ $(document)
 											adminDiv.appendChild(select);
 											
 										} else if (option.value == 'imagewithtext') {
-											
 											var myform = document.createElement("form");
 											myform.setAttribute("method","POST");
 											myform.setAttribute("id","imagewithtextForm_" + btncnt);
-											myform.setAttribute("action","http://localhost:8989/cms-admin/admin/page/fileupload");
 											myform.setAttribute("enctype","multipart/form-data");
 											
 											var imagewithtextimgchooser = document.createElement("input");
@@ -297,19 +267,12 @@ $(document)
 											adminDiv.appendChild(filechooser);
 									        adminDiv.appendChild(fileuploadtext);
 											}else if(option.value =='Menu'){
-											
-										
-											/* MENU*/
-											
 											var menu= document.createElement('div');
 											menu.setAttribute('class',  'menu');
-									        
-
 										} else {
 											var myform = document.createElement("form");
 											myform.setAttribute("method","POST");
 											myform.setAttribute("id","imgForm_adminsave" + btncnt);
-											myform.setAttribute("action","http://localhost:8989/cms-admin/admin/page/fileupload");
 											myform.setAttribute("enctype","multipart/form-data");
 											
 											var imagechooser = document.createElement("input");
@@ -343,12 +306,6 @@ function addelement(id) {
 	$('#' + id).css("display", "block");
 	return false;
 }
-
-/* method for removing controls on a page section 
-function closecontroldiv(id) {
-	$('#' + id).parent().remove();
-	return false;
-}*/
 
 function applyMCE() {
 	tinyMCE
@@ -443,7 +400,6 @@ function addcontainer(id) {
 }
 
 function showcontainer(id) {
-
 	var ele = $('#' + id).parent().attr('id');
 	var mainDiv = document.getElementById(ele);
 	var x = mainDiv.getElementsByTagName('div')[0].id;
@@ -472,20 +428,6 @@ function showcontainer(id) {
 	container.appendChild(iDiv);
 
 	count++;
-}
-
-function carousel() {
-	var i;
-	var x = document.getElementsByClassName("mySlides");
-	for (i = 0; i < x.length; i++) {
-		x[i].style.display = "none";
-	}
-	myIndex++;
-	if (myIndex > x.length) {
-		myIndex = 1
-	}
-	x[myIndex - 1].style.display = "block";
-	setTimeout(carousel, 2000);
 }
 
 function checkpagename() {
@@ -519,7 +461,6 @@ function checkpagename() {
 }
 
 function upload(data ,hostId) {
-   // hostId=hostId.trim();
      $.ajax({
          url : "/cms-admin/admin/page/fileupload?hostId="+hostId,
          data : data,
@@ -531,7 +472,7 @@ function upload(data ,hostId) {
              return data;
          },
          error : function(err) {
-             //alert(err);
+            
          }
      });
 } 

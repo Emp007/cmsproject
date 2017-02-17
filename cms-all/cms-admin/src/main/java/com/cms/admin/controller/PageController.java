@@ -259,9 +259,9 @@ public class PageController {
 			if (savePage != null) {
 				bool = true;
 			}
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error updating document");
 		}
 
 		mav.addObject("pages", page);
@@ -275,7 +275,9 @@ public class PageController {
 			if(pageService.getPage(pageName,hostId) != null)
 				return "FOUND";
 			
-		} catch (Exception e) {}
+		} catch (CMSAdminException e) {
+			throw new CMSAdminException("Error in checking page name by host id");
+		}
 		return "NOT-FOUND";
 	}
 	

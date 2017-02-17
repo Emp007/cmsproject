@@ -14,7 +14,6 @@
 		var myIndex = 0;
 		var images = [];
 		
-		
 		var i = 0;
         var path = new Array();
         
@@ -41,7 +40,6 @@
 							var list = document.getElementById("hostid-select");
 							for(var i in hosts) {
 								if(hosts[i].id == host){
-							        //list.add(new Option(hosts[i].hostName, hosts[i].id));
 									$('#host-name').val(hosts[i].hostName);
 									$('#host-id').val(hosts[i].id);
 								}
@@ -68,9 +66,6 @@
 							lDiv.id = 'leftside';
 							lDiv.className = 'min-height-100';
 							lDiv.appendChild(lrow);
-							//lDiv.innerHTML = "<a id='lsb-add-container' class='btn btn-xs' style='text-decoration: none;float:left' onclick='addcontainer(this.id);'>+ Add Container</a>";
-
-							
 
 							var mainDiv = document
 									.getElementById('body-content');
@@ -81,8 +76,7 @@
 									.change(
 											function() {
 												if ($(this).is(':checked')) {
-													$("#header").css("display",
-															"block");
+													$("#header").css("display","block");
 													document
 															.getElementById('isContainsHeader').value = "1";
 												} else {
@@ -96,108 +90,60 @@
 									.change(
 											function() {
 												if ($(this).is(':checked')) {
-													$("#footer").css("display",
-															"block");
-													document
-															.getElementById('isContainsFooter').value = "1";
+													$("#footer").css("display","block");
+													document.getElementById('isContainsFooter').value = "1";
 												} else {
-													$("#footer").css("display",
-															"none");
-													document
-															.getElementById('isContainsFooter').value = "0";
+													$("#footer").css("display","none");
+													document.getElementById('isContainsFooter').value = "0";
 												}
 											});
 							$('#heropanel-check')
 									.change(
 											function() {
 												if ($(this).is(':checked')) {
-													$("#imagetype-select").css(
-															"display", "block");
-													document
-															.getElementById('isContainsFooter').value = "1";
+													$("#imagetype-select").css("display", "block");
+													document.getElementById('isContainsFooter').value = "1";
 												} else {
-													$("#imagetype-select").css(
-															"display", "none");
-													document
-															.getElementById('isContainsFooter').value = "0";
+													$("#imagetype-select").css("display", "none");
+													document.getElementById('isContainsFooter').value = "0";
 												}
 											});
 
 							$('.tab')
 									.click(
 											function() {
-
-
                                                 swapImage(); 
 												var ativetab = $(this).attr(
 														'id');
 												if (ativetab == 'tab2') {
-
-													if ($("#header-check").is(
-															':checked')) {
-														$("#preview-header")
-																.css("display",
-																		"block");
+													if ($("#header-check").is(':checked')) {
+														$("#preview-header").css("display","block");
 													} else {
-														$("#preview-header")
-																.css("display",
-																		"none");
+														$("#preview-header").css("display","none");
 													}
 
-													if ($("#footer-check").is(
-															':checked')) {
-														$("#preview-footer")
-																.css("display",
-																		"block");
+													if ($("#footer-check").is(':checked')) {
+														$("#preview-footer").css("display","block");
 													} else {
-														$("#preview-footer")
-																.css("display",
-																		"none");
+														$("#preview-footer").css("display","none");
 													}
 
-													if ($("#heropanel-check")
-															.is(':checked')) {
-														$("#preview-heropanel")
-																.css("display",
-																		"block");
+													if ($("#heropanel-check").is(':checked')) {
+														$("#preview-heropanel").css("display","block");
 													} else {
-														$("#preview-heropanel")
-																.css("display",
-																		"none");
+														$("#preview-heropanel").css("display","none");
 													}
 
-													var html = document
-															.getElementById('body-content').innerHTML;
+													var html = document.getElementById('body-content').innerHTML;
 													var jHtmlObject = jQuery(html);
-													var editor = jQuery("<p>")
-															.append(jHtmlObject);
-													editor
-															.find(
-																	"#lsb-add-container,#rsb-add-container")
-															.remove();
-													editor
-															.find(
-																	".addremoveDiv")
-															.remove();
-													editor
-															.find(
-																	"#leftside,#rightside")
-															.removeClass(
-																	"templet_style");
-													editor.find(
-															"[id^=container]")
-															.css("border",
-																	"none");
-													editor
-															.find(
-																	"#leftside,#rightside")
-															.css("border",
-																	"none");
-
-
+													var editor = jQuery("<p>").append(jHtmlObject);
+													editor.find("#lsb-add-container,#rsb-add-container").remove();
+													editor.find(".addremoveDiv").remove();
+													editor.find("#leftside,#rightside").removeClass("templet_style");
+													editor.find("[id^=container]").css("border","none");
+													editor.find("#leftside,#rightside").css("border","none");
 													var newHtml = editor.html();
-													$("#preview-body-content")
-															.html(newHtml);
+													$("#preview-body-content").html(newHtml);
 
 													document
 															.getElementById('templetcontent').value = newHtml;

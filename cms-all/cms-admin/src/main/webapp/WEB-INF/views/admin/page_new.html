@@ -7,13 +7,7 @@
 
 <script type="text/javascript" th:inline="javascript">
 
-$(document).ready(function() {
-
-	$( "#gethtml" ).click(function() {
-		var html = document.getElementById('body-content').innerHTML;
-		$('#htmltxt').html("<i>"+html 	+"</i>");;
-	});
-	
+$(document).ready(function() {	
 	 $("#pageform")
 	.on(
 			"submit",
@@ -62,19 +56,16 @@ $('.tab').click(function(){
        }
       
         html = templets[0].templetContent;
-        html = html.replace(/Remove/g, "Add Content");
+        html = html.replace(/Remove Container/g, "Add Content");
 		html = html.replace(/removeDrawedContainer/g, "changeContentModelButtonId");
 		
       	var jHtmlObject = jQuery(html);
      	var editor = jQuery("<p>").append(jHtmlObject);
      	editor.find("#lsb-add-container,#rsb-add-container").remove();
-  	
   	    editor.find(".control").css("display","block");
-  	
     	var newHtml = editor.html();
         $("#body-content").html(newHtml);
 	 }
-      
       
       hosts = [[${hosts}]];
       hostid = [[${hostid}]];
@@ -106,7 +97,6 @@ $('.tab').click(function(){
     	
     	var newHtml = editor.html();
         $("#body-content").html(newHtml);
-      
 	}
 
 </script>
@@ -172,20 +162,12 @@ $('.tab').click(function(){
 													name="hostName" disabled="disabled">
 											 <input id="host-id" type="hidden" class="form-control"
 													name="hostId">
-												<!-- <select class="selectpicker form-control" id="hostid-select"
-													name="hostId" onchange="getval(this);">
-													
-												</select> -->
 										</div>
 									</DIV>
 									<DIV class="form-group">
 										<div class="control">
 										<input type="submit" class="btn btn-primary" value="Save"
 													id="savepage" />
-												<!-- <div id="savepage" class="btn btn-success">
-												  Save
-												</div>	 -->
-													
 											</div>
 										</DIV>
 										</form>
