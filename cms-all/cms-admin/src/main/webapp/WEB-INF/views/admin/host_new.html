@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Host</title>
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+<script type="text/javascript">
+	$(function() {
+		  var date = new Date();
+		  var start = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+		  var end = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+		$("#datepicker1").datepicker({
+			 format: 'dd/mm/yyyy',
+			 todayHighlight: true,
+			 startDate: start,
+			 autoclose: true
+		});
+		
+		$("#datepicker2").datepicker({
+			 format: 'dd/mm/yyyy',
+			 todayHighlight: true,
+			 startDate: end,
+			 autoclose: true
+		});
+		
+		$('#datepicker1,#datepicker2').datepicker('setDate', start);
+	});
+</script>
+<style type="text/css">
+#ui-datepicker-div {
+	z-index: 99999 !important;
+}
+.input-group{
+ margin-bottom: 25px;
+}
+</style>
+</head>
+<body style="background-color:#FFF; ">
+	<div class="main-wrapper">
+		<div class="app" id="app">
+			<i th:replace="/fragments/component :: cms-header"></i>
+			<div class="container">
+				<div id="create-site" style="margin-top: 50px;"
+					class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<div class="panel-title" >Create New Project</div>
+							<div
+								style="float: right; font-size: 80%; position: relative; top: -10px">
+							</div>
+						</div>
+
+						<div style="padding-top: 30px" class="panel-body">
+
+							<div style="display: none" id="login-alert"
+								class="alert alert-danger col-sm-12"></div>
+
+							<form id="siteform" method="POST" 
+							    th:action="@{/admin/host/saveHost}" data-parsley-validate
+								class="form-horizontal" th:object="${host}">
+								<input type="hidden" name="id" id="id" th:field="*{id}"/>
+
+								<div class="col-sm-4">Host Name :</div>
+								<div class="input-group">
+									<input id="hostName" type="text" class="form-control"
+										name="hostName" th:field="*{hostName}" placeholder="site name" required onblur="checkhostname();">
+										<span id="namealert"></span>
+								</div>
+
+								<div class="col-sm-4">Status</div>
+								<div class="input-group col-sm-4">
+									<select class="selectpicker form-control" id="status"
+										name="status" th:field="*{status}" required>
+										<option value="">Select</option>
+										<option value="Active">Active</option>
+										<option value="Deactive">Deactive</option>
+									</select>
+								</div>
+
+								<div class="col-sm-4">Type :</div>
+								<div class="input-group col-sm-4">
+									<select class="selectpicker form-control" id="type" name="type" th:field="*{type}" required>
+										<option value="">Select</option>
+										<option value="Trial">Trial</option>
+										<option value="Licence">Licence</option>
+									</select>
+								</div>
+
+								<div class="col-sm-4">Strat Date :</div>
+								<div class="input-group">
+									<div class="input-append date form_datetime">
+										<input class="form-control" type="text" id="datepicker1" name="startDate" th:field="*{startDate}">
+									</div>
+								</div>
+
+								<div class="col-sm-4">Expire Date :</div>
+								<div class="input-group">
+									<div class="input-append date form_datetime">
+										<input class="form-control" type="text" id="datepicker2" name="expireDate" th:field="*{expireDate}">
+									</div>
+								</div>
+
+
+								<div class="col-sm-4">Alias:</div>
+								<div class="input-group">
+									<input id="alias" type="text" class="form-control" name="alias" th:field="*{alias}"
+										 placeholder="alias">
+								</div>
+
+								<div class="col-sm-4">IndexpageURL :</div>
+								<div class="input-group">
+									<input id="indexpageURL" type="text" class="form-control"
+										name="indexpageURL" placeholder="indexpageURL" th:field="*{indexpageURL}" required>
+								</div>
+
+								<div class="form-group">
+									<div class="col-md-12 control">
+										<div
+											style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
+											<input type="submit" class="btn btn-primary" value="Add" />
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div th:replace="/fragments/snent :: cms-footer" /> -->
+</body>
+</html>

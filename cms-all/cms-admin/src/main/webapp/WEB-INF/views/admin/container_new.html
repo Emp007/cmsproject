@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>CMS Container</title>
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />	
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("#containerform").on("submit", function(){
+		tinyMCE.triggerSave();
+		var content = $('#contaner-content').val();
+	    alert("editor content in html formet :" +content);
+	 	document.getElementById('containercontent').value = content;
+	})
+});
+
+</script>
+
+</head>
+<body>
+	<div class="main-wrapper">
+		<div class="app" id="app">
+			<i th:replace="/fragments/component :: cms-header"></i>
+			<div class="container">
+				<div id="create-site" style="margin-top: 50px; margin-left: 12.5%;"
+					class="mainbox col-md-9 col-md-offset-0 col-sm-8 col-sm-offset-2">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<div class="panel-title">Create New Container</div>
+							<div
+								style="float: right; font-size: 80%; position: relative; top: -10px">
+							</div>
+						</div>
+
+						<div style="padding-top: 5px" class="panel-body">
+
+							<div style="display: none" id="login-alert"
+								class="alert alert-danger col-sm-12"></div>
+
+							<form id="containerform" method="POST"
+								th:action="@{/admin/container/saveContainer}"
+								data-parsley-validate class="form-horizontal"
+								enctype="multipart/form-data">
+							<input type="hidden" name="id" id="id" />
+							<input type="hidden" name="containercontent" id="containercontent" />
+
+								<DIV class="row" style="padding: 10px;">
+									<div class="col-sm-4">Name</div>
+									<div class="col-sm-4">
+										<input id="name" type="text" class="form-control" name="name"
+									value="" placeholder="Name">
+									</div>
+								</DIV>
+
+								<DIV class="row" style="padding: 10px;">
+									<div class="col-sm-4">Description :</div>
+									<div class="col-sm-4">
+                                        <input id="description" type="text" class="form-control" name="description"
+									value="" placeholder="Description">
+                                        
+									</div>
+								</DIV>
+							
+							<!-- Modal content-->
+								<DIV class="row" style="padding: 10px;">
+									<div class="col-sm-4">Content</div>
+									<div style="margin-bottom: 25px" class="input-group">
+										<textarea id="contaner-content" name="content">Content goes here....</textarea>
+									</div>
+								</DIV>
+								<div class="form-group">
+									<div class="col-md-12 control">
+										<div
+											style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
+											<input type="submit" class="btn btn-success" value="Add" />
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- <div th:replace="/fragments/component :: cms-footer" /> -->
+</body>
+</html>

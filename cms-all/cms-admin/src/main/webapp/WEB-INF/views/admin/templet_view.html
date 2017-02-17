@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>CMS Dashboard</title>
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+</head>
+<body>
+<body>
+	<div class="main-wrapper">
+		<div class="app" id="app">
+			<div th:replace="/fragments/component :: cms-header" />
+            <div class="container">
+            <h2>Template</h2>
+            <br>
+            <div class="row">
+            	<div class="col-sm-4">
+            	<form class="form">
+				  <div class="form-group">
+				    <input type="text" class="form-control ui-autocomplete-input" id="searchByHostName" placeholder="Search" autocomplete="off">
+				    <button type="submit" class="btn btn-default">Search</button>
+				  </div>						  
+				</form>
+            	</div>
+            	<div class="col-sm-8 text-right">
+            	<a class="btn btn-default" href="#" role="button"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Add Template</a>
+            	</div>
+            </div>
+            
+            <div class="table-responsive">
+				<table id="tabvccTable" class="table datatable table-fixed tablefix-four-column">
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Description</th>
+							<th>Modify Date</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:onclick="'javascript:rowClicked(\'' + ${templet.id} + '\');'" th:if="${templet != null }" th:each="templet : ${templets}">
+						<!-- <td><a th:href="@{/admin/page/newpage/}+${templet.id}+'/'+${hostid}"><img th:src="@{/resources/assets/add.png}" alt="view" width="30px" height="20px"  /></a></td> -->
+						<td th:if="${templet.templetName != null }"  th:text="${templet.templetName}"></td>
+						<td th:if="${templet.description != null }" th:text="${templet.description}"></td>
+						<td> -- </td>
+						<td>
+						<a class="btn btn-default btn-xs" th:href="@{/admin/templet/}+${templet.id}" data-toggle="tooltip" title="edit host">
+						<i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+						<!-- <a class="btn btn-default btn-xs" th:href="@{/admin/templet/}+${templet.id}" data-toggle="tooltip" title="edit host">
+						<i class="fa fa-trash" aria-hidden="true"></i> Delete</a> -->
+						</td>
+							
+						</tr> 
+												
+					<tbody>
+				</table>
+				<div class="clearfix"></div>
+			</div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- <div th:replace="/fragments/header :: cms-footer" /> -->
+</body>
+</html>

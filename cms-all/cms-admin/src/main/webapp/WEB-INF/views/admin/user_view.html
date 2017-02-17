@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>SCB Dashboard</title>
+<object th:include="/fragments/header :: head" th:remove="tag" />
+<script type="text/javascript" th:inline="javascript">
+
+function fillData(){
+	var result =[[${issave}]];
+	if(result==true)
+	alert("User Update successfully");
+}
+window.onload = function () { fillData(); }
+</script>
+</head>
+<body>
+	<div class="main-wrapper">
+		<div class="app" id="app">
+			<div th:replace="/fragments/component :: header" />
+			<div th:replace="/fragments/component :: sidebar" />
+
+			<div class="sidebar-overlay" id="sidebar-overlay"></div>
+			<article class="content dashboard-page">
+				<section class="section">
+					<div class="row sameheight-container">
+						<div class="col col-xs-12 col-sm-12 col-md-6 col-xl-12 stats-col">
+							<div class="dashboard-title"></div>
+							<div class="table-responsive">
+									<table id="tabvccTable"
+										class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+                                                <th>User Staff Id</th>
+                                                <th>Login Id</th>
+												<th>Name</th>
+												<th>User Email</th>
+												<th>User Role</th>
+												<th>User Parent Id</th>
+												<th>Edit</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:if="${users != null }" th:each="user : ${users}">
+                                                <td ><span th:if="${user.staffId != null }" th:text="${user.staffId}"></span></td>
+                                                <td ><span th:if="${user.loginId != null }" th:text="${user.loginId}"></span></td>
+												<td ><span th:if="${user.name != null }" th:text="${user.name}"></span></td>
+												<td ><span th:if="${user.email != null }" th:text="${user.email}"></span></td>
+												<td ><span th:if="${user.authorities != null }" th:text="${user.authorities}"></span></td>
+												<td ><span th:if="${user.parentId != null }" th:text="${user.parentId}"></span></td>
+												<td align="right"><a th:if="${user.id != null }" th:href="@{/admin/user/} + ${user.id}"><i class="fa fa-pencil"></i></a></td>
+												</tr>
+										<tbody>
+									</table>
+									<div class="clearfix"></div>
+
+								</div>
+						</div>
+					</div>
+				</section>
+			</article>
+		</div>
+	</div>
+	<div th:replace="/fragments/component :: cms-footer" />
+
+	</div>
+	</div>
+</body>
+</html>
