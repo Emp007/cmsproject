@@ -7,7 +7,9 @@
 
 <script type="text/javascript" th:inline="javascript">
 
+
 $(document).ready(function() {	
+
 	 $("#pageform")
 	.on(
 			"submit",
@@ -77,15 +79,26 @@ $('.tab').click(function(){
     	   }
         }
 });
-
+		
 	function getval(sel) {
 		var html = null;
+		var imagesURL ="";
 		for(var i=0;i<templets.length;i++){
 			if(templets[i].id == sel.value){
 				html = templets[i].templetContent; 	
+				if(templets[i].herosURL!=null)
+					$("#herosURL").val(templets[i].herosURL);
+					imagesURL = templets[i].herosURL;
 			}
 		}
 		
+		if(imagesURL!=""){
+			images = imagesURL.split("~");
+			alert(images.length);
+			if(images.length>0){
+				swapImage();
+			}
+		}
 		html = html.replace(/Remove/g, "Add Content");
 		html = html.replace(/removeDrawedContainer/g, "changeContentModelButtonId");
 		
@@ -98,7 +111,17 @@ $('.tab').click(function(){
     	var newHtml = editor.html();
         $("#body-content").html(newHtml);
 	}
-
+	var i = 0;
+	function swapImage()
+    {
+        $("#img_preview").empty();
+        $("<img>", {
+              "src": images[i],
+              "width": "800px", "height": "150px"})
+            .appendTo("#img_preview");
+            if(i < images.length - 1) i++; else i = 0;
+       setTimeout("swapImage()",3000);
+    }
 </script>
 
  <script type="text/javascript">
@@ -134,7 +157,8 @@ $('.tab').click(function(){
 									 <input type="hidden" id="pagecontent" name="pageContent"> 
 								     <input type="hidden" id="templetid" name="templetid" th:value ="${templetid}">
 									 <input type="hidden" id="hostid" name="hostid" th:value = "${hostid}">
-									
+									<input type="text"
+										id="herosURL" name="herosURL">
 									<DIV class="form-group">
 									<label>Name</label>
 										<input id="page-name" type="text" class="form-control"

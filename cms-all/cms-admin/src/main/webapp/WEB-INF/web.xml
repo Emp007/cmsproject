@@ -7,7 +7,8 @@
 
 	<context-param>
 		<param-name>config.location</param-name>
-		<param-value>/home/orange/Desktop/cms/admin/</param-value>
+<!-- 	<param-value>/home/orange/Desktop/cms/admin/</param-value> -->
+		<param-value>/Users/virendra/Documents/cms-static/cms/admin/</param-value>
 	</context-param>
 
 </web-app>

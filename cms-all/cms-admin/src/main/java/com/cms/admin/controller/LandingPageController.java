@@ -57,7 +57,9 @@ public class LandingPageController {
 		ModelAndView mav = new ModelAndView(PAGE_VIEW_NAME);
 		Map<String , String> pageMap = new HashMap<String ,String>();
 		Map<String , String> indexPage = new HashMap<String ,String>();
+		Map<String , String> herosURL = new HashMap<String ,String>();
 		List<Page> pages = new ArrayList<Page>();
+		String imagesURL="";
 		try{
 		pages = landingPageService.getIndexPage(hostName, templetName, indexPageName);
 		
@@ -67,7 +69,7 @@ public class LandingPageController {
 		
 		
 		long hostId = page.getHostId();
-		
+		imagesURL = page.getHerosURL();
 		List<Header> headerList = new ArrayList<Header>();
 		Header headerFound = new Header();
 		try {
@@ -106,6 +108,7 @@ public class LandingPageController {
 		
 		if(!CollectionUtils.isEmpty(pages) ){
 			pageMap = landingPageService.arrangePages(pages);
+			herosURL =landingPageService.getHerosPagesURL(pages);
 			indexPage = landingPageService.indexPageSetting(pages, indexPageName);
 			mav.addObject("pageList", pageMap);
 			mav.addObject("indexPageName", indexPageName);
@@ -113,6 +116,10 @@ public class LandingPageController {
 			mav.addObject("hostName", hostName);
 			mav.addObject("menu" ,menuService.getAllMenuByParentsId(0L));
 			mav.addObject("parentsMenus",menuService.getAllHostNameMenuName(hostName,"parents"));
+			mav.addObject("imagesURL" ,imagesURL);
+			mav.addObject("pages" ,pages);
+			mav.addObject("herosURLS" ,herosURL);
+			
 			
 			
 		}

@@ -1,6 +1,8 @@
 /*page.js*/
 
 var imagepath = "http://localhost:10953/cms-rest/static/";
+
+
 var imageuploadurl = "/cms-admin/admin/page/fileupload";
 
 var templets = null;
