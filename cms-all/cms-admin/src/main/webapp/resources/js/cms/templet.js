@@ -1,6 +1,9 @@
 
 /*templet.js*/
 
+var imagepath = "http://localhost:8989/cms-rest/static/";
+
+
 $(document)
 		.ready(
 				function() {
@@ -40,6 +43,7 @@ function readURL(input) {
 			}
 		}
 
+		var seperator ="";
 		function readURLs(input) {
 			var ext = input.files[0]['name'].substring(
 					input.files[0]['name'].lastIndexOf('.') + 1).toLowerCase();
@@ -51,11 +55,41 @@ function readURL(input) {
 					images.push(e.target.result);
 				}
 
+				 var imageId = input.id;
+			     var formData = new FormData();
+                 var image = document.getElementById(imageId).files[0];
+                 formData.append('file', image);
+                 var hostId = $("#host-id").val();
+                 var status = upload(formData,hostId);
+                 var URL = imagepath+'images/'+hostId+'/'+input.files[0]['name'];
+                 var textPath = $("#herosURL").val();
+                 textPath+=seperator+URL;
+                 seperator="~";
+                 $("#herosURL").val(textPath);
+
 				reader.readAsDataURL(input.files[0]);
 			} else {
 				$('#img').attr('src', '/assets/no_preview.png');
 			}
 		}
+
+		function upload(data ,hostId) {
+			   // hostId=hostId.trim();
+			     $.ajax({
+			         url : "/cms-admin/admin/page/fileupload?hostId="+hostId,
+			         data : data,
+			         processData : false,
+			         contentType : false,
+			         async: false,
+			         type : 'POST',
+			         success : function(data) {
+			             return data;
+			         },
+			         error : function(err) {
+			             //alert(err);
+			         }
+			     });
+			} 
 		
 		function getImageType(sel) {
 

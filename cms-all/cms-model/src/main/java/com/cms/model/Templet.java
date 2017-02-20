@@ -27,6 +27,7 @@ public class Templet implements Serializable {
     @NotNull
     private String templetName;
     
+    private String herosURL;
     
     public long getCount() {
 		return count;
@@ -191,5 +192,12 @@ public class Templet implements Serializable {
 	public void setTempletContent(String templetContent) {
 		this.templetContent = templetContent;
 	}
-    
+
+	public String getHerosURL() {
+		return herosURL;
+	}
+
+	public void setHerosURL(String herosURL) {
+		this.herosURL = herosURL;
+	}    
 }

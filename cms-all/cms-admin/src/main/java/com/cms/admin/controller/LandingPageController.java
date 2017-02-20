@@ -22,12 +22,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cms.admin.Response;
 import com.cms.admin.service.FooterService;
 import com.cms.admin.service.HeaderService;
+
 import com.cms.admin.service.HostService;
+
 import com.cms.admin.service.LandingPageService;
 import com.cms.admin.service.MenuService;
 import com.cms.model.Footer;
 import com.cms.model.Header;
+
 import com.cms.model.Host;
+
 import com.cms.model.Menu;
 import com.cms.model.Page;
 import com.google.gson.Gson;
@@ -159,6 +163,7 @@ public class LandingPageController {
 			menus = menuService.getAllHostNameMenuName(hostName, menuName);
 			// subMenus =
 			// menuService.getAllHostNameChildPage(hostName,menuName);
+
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			throw e;
@@ -168,3 +173,4 @@ public class LandingPageController {
 
 	}
 }
+

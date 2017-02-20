@@ -75,6 +75,20 @@ public class LandingPageService {
 		return pageMap;
 	}
 
+	
+	public Map<String, String> getHerosPagesURL(List<Page> pages) {
+
+		Map<String, String> pageMap = new HashMap<String, String>();
+		try {
+			pages.forEach(page -> {
+				pageMap.put(page.getPageName(), page.getHerosURL());
+			});
+		} catch (Exception e) {
+			throw new CMSAdminException(e.getMessage(), e);
+		}
+		return pageMap;
+	}
+
 	public Map<String, String> indexPageSetting(List<Page> pages, String pageName) {
 
 		Map<String, String> pageMap = new HashMap<String, String>();

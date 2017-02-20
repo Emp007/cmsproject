@@ -178,7 +178,6 @@ public class Host implements Serializable {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-
 	public HostConfig getHostConfig() {
 		return hostConfig;
 	}

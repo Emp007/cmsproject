@@ -109,7 +109,12 @@ public class TempletController {
 			@RequestParam("templetName") String templetName, @RequestParam("description") String description,
 			@RequestParam("isContainsHeader") String isContainsHeader,
 			@RequestParam("isContainsFooter") String isContainsFooter,
-			@RequestParam("templetContent") String templetContent) {
+
+			@RequestParam("templetContent") String templetContent,
+			@RequestParam("herosURL") String herosURL) 
+	
+	{
+
 		ModelAndView mav = new ModelAndView(TEMPLET_VIEW_NAME);
 		Boolean bool = false;
 		Templet templet = new Templet();
@@ -119,6 +124,9 @@ public class TempletController {
 		templet.setIsContainsHeader(isContainsHeader);
 		templet.setIsContainsFooter(isContainsFooter);
 		templet.setTempletContent(templetContent);
+
+		templet.setHerosURL(herosURL);
+
 		System.out.println("Templet Detail : " + new Gson().toJson(templet));
 		try {
 			Templet saveTemplet = templetService.Save(templet);

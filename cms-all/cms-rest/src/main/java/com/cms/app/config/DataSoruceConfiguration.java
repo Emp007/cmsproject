@@ -16,9 +16,9 @@ import com.mongodb.MongoClient;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource(value =
- "file:///home/orange/Desktop/sherlock-desktop/props/datasource.properties")
-//@EnableJpaRepositories("com.cms.app.dao")
+@PropertySource(value ="file:///Users/virendra/Documents/cms-static/cms/props/datasource.properties")
+//@PropertySource(value =
+// "file:///home/orange/Desktop/sherlock-desktop/props/datasource.properties")
 @EnableMongoRepositories(mongoTemplateRef = "mongoTemplate" ,basePackages = "com.cms.app.dao")
 public class DataSoruceConfiguration {
 	
