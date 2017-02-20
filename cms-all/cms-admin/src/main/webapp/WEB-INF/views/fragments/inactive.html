@@ -1,0 +1,20 @@
+<!DOCTYPE div PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<div th:replace="fragments/header :: cssLive404Load"></div>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="error-template">
+					<h1>Oops!</h1>
+					<h2>Your Server <u th:if="${hostType != null}" th:text="${hostType}"></u> Not Active</h2>
+					<div class="error-details">Sorry, an error has occured,
+						This Server down!</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

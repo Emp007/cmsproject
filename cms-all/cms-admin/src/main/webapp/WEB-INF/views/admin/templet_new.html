@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>CMS Dashboard</title>
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+<style>
+.mySlides {
+	display: none;
+}
+</style>
+
+<script type="text/javascript" th:inline="javascript">
+		var myIndex = 0;
+		var images = [];
+		
+		
+		var i = 0;
+        var path = new Array();
+        
+        function swapImage()
+        {
+            $("#img_preview").empty();
+            $("<img>", {
+                  "src": images[i],
+                  "width": "100%", "height": "100%"})
+                .appendTo("#img_preview");
+                if(i < images.length - 1) i++; else i = 0;
+           setTimeout("swapImage()",3000);
+        }
+
+		
+		$(document)
+				.ready(
+						function() {
+							images = [];
+							
+							var hosts = [[${hosts}]];
+							var host = [[${host}]];
+							
+							var list = document.getElementById("hostid-select");
+							for(var i in hosts) {
+								if(hosts[i].id == host){
+							        //list.add(new Option(hosts[i].hostName, hosts[i].id));
+									$('#host-name').val(hosts[i].hostName);
+									$('#host-id').val(hosts[i].id);
+								}
+							}
+							
+							var lrow = document.createElement('div');
+							lrow.id = 'leftcontent';
+							lrow.className = '';
+							
+							var lsb_add_container = document.createElement('a');
+							lsb_add_container.setAttribute('id','lsb-add-container');
+							lsb_add_container.setAttribute("class","btn btn-xs addcontainer");
+							lsb_add_container.style.cssText = 'text-decoration: none;';
+							lsb_add_container.innerHTML = "<i class='fa fa-plus-square-o' aria-hidden='true'></i> Add Container";
+							lrow.appendChild(lsb_add_container);
+							
+							var lcDiv = document.createElement('div');
+							lcDiv.id = 'lsb_container';
+							lcDiv.className = 'whitebg-min-height margin-top-10';
+							lcDiv.style.cssText = 'display: none;';
+							lrow.appendChild(lcDiv);
+							
+							var lDiv = document.createElement('div');
+							lDiv.id = 'leftside';
+							lDiv.className = 'min-height-100';
+							lDiv.appendChild(lrow);
+							//lDiv.innerHTML = "<a id='lsb-add-container' class='btn btn-xs' style='text-decoration: none;float:left' onclick='addcontainer(this.id);'>+ Add Container</a>";
+
+							
+
+							var mainDiv = document
+									.getElementById('body-content');
+							lDiv.style.cssText = 'width: 100%;';
+							mainDiv.appendChild(lDiv);
+
+							$('#header-check')
+									.change(
+											function() {
+												if ($(this).is(':checked')) {
+													$("#header").css("display",
+															"block");
+													document
+															.getElementById('isContainsHeader').value = "1";
+												} else {
+													$("#header").css("display",
+															"none");
+													document
+															.getElementById('isContainsHeader').value = "0";
+												}
+											});
+							$('#footer-check')
+									.change(
+											function() {
+												if ($(this).is(':checked')) {
+													$("#footer").css("display",
+															"block");
+													document
+															.getElementById('isContainsFooter').value = "1";
+												} else {
+													$("#footer").css("display",
+															"none");
+													document
+															.getElementById('isContainsFooter').value = "0";
+												}
+											});
+							$('#heropanel-check')
+									.change(
+											function() {
+												if ($(this).is(':checked')) {
+													$("#imagetype-select").css(
+															"display", "block");
+													document
+															.getElementById('isContainsFooter').value = "1";
+												} else {
+													$("#imagetype-select").css(
+															"display", "none");
+													document
+															.getElementById('isContainsFooter').value = "0";
+												}
+											});
+
+							$('.tab')
+									.click(
+											function() {
+
+
+                                                swapImage(); 
+												var ativetab = $(this).attr(
+														'id');
+												if (ativetab == 'tab2') {
+
+													if ($("#header-check").is(
+															':checked')) {
+														$("#preview-header")
+																.css("display",
+																		"block");
+													} else {
+														$("#preview-header")
+																.css("display",
+																		"none");
+													}
+
+													if ($("#footer-check").is(
+															':checked')) {
+														$("#preview-footer")
+																.css("display",
+																		"block");
+													} else {
+														$("#preview-footer")
+																.css("display",
+																		"none");
+													}
+
+													if ($("#heropanel-check")
+															.is(':checked')) {
+														$("#preview-heropanel")
+																.css("display",
+																		"block");
+													} else {
+														$("#preview-heropanel")
+																.css("display",
+																		"none");
+													}
+
+													var html = document
+															.getElementById('body-content').innerHTML;
+													var jHtmlObject = jQuery(html);
+													var editor = jQuery("<p>")
+															.append(jHtmlObject);
+													editor
+															.find(
+																	"#lsb-add-container,#rsb-add-container")
+															.remove();
+													editor
+															.find(
+																	".addremoveDiv")
+															.remove();
+													editor
+															.find(
+																	"#leftside,#rightside")
+															.removeClass(
+																	"templet_style");
+													editor.find(
+															"[id^=container]")
+															.css("border",
+																	"none");
+													editor
+															.find(
+																	"#leftside,#rightside")
+															.css("border",
+																	"none");
+
+
+													var newHtml = editor.html();
+													$("#preview-body-content")
+															.html(newHtml);
+
+													document
+															.getElementById('templetcontent').value = newHtml;
+												}
+											});
+
+							$("#templetform")
+									.on(
+											"submit",
+											function() {
+												
+												document
+														.getElementById('templetcontent').value = document
+														.getElementById('preview-heropanel').innerHTML+document
+														.getElementById('body-content').innerHTML;
+											})
+						});
+		
+	</script>
+
+</head>
+<body>
+	<div class="main-wrapper">
+		<div class="app" id="app">
+			<i th:replace="/fragments/component :: cms-header"></i>
+
+			<div class="container">
+				<h2>Create Templets</h2>
+				<br>
+					
+						
+				<div id="exTab2" class="">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#1" data-toggle="tab"
+							class="tab" id="tab1"> Templet</a></li>
+						<li><a href="#2" data-toggle="tab" class="tab" id="tab2">Preview</a></li>
+					</ul>
+
+					<div class="tab-content padding-top-bottom container-fluid">
+						<div class="tab-pane row active" id="1">
+							<aside class="sidebar col-sm-3">
+								<div style="display: none" id="login-alert"
+									class="alert alert-danger col-sm-12"></div>
+
+								<form id="templetform" method="POST"
+									th:action="@{/admin/templet/savenewtemplet}"
+									data-parsley-validate class="">
+									<input type="hidden" name="id" id="id" /> <input
+										type="hidden" name="isContainsHeader" id="isContainsHeader"
+										value="1" /> <input type="hidden" name="isContainsFooter"
+										id="isContainsFooter" value="0" /> <input type="hidden"
+										id="templetcontent" name="templetContent">
+									
+									<DIV id="body-column-select_0">
+										<div class="form-group" id="hostidrow">
+											<label>Host Id</label>
+											<input id="host-name" type="text" class="form-control"
+													name="hostName" disabled="disabled"/>
+													<input id="host-id" type="hidden" class="form-control"
+													name="hostId" />
+										</div>
+									<DIV class="form-group">
+										<label>Name</label>										
+										<input id="templet-name" type="text" class="form-control"
+											name="templetName" placeholder="templet name" required onblur="checktempletname()"/>
+											<span id="namealert"></span>
+									</DIV>
+									<DIV class="form-group">
+										<label>Description</label>
+										<input id="description" type="text" class="form-control"
+											name="description" placeholder="templet description" required />
+											
+									</DIV>
+									<DIV id="body-column-select_0">
+										<div class="form-group" id="bodyrow">
+											<label>Body Rows</label>
+											<select class="selectpicker form-control"
+												id="bodyrow-select" name="bodyColumn"
+												onchange="gettemplettype(this);">
+												<option value="1">1 Column (100)</option>
+												<option value="2">2 Column (50/50)</option>
+												<option value="3">2 Column (66/33)</option>
+												<option value="4">2 Column (33/66)</option>
+											</select>
+										</div>
+									</DIV>									
+									
+									<div class="form-group">
+									  <label class="checkbox-inline">
+									    <input id="header-check" class="form-check-input" type="checkbox" value="" checked="checked" />	
+									    Header
+									  </label>
+									
+									  <label class="checkbox-inline">
+									    <input id="footer-check" class="form-check-input" type="checkbox" value="" checked="checked" />	
+									    Footer
+									  </label>
+									</div>
+									
+									<DIV class="checkbox">
+										<label><input id="heropanel-check" class="form-check-input"
+												type="checkbox" />
+												Hero Panel
+										</label>
+									</DIV>
+									
+									<DIV class="form-group" style="display: none;" id="imagetype-select">
+										<label>Image Type :</label>
+										<select class="selectpicker form-control" id="imageType"
+											name="imageType" onchange="getImageType(this);">
+											<option value="0">Select</option>
+											<option value="1">Single</option>
+											<option value="2">Multiple</option>
+										</select>
+									</DIV>
+									<DIV class="form-group" style="display: none;" id="imageno-select">
+										<label>No of Image :</label>
+										<select class="selectpicker form-control" id="imageNo"
+											name="imageNo" onchange="getImageNo(this);">
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</DIV>
+									<DIV class="form-group" style="display: none;" id="imageuploadpane"></DIV>
+									
+									<br>
+									<DIV class="form-group">
+										<input type="submit" class="btn btn-primary" value="Save"
+											id="savetemplet" />
+										
+									</DIV>
+								</form>
+							</aside>
+							<article class="col-sm-9 border-left min-hight-400">
+								<div id="templettext">
+									<form action="">
+										<input type="hidden" id="selected-container" value="">
+										<div id="preview">
+											<div id="header" class='templet_style container-fluid padding-top-bottom'>
+												<h1>Header</h1>
+											</div>
+											<div id="heropanel" class='templet_style container-fluid padding-top-bottom'>
+											<h1>hero panel</h1>
+												<div id="singleimg" style="display: none;">
+													<img id="img" src="#" alt="your image" width="100%"
+														height="100px" />
+												</div>
+											</div>
+											<div id="body-content" class='templet_style container-fluid padding-top-bottom'> </div>
+
+											<div id="footer" class='templet_style templet_style container-fluid padding-top-bottom'>
+												<h1>Footer</h1>
+											</div>
+										</div>
+									</form>
+								</div>
+							</article>
+						</div>
+
+						<div class="tab-pane" id="2">
+							<div id="templettext">
+								<form action="">
+									<input type="hidden" id="selected-container" value="">
+									<div id="preview" class="container">
+
+										<div id="preview-header">
+											<i th:replace="/fragments/header :: preview-header"></i>
+										</div>
+										<div id="preview-heropanel">
+											<div id="preview-singleimg" style="display: none;">
+												<img id="preview-img" src="#" alt="your image"
+													width="100%" height="100px" />
+											</div>
+											  <div id="img_preview" >
+                                            </div> 
+										</div>
+										<div id="preview-body-content"
+											style="min-height: 400px; height: 70%"></div>
+
+										<div id="preview-footer">
+											<i th:replace="/fragments/component :: preview-footer"></i>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div th:replace="/fragments/component :: myModal" />
+						<div th:replace="/fragments/component :: contentModal" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div th:replace="/fragments/header :: cms-footer" />  -->
+</body>
+</html>

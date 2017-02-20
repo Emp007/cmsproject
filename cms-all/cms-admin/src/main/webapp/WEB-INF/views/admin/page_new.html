@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>New Page</title>
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+
+<script type="text/javascript" th:inline="javascript">
+
+$(document).ready(function() {
+
+	$( "#gethtml" ).click(function() {
+		var html = document.getElementById('body-content').innerHTML;
+		$('#htmltxt').html("<i>"+html 	+"</i>");;
+	});
+	
+	 $("#pageform")
+	.on(
+			"submit",
+			function() {
+				var html = document.getElementById('body-content').innerHTML;
+			    document.getElementById('pagecontent').value = html;
+			})
+	
+	
+$('.tab').click(function(){
+	    var ativetab = $(this).attr('id');
+	    if(ativetab == 'tab2'){
+	    	if($(" [id^='adminelement']").css('display') == 'block')
+	    	{
+              alert("Please fill required field !!!");
+              return false;
+	    	}
+	    	
+	    	var html = document.getElementById('body-content').innerHTML;
+	    	var jHtmlObject = jQuery(html);
+	    	var editor = jQuery("<p>").append(jHtmlObject);
+	    	editor.find("#lsb-add-container,#rsb-add-container").remove();
+	    	editor.find(".addremoveDiv").remove();
+	    	editor.find(".add").remove();
+	    	editor.find("#leftside,#rightside").removeClass("templet_style");
+	    	editor.find("[id^=container]").css("border","none");
+	    	editor.find("#leftside,#rightside").css("border","none");
+	    	
+	    	var newHtml = editor.html();
+	        $("#preview-body-content").html(newHtml);
+	        
+	     	document.getElementById('templetcontent').value = html;
+	    } 
+	});
+	
+	
+	 templets = [[${templets}]];
+	 var obj=document.getElementById("bodyrow-select"); 
+	 if(templets.length > 0){
+	  var html = null;
+      for (var i = 0; i < templets.length; i++){
+         opt = document.createElement("option");
+         opt.value = templets[i].id;
+         opt.text=templets[i].templetName;
+         obj.appendChild(opt);
+       }
+      
+        html = templets[0].templetContent;
+        html = html.replace(/Remove/g, "Add Content");
+		html = html.replace(/removeDrawedContainer/g, "changeContentModelButtonId");
+		
+      	var jHtmlObject = jQuery(html);
+     	var editor = jQuery("<p>").append(jHtmlObject);
+     	editor.find("#lsb-add-container,#rsb-add-container").remove();
+  	
+  	    editor.find(".control").css("display","block");
+  	
+    	var newHtml = editor.html();
+        $("#body-content").html(newHtml);
+	 }
+      
+      
+      hosts = [[${hosts}]];
+      hostid = [[${hostid}]];
+      
+       for (var i = 0; i < hosts.length; i++){
+    	   if(hosts[i].id == hostid){
+    		 document.getElementById('host-name').value = hosts[i].hostName;
+			 document.getElementById('host-id').value = hosts[i].id;
+    	   }
+        }
+});
+
+	function getval(sel) {
+		var html = null;
+		for(var i=0;i<templets.length;i++){
+			if(templets[i].id == sel.value){
+				html = templets[i].templetContent; 	
+			}
+		}
+		
+		html = html.replace(/Remove/g, "Add Content");
+		html = html.replace(/removeDrawedContainer/g, "changeContentModelButtonId");
+		
+    	var jHtmlObject = jQuery(html);
+    	var editor = jQuery("<p>").append(jHtmlObject);
+    	editor.find("#lsb-add-container,#rsb-add-container").remove();
+    	
+    	editor.find(".control").css("display","block");
+    	
+    	var newHtml = editor.html();
+        $("#body-content").html(newHtml);
+      
+	}
+
+</script>
+
+ <script type="text/javascript">
+	
+</script>
+</head>
+<body>
+	<div class="main-wrapper">
+		<div class="app" id="app">
+			<i th:replace="/fragments/component :: cms-header"></i>
+
+			<div class="container">
+				<div id="loginbox">
+				<h2>Create Page</h2>
+				<br>
+						
+				<div id="exTab2" class="">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#1" data-toggle="tab" class="tab" id="tab1"> Page</a></li>
+						<li><a href="#2" data-toggle="tab" class="tab" id="tab2">Preview</a></li>
+					</ul>
+
+					<div class="tab-content container-fluid padding-top-bottom">
+						<div class="tab-pane active row" id="1">
+						<aside class="sidebar col-sm-3">
+
+								<div style="display: none" id="login-alert"	class="alert alert-danger col-sm-12"></div>
+                                      
+								<form id="pageform" method="POST"
+									th:action="@{/admin/page/save}" data-parsley-validate
+									class="">
+                                          <input type="hidden" name="id" id="id" />
+									 <input type="hidden" id="pagecontent" name="pageContent"> 
+								     <input type="hidden" id="templetid" name="templetid" th:value ="${templetid}">
+									 <input type="hidden" id="hostid" name="hostid" th:value = "${hostid}">
+									
+									<DIV class="form-group">
+									<label>Name</label>
+										<input id="page-name" type="text" class="form-control"
+											name="pageName" placeholder="Page Name" required onblur="checkpagename()">
+											<span id="namealert"></span>
+									</DIV>
+									<DIV class="form-group">
+									<label>URL</label>
+										<input id="URL" type="text" class="form-control"
+											name="URL" placeholder="Page URL" required>
+									</DIV>
+									<DIV id="body-column-select_0">
+										<div class="form-group" id="bodyrow">
+										<label>Templet</label>
+										<select class="selectpicker form-control" id="bodyrow-select"
+											name="templetId" onchange="getval(this);">
+											
+										</select>
+										</div>
+									</DIV>
+									<DIV id="body-column-select_0">
+										<div class="form-group" id="hostid">
+											<label>Host</label>
+											 <input id="host-name" type="text" class="form-control"
+													name="hostName" disabled="disabled">
+											 <input id="host-id" type="hidden" class="form-control"
+													name="hostId">
+												<!-- <select class="selectpicker form-control" id="hostid-select"
+													name="hostId" onchange="getval(this);">
+													
+												</select> -->
+										</div>
+									</DIV>
+									<DIV class="form-group">
+										<div class="control">
+										<input type="submit" class="btn btn-primary" value="Save"
+													id="savepage" />
+												<!-- <div id="savepage" class="btn btn-success">
+												  Save
+												</div>	 -->
+													
+											</div>
+										</DIV>
+										</form>
+								</aside>
+								<article class="col-sm-9 border-left min-hight-400">
+								<div id="templettext">
+									<form action="">
+										<input type="hidden" id="selected-container" value="">
+										<div id="preview">
+											<div id="preview-header">
+											<i th:replace="/fragments/header :: preview-header"></i>
+										    </div>
+
+											<div id="body-content" class="div_style templet_style"
+												style="width: 100%;margin:0px;">
+											</div>
+										
+											<div id="preview-footer">
+											 <i th:replace="/fragments/component :: preview-footer" ></i>
+										</div>
+										</div>
+									</form>
+								</div>
+							</article>
+							</div>
+							
+						<div class="tab-pane" id="2">
+							 <div id="templettext">
+								<form action="">
+									<input type="hidden" id="selected-container" value="">
+									<div id="preview" class="container">
+										
+										<div id="preview-header">
+											<i th:replace="/fragments/header :: preview-header"></i>
+										</div>
+										
+										<div id="preview-body-content" class="div_style templet_style"
+												style="width: 100%">
+										</div>
+
+										<div id="preview-footer">
+											 <i th:replace="/fragments/component :: preview-footer" ></i>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div th:replace="/fragments/component :: myModal" />
+							<div th:replace="/fragments/component :: contentModal" />
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	  <!-- <div th:replace="/fragments/header :: footer" /> -->
+</body>
+</html>

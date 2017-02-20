@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="cms-head">
+<meta charset="utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<title>CMS</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="../../../resources/css/bootstrap/datepicker.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap/datepicker.css}" />
+	
+<!-- <link href="../../../resources/tinymce/skins/lightgray/skin.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/tinymce/skins/lightgray/skin.min.css}" /> -->
+
+<!-- <link href="../../../resources/tinymce/skins/lightgray/content.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/tinymce/skins/lightgray/content.min.css}" />
+	 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+<link href="../../../resources/css/cms/page.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/cms/cmsmain.css}" />
+
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 
+<!--   <script type="text/javascript"
+	src="../../../resources/tinymce/tinymce.min.js"
+	th:src="@{/resources/tinymce/tinymce.min.js}"></script> -->
+	
+ 
+ <script type="text/javascript"
+	src="../../../resources/js/bootstrap/bootstrap-datepicker.js"
+	th:src="@{/resources/js/bootstrap/bootstrap-datepicker.js}"></script>
+	
+<script type="text/javascript"
+	src="../../../resources/js/bootstrap/bootstrap-filestyle.min.js"
+	th:src="@{/resources/js/bootstrap/bootstrap-filestyle.min.js}"></script>
+<script type="text/javascript"
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="../../../resources/js/cms/cmsmain.js"
+	th:src="@{/resources/js/cms/cmsmain.js}"></script>
+<script type="text/javascript"
+	src="../../../resources/js/cms/page.js"
+	th:src="@{/resources/js/cms/page.js}"></script>
+<script type="text/javascript"
+	src="../../../resources/js/cms/templet.js"
+	th:src="@{/resources/js/cms/templet.js}"></script>
+<script type="text/javascript"
+	src="../../../resources/js/cms/host.js"
+	th:src="@{/resources/js/cms/host.js}"></script>
+</head>
+
+<div th:fragment="cssLive404Load">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+	<!-- Website Font style -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+	<!-- Google Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Passion+One'
+		rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Oxygen'
+		rel='stylesheet' type='text/css'>
+
+	<link th:href="@{/resources/css/cms/live.css}"
+		href='/resources/css/cms/live.css' rel='stylesheet'
+		type='text/css'>
+</div>
+
+<body>
+	<div id="spinner"></div>	
+	<header class="header-wrap" th:fragment="preview-header">
+		<div class="navbar navbar-inverse" role="banner">
+			<div class="container header-navbar">
+				<nav class="navbar-collapse bs-navbar-collapse collapse"
+					role="navigation" style="height: 1px;">
+					
+					<div id="menuApp" style="color:red;">menu Area</div>
+				</nav>
+			</div>
+		</div>
+	</header>
+	
+ <div class="footer-wrapper footer" th:fragment="footer">
+    <div class="container">
+        <div class="row footer-nav">
+            <div class="col-sm-2 border-right">
+                <h4>Quick Link</h4>
+                <ul>
+				<li><a href="#">Why Us</a></li>
+				<li><a href="#">About Us</a></li>
+				<li><a href="#">Process</a></li>
+				<li><a href="#">Award</a></li>
+				<li><a href="#">Careers</a></li>
+				<li><a href="#">Contact Us</a></li>
+				<li><a href="#">Blog</a></li>
+				<li><a href="#">Case Study</a></li>
+				<li><a href="#">Investors &amp; Partners</a></li>
+				<li><a href="#">Our Clients</a></li>
+				<li><a href="#">Testimonials</a></li>
+				<li><a href="#">Privacy Policy</a></li>
+				<li><a href="#">Sample Work</a></li>
+				<li><a href="#">Know More About Magento</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-7 border-right">
+                <div class="row">
+                	<div class="col-sm-4">
+                	<h4>Web Development</h4>
+                	<p><a>HTML5,</a><a>CSS3,</a><a>jQuery,</a><a>PHP</a></p>
+                	</div>
+                	<div class="col-sm-4">
+                	<h4>Framework Development</h4>
+                	<p><a>HTML5,</a> <a>CSS3,</a> <a>jQuery,</a> <a>PHP</a> </a> <a>CSS3,</a> <a>jQuery,</a></p>
+                	</div>
+                	<div class="col-sm-4">
+                	<h4>PHP Development</h4>
+                	<p><a>HTML5,</a> <a>CSS3,</a> <a>jQuery,</a> <a>CSS3,</a> <a>jQuery,</a> </p>
+                	</div>
+                </div>
+                
+                <div class="row">
+                	<div class="col-sm-4">
+                	<h4>Web Development</h4>
+                	<p><a>HTML5,</a> <a>CSS3,</a> <a>jQuery,</a> <a>PHP</a></p>
+                	</div>
+                	<div class="col-sm-4">
+                	<h4>Framework Development</h4>
+                	<p><a>HTML5,</a> <a>CSS3,</a> <a>jQuery,</a> <a>PHP</a> <a>CSS3,</a> <a>jQuery,</a></p>
+                	</div>
+                	<div class="col-sm-4">
+                	<h4>PHP Development</h4>
+                	<p><a>HTML5,</a> <a>CSS3,</a> <a>jQuery,</a> <a>CSS3,</a> <a>jQuery,</a></p>
+                	</div>
+                </div>
+                
+                <div class="row">
+                	<div class="col-sm-4">
+                	<h4>Web Development</h4>
+                	<p><a>HTML5,</a> <a>CSS3,</a> <a>jQuery,</a> <a>PHP</a></p>
+                	</div>
+                	<div class="col-sm-4">
+                	<h4>Framework Development</h4>
+                	<p><a>HTML5,</a> <a>CSS3,</a> <a>jQuery,</a> <a>PHP</a> <a>CSS3,</a> <a>jQuery,</a> <a>HTML5,</a> <a>CSS3,</a><a>jQuery,</a><a>PHP</a> </a><a>CSS3,</a><a>jQuery,</a></p>
+                	</div>
+                	<div class="col-sm-4">
+                	<h4>PHP Development</h4> 
+                	<p><a>HTML5,</a> <a>CSS3,</a> <a>jQuery,</a> <a>CSS3,</a> <a>jQuery,</a><a>CSS3,</a> <a>jQuery,</a><a>CSS3,</a> <a>jQuery,</a> <a>CSS3,</a> <a>jQuery,</a> <a>CSS3,</a> <a>jQuery,</a></p>
+                	</div>
+                </div>
+                 <div class="row">
+                	<div class="col-sm-4">
+                	<h4>Web Development</h4>
+                	<p><a>HTML5,</a> <a>CSS3,</a> <a>jQuery,</a> <a>CSS3,</a> <a>jQuery,</a><a>CSS3,</a> <a>jQuery,</a><a>CSS3,</a> <a>jQuery,</a> <a>CSS3,</a> <a>jQuery,</a> <a>CSS3,</a> <a>jQuery,</a></p>
+                	
+                	</div>
+                	<div class="col-sm-4">
+                	<h4>Framework Development</h4>
+                	<p><a>HTML5,</a> <a>CSS3,</a> <a>jQuery,</a> <a>PHP</a> <a>CSS3,</a> <a>jQuery,</a> <a>HTML5,</a> <a>CSS3,</a><a>jQuery,</a><a>PHP</a> </a><a>CSS3,</a><a>jQuery,</a></p>
+                	</div>
+                	<div class="col-sm-4">
+                	<h4>PHP Development</h4> 
+                	<p><a>HTML5,</a> <a>CSS3,</a> <a>jQuery,</a> <a>PHP</a></p>
+                	</div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-10">
+            	<div class="foot_text">
+            	<p>The rights to all trademarks, images, videos and logos belong to its exclusive owners.They are being used on this site for reference purpose only..
+Clients : USA, UK, Europe, BeNeLux, Belgium, Netherlands, Luxembourg, Denmark, Canada, Australia, UAE, Dubai, Italy, Turkey, Germany, Singapore, Japan, France, Brazil, Portugal.</p>
+            	</div>
+                <div class="copyright">
+	                Powered By: 
+	                <p><a href="http://www.orangemantra.com" target="_blank">OM</a> © 2016  All rights reserved.</p>
+	            </div>
+            </div>   
+        </div>
+    </div>
+</div>
+</body>
+</html>
