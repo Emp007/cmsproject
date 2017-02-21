@@ -98,6 +98,10 @@ public class UserManagement {
 		operation(option);
 	}
     
+	
+	 /***************** SIMPLE LOGICS ****************************/
+	
+	
 	 public static  int getReverseInt(int value) {
 		    int resultNumber = 0;
 		    for(int i = value; i !=0; i /= 10) {
@@ -222,6 +226,8 @@ public class UserManagement {
 	            System.out.print(num + " * " + i + " = " + tab + "\n");
 	        }
 	 }
+	 
+	 
 public static void addnnumbers(){
 	  int i, n, sum=0, num;
       Scanner scan = new Scanner(System.in);
@@ -238,6 +244,8 @@ public static void addnnumbers(){
 		
       System.out.print("Sum of all " +n+ " numbers is " +sum);
   }
+
+
 public static void COUNTPOSITIVENEGATIVEOS(){
 	 int countp=0, countn=0, countz=0, i;
      int arr[] = new int[10];
@@ -268,6 +276,8 @@ public static void COUNTPOSITIVENEGATIVEOS(){
      System.out.print("\n" + countn + " Negative Numbers");
      System.out.print("\n" + countz + " Zero");
 }
+
+
 public static void printASCIIvalues(){
 	   String ch;
        int i;
@@ -277,14 +287,12 @@ public static void printASCIIvalues(){
            System.out.print(i+ " -> " + ch + "\t");
        }
 }
+
+
 public static void printarmstrongnumbers(){
 	 int num1, num2, i, n, rem, temp, count=0;
      Scanner scan = new Scanner(System.in);
-     
-     /* enter the interval (two number) */
-     
      System.out.print("Enter the Interval :\n");
-		
      System.out.print("Enter Starting Number : ");
      num1 = scan.nextInt();
      System.out.print("Enter Ending Number : ");
@@ -319,11 +327,9 @@ public static void printarmstrongnumbers(){
 
 	 
 	public static void main(String [] args){
-		
-		
 	paskaltriangle();	
 	int input = 89652;	
-	int output = 	getReverseInt(input);
+	int output = getReverseInt(input);
 	System.out.println("Reverse Int :" +output);
 	
 	System.out.println("Pramid printing start :===============");

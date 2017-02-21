@@ -18,10 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cms.model.FileUpload;
+
+
 
 @Controller
-@RequestMapping(value = "admin/test")
+@RequestMapping(value = "admin/cssmanagement")
 public class TestController {
 	
 	
@@ -30,7 +31,7 @@ public class TestController {
 	@RequestMapping( method = RequestMethod.GET)
     public ModelAndView modelview(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-		ModelAndView mv = new  ModelAndView("admin/test");
+		ModelAndView mv = new  ModelAndView("admin/cssmanagement");
 		return mv;
     
     }
@@ -57,7 +58,7 @@ public class TestController {
 	  
 	  
 	  
-	    @RequestMapping(value = "/fileupload", method = RequestMethod.POST)
+	   /* @RequestMapping(value = "/fileupload", method = RequestMethod.POST)
 	    public String fileupload(@ModelAttribute() FileUpload fileBucket, BindingResult result, ModelMap model) throws Exception {
 	    
 		  System.out.println("---------------- Original File --------------");
@@ -75,5 +76,5 @@ public class TestController {
 	            model.addAttribute("fileName", fileName);
 	            return "success";
 	        }
-	    }
+	    }*/
 }

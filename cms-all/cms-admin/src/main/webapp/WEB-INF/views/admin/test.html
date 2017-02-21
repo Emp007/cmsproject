@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>CSS Test</title>
+<!-- <object th:include="/fragments/header :: cms-head" th:remove="tag" />
+ --><link rel="stylesheet" href="../../../resources/css/colorpicker.css"
+	type="text/css" th:href="@{/resources/css/colorpicker.css}" />
+	<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<title>ColorPicker - jQuery plugin</title>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript"
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript" src="../../../resources/js/jquery.js"
+	th:src="@{/resources/js/jquery.js}"></script> -->
+<script type="text/javascript"
+	src="../../../resources/js/colorpicker.js"
+	th:src="@{/resources/js/colorpicker.js}"></script>
+<script type="text/javascript" src="../../../resources/js/eye.js"
+	th:src="@{/resources/js/eye.js}"></script>
+<script type="text/javascript" src="../../../resources/js/utils.js"
+	th:src="@{/resources/js/utils.js}"></script>
+<!-- <script type="text/javascript"
+	src="../../../resources/css/js/layout.js?ver=1.0.2"
+	th:src="@{/resources/js/layout.js?ver=1.0.2}"></script>-->
+<script type="text/javascript">
+	function report(val) {
+		if (val == 'Color') {
+			$('#colorSelector').css('display', 'block');
+			$('#colorSelector').ColorPicker({
+				flat : true,
+				color : '#0000ff',
+				onShow : function(colpkr) {
+					$(colpkr).fadeIn(500);
+					return false;
+				},
+				onHide : function(colpkr) {
+					$(colpkr).fadeOut(500);
+					return false;
+				},
+				onChange : function(hsb, hex, rgb) {
+					$('#colorSelector div').css('backgroundColor', '#' + hex);
+				}
+			});
+		} else if (val == 'Background') {
+			$('#colorSelector').css('display', 'block');
+			$('.background').css('display', 'block')
+		}
+	}
+
+	function fillselect() {
+		var arr = [ "Color", "Background", "Margin", "Padding", "align",
+				"Display", "Height", "Width", "Overflow" ];
+		select = document.getElementById('attributes');
+		for (var i = 0; i <= arr.length; i++) {
+			option = document.createElement('option');
+			option.value = option.text = arr[i];
+			select.add(option);
+		}
+	}
+
+	function performoperation(value) {
+		$('#myModal').show();
+		var mainDiv = document.getElementById('control');
+
+		var rowDiv = document.createElement('div');
+		rowDiv.className = 'row';
+		rowDiv.style.cssText = 'padding-top: 10px';
+
+		var lableDiv = document.createElement('div');
+		lableDiv.className = 'col-sm-4';
+		lableDiv.innerHTML = "background-color	";
+		rowDiv.appendChild(lableDiv);
+
+		var propertyDiv = document.createElement('div');
+		propertyDiv.className = 'col-sm-4 ';
+		propertyDiv.id = 'input';
+		propertyDiv.innerHTML = "<input id='input' type='text' class='form-control' />";
+		rowDiv.appendChild(propertyDiv);
+
+		mainDiv.appendChild(rowDiv);
+
+		if (value == 'Color') {
+			//$('.color').css('display','block');
+			$('#control').empty();
+			$('#colorSelector').ColorPicker({
+				flat : true,
+				color : '#0000ff',
+				onShow : function(colpkr) {
+					$(colpkr).fadeIn(500);
+					return false;
+				},
+				onHide : function(colpkr) {
+					$(colpkr).fadeOut(500);
+					return false;
+				},
+				onChange : function(hsb, hex, rgb) {
+					$('#colorSelector div').css('backgroundColor', '#' + hex);
+				}
+			});
+		} else if (value == 'Background') {
+			//$('.color').css('display','none');
+			//$('.background').css('display','block');
+			$('#control').empty();
+			var mainDiv = document.getElementById('control');
+
+			var rowDiv = document.createElement('div');
+			rowDiv.className = 'row';
+			rowDiv.style.cssText = 'padding-top: 10px';
+
+			var lableDiv = document.createElement('div');
+			lableDiv.className = 'col-sm-4';
+			lableDiv.innerHTML = "background-color	";
+			rowDiv.appendChild(lableDiv);
+
+			var propertyDiv = document.createElement('div');
+			propertyDiv.className = 'col-sm-4 ';
+			propertyDiv.id = 'input';
+			propertyDiv.innerHTML = "<input id='input' type='text' class='form-control' />";
+			rowDiv.appendChild(propertyDiv);
+
+			mainDiv.appendChild(rowDiv);
+		}
+	}
+</script>
+
+</head>
+<body style="background-color: #FFF;" onload="fillselect();">
+	<div class="main-wrapper">
+		<div class="app" id="app">
+			<!-- <i th:replace="/fragments/component :: cms-header"></i> -->
+			<div class="container">
+				<div id="create-site" style="margin-top: 50px;"
+					class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<div class="panel-title">Create New CSS</div>
+							<div
+								style="float: right; font-size: 80%; position: relative; top: -10px">
+							</div>
+						</div>
+
+						<div style="padding-top: 30px" class="panel-body">
+
+							<div style="display: none" id="login-alert"
+								class="alert alert-danger col-sm-12"></div>
+
+							<div class="col-sm-4">Attribute List</div>
+							<div class="input-group col-sm-4">
+								<select class="selectpicker form-control" id="attributes"
+									onchange="performoperation(this.value);">
+								</select>
+							</div>
+
+							<div class="row color" style="display: none;">
+								<div class="clo-sm-4">
+									<div id="colorSelector" style="padding: 100px;">
+										<div
+											style="background-color: #0000ff; height: 200px; width: 200px;"></div>
+									</div>
+								</div>
+							</div>
+							<div class="row" id="control"></div>
+						</div>
+
+						<div id="myModal" class="modal fade">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">&times;</button>
+										<h4 class="modal-title">Confirmation</h4>
+									</div>
+									<div class="modal-body">
+										<p>Do you want to save changes you made to document before
+											closing?</p>
+										<p class="text-warning">
+											<small>If you don't save, your changes will be lost.</small>
+										</p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-primary">Save
+											changes</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div th:replace="/fragments/snent :: cms-footer" /> -->
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CSS Test</title>
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+
+    <link rel="stylesheet" href="../../../resources/css/colorpicker.css" type="text/css"  th:href="@{/resources/css/colorpicker.css}"/>
+    <link rel="stylesheet" media="screen" type="text/css" href="../../../resources/css/layout.css" th:href="@{/resources/css/layout.css}"/>
+    <title>ColorPicker - jQuery plugin</title>
+	<script type="text/javascript" src="../../../resources/js/jquery.js" th:src="@{/resources/js/jquery.js}"></script>
+	<script type="text/javascript" src="../../../resources/js/colorpicker.js" th:src="@{/resources/js/colorpicker.js}"></script>
+    <script type="text/javascript" src="../../../resources/js/eye.js" th:src="@{/resources/js/eye.js}"></script>
+    <script type="text/javascript" src="../../../resources/js/utils.js" th:src="@{/resources/js/utils.js}"></script>
+    <script type="text/javascript" src="../../../resources/css/js/layout.js?ver=1.0.2" th:src="@{/resources/js/layout.js?ver=1.0.2}"></script>
+<script type="text/javascript">
+	
+ function report (val){
+	 if(val == 'Color'){
+		 $('#colorSelector').css('display','block');
+			$('#colorSelector').ColorPicker({
+	    		flat: true,color: '#0000ff',
+	    		onShow: function (colpkr) {
+	    			$(colpkr).fadeIn(500);
+	    			return false;
+	    		},
+	    		onHide: function (colpkr) {
+	    			$(colpkr).fadeOut(500);
+	    			return false;
+	    		},
+	    		onChange: function (hsb, hex, rgb) {
+	    			$('#colorSelector div').css('backgroundColor', '#' + hex);
+	    		}});
+	 }else if(val == 'Background'){
+		 $('.background').css('display','block')
+	 }
+ }
+</script>
+
+</head>
+<body>
+	
+	<div class="container">
+	<div class="row">
+	<div class="col-sm-4">
+	<h1>hello</h1>
+	<select class="selectpicker form-control" id="cssattribute" name="cssattribute" onchange="report(this.value);">
+		<option value="">Select</option>
+		<option value="Color">Color</option>
+		<option value="Opacity">Opacity</option>
+		<option value="Background">Background</option>
+		<option value="Border">Border</option>
+		<option value="Display">Display</option>
+		<option value="Float">Float</option>
+		<option value="Height">Height</option>
+		<option value="Left">Left</option>
+		<option value="Margin">Margin</option>
+		<option value="Overflow">Overflow</option>
+		<option value="Padding">Padding</option>
+		<option value="Position">Position</option>
+		<option value="Right">Right</option>
+		<option value="Top">Top</option>
+		<option value="Visibility">Visibility</option>
+		<option value="Width">Width</option>
+		<option value="Z-index">Z-index</option>
+		<option value="Font">Font</option>
+		<option value="Cursor">Cursor</option>
+	</select>
+	
+	
+	</div>
+	</div>
+	<div class="row color" style="display: none;">
+			<div class="clo-sm-4" >
+				<div id="colorSelector" style="padding: 100px;display: none;">
+					<div style="background-color: #0000ff;height:200px;width: 200px;"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row background" style="display: none;">
+				<div class="col-sm-4">Expire Date :</div>
+				<div class="input-group col-sm-4">
+					<div class="input-append date form_datetime">
+					<input class="form-control" type="text" id="" >
+				</div>
+			</div>
+			<div class="col-sm-4"></div>
+		</div>
+</body>
+</html> -->

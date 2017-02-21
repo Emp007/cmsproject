@@ -3,23 +3,12 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
-
-
 /*===================================*/
 
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i,900');
-
-
 body{font-family: 'Lato', sans-serif;}
-
-#exTab1 .tab-content {
-	color: white;
-	background-color: #428bca;
-	padding: 5px 15px;
-}
-
-#exTab2 h3 {
-	color: white;
+#exTab1 .tab-content {color: white;background-color: #428bca;padding: 5px 15px;}
+#exTab2 h3 {color: white;
 	background-color: #428bca;
 	padding: 5px 15px;
 }
@@ -45,7 +34,7 @@ body{font-family: 'Lato', sans-serif;}
 	border: 1px solid gray;
 }
 
-.footer {
+.g {
 	
  	padding: .5rem; 
  	background-color: black;
@@ -99,6 +88,7 @@ h1 {
 
 
 /*------cms-footer ----------------*/
+
 .footer-wrapper {
 	height:inherit;
     color: #eaeff4;
@@ -133,11 +123,6 @@ form-narrow input.form-control {
     text-decoration: none;
     position: relative;
 }
-
-/* .fragment:hover {
-    box-shadow: 2px 2px 5px rgba(0,0,0,.2);
-
-} */
 
 .fragment img { 
     float: left;
@@ -180,9 +165,6 @@ form-narrow input.form-control {
 
 /* ----------------------------------- */
 
-
-
-
 .box { background: #e7f4ff; min-height: 250px;}
 .box:after { content: ""; display: table; clear: both;}
 .padding-10 { padding:10px}
@@ -195,14 +177,8 @@ form-narrow input.form-control {
 .search {margin: 0 auto 30px; max-width: 490px; background:rgb(226, 233, 239);  padding: 15px;}
 form.form input {    float: left;    width: 79%;    border-radius: 5px 0 0 5px;}
 form.form button[type="submit"] {border-radius: 0 5px 5px 0; border-left:0px; padding:6.4px;}
-.hostname a{ display: inline-block;
-    padding: 4px 8px;
-    margin: 0 3px 4px 0;
-    border: 1px solid #e7ebef;
-    background: #dae2ea;
-    font-size: 12px;}
+.hostname a{ display: inline-block;padding: 4px 8px;margin: 0 3px 4px 0;border: 1px solid #e7ebef;background: #dae2ea;font-size: 12px;}
 .hostname a:hover {background: #f3f3f3;border: 1px solid #f3f3f3; text-decoration: none;}
-
 .header { background: #337ab7; margin-bottom: 20px;}
 .header nav.navbar.navbar-inverse {    margin: 0;    background: none;    border: none;}
 .header nav.navbar.navbar-inverse a { color:#fff; }

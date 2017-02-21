@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+<title>CSS Management</title>
+
+
+<script type="text/javascript">
+function fillselect() {
+	var arr = [ "Color", "Background", "Margin", "Padding", "align",
+			"Display", "Height", "Width", "Overflow" ];
+	select = document.getElementById('attributes');
+	for (var i = 0; i <= arr.length; i++) {
+		option = document.createElement('option');
+		option.value = option.text = arr[i];
+		select.add(option);
+	}
+}
+
+function performoperation(value) {
+	var mainDiv = document.getElementById('control');
+
+	var rowDiv = document.createElement('div');
+	rowDiv.className = 'row';
+	rowDiv.style.cssText = 'padding: 10px 40px';
+
+	var lableDiv = document.createElement('div');
+	lableDiv.className = 'col-sm-4';
+	//lableDiv.innerHTML = "background-color	";
+	rowDiv.appendChild(lableDiv);
+
+	var propertyDiv = document.createElement('div');
+	propertyDiv.className = 'col-sm-4 ';
+	propertyDiv.id = 'input';
+	//propertyDiv.innerHTML = "<input id='input' type='text' class='form-control' />";
+	rowDiv.appendChild(propertyDiv);
+	
+	if (value == 'Color') {
+		$('#control').empty();
+		alert("Color Selected !!!");
+	} else if (value == 'Background') {
+		$('#control').empty();
+		lableDiv.innerHTML = "background-color : ";
+		propertyDiv.innerHTML = "<input id='bgcolor' type='text' class='form-control' />";
+		mainDiv.appendChild(rowDiv);
+		
+		lableDiv.innerHTML = "background-color : ";
+		propertyDiv.innerHTML = "<input id='bgcolor' type='text' class='form-control' />";
+		mainDiv.appendChild(rowDiv);
+		$("#myModal").modal('show');
+	}
+}
+</script>
+</head>
+<body style="background-color: #FFF;" onload="fillselect();">
+	<div class="container">
+		<div id="create-site" style="margin-top: 50px;"
+			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">Create New CSS</div>
+					<div
+						style="float: right; font-size: 80%; position: relative; top: -10px">
+					</div>
+				</div>
+
+				<div style="padding-top: 30px" class="panel-body">
+
+					<div style="display: none" id="login-alert"
+						class="alert alert-danger col-sm-12"></div>
+
+					<div class="col-sm-4">Attribute List</div>
+					<div class="input-group col-sm-4">
+						<select class="selectpicker form-control" id="attributes"
+							onchange="performoperation(this.value);">
+						</select>
+					</div>
+
+					<div class="row color" style="display: none;">
+						<div class="clo-sm-4">
+							<div id="colorSelector" style="padding: 100px;">
+								<div
+									style="background-color: #0000ff; height: 200px; width: 200px;"></div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="myModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Confirmation</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row" id="control"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
