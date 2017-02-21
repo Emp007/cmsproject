@@ -125,7 +125,6 @@ public class HeaderController {
 		ModelAndView mav = new ModelAndView(HEADER_VIEW_NAME);
 
 		Boolean bool = false;
-
 		System.out.println(headerContent);
 		Header header = new Header();
 		header.setHeaderName(headerName);
@@ -133,7 +132,6 @@ public class HeaderController {
 		header.setHostId(hostId);
 		
 		System.out.println("Sample HTML = "+headerContent);
-
 		header.setHeaderContent(headerContent);
 		try {
 			Header saveHeader = headerService.Save(header);

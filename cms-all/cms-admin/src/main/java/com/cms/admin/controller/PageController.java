@@ -183,13 +183,7 @@ public class PageController {
 
 	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public ModelAndView save(@RequestParam("id") Long id, @RequestParam("pageName") String pageName,
-
-			@RequestParam("URL") String hostName,@RequestParam("hostId") long hostId,@RequestParam("templetId") long templetId, 
-			@RequestParam("pageContent") String pageContent,
-			@RequestParam("hostid") String hostid,
-			@RequestParam("templetid") String templateid,
-			@RequestParam("herosURL") String herosURL) {
-
+			@RequestParam("URL") String hostName,@RequestParam("hostId") long hostId,@RequestParam("templetId") long templetId, @RequestParam("pageContent") String pageContent,@RequestParam("hostid") String hostid,@RequestParam("templetid") String templateid) {
 		ModelAndView mav = new ModelAndView(PAGE_VIEW_NAME);
 
 	Boolean bool = false;
@@ -199,9 +193,7 @@ public class PageController {
 		page.setPageURL(hostName);
 		page.setTempletId(templetId);
 		page.setHostId(hostId);
-
-		page.setHerosURL(herosURL);
-
+		
 		System.out.println("Sample HTML = "+pageContent);
 		page.setTemplateContent(pageContent);
 		try {
@@ -267,11 +259,9 @@ public class PageController {
 			if (savePage != null) {
 				bool = true;
 			}
-
-		} catch (CMSAdminException e) {
+		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new CMSAdminException("Error updating document");
-
+			throw e;
 		}
 
 		mav.addObject("pages", page);
@@ -285,11 +275,7 @@ public class PageController {
 			if(pageService.getPage(pageName,hostId) != null)
 				return "FOUND";
 			
-
-		} catch (CMSAdminException e) {
-			throw new CMSAdminException("Error in checking page name by host id");
-		}
-
+		} catch (Exception e) {}
 		return "NOT-FOUND";
 	}
 	

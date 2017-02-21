@@ -35,13 +35,15 @@ public class HeaderController {
 	public ResponseEntity<Response<Header>> save(@RequestBody Header header ) {
 		try {
 			LOGGER.debug("Process start to save Header data");
-
+			System.out.println("Header Detail : " + new Gson().toJson(header));
 			header.setId(headerService.count());
+			
+			
+			
 			System.out.println("Header Detail UpdatedId : " + new Gson().toJson(header));
-			Header prevheader =  headerService.get(header.getId());
-			prevheader = header;
-			headerService.save(prevheader);
-		} catch (CMSException e) {
+			
+			headerService.save(header);
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new CMSException(
 					"Error find while save Header data in HeaderController with Header name :" + header.getHeaderName(), e);

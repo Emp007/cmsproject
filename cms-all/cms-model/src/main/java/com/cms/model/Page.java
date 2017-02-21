@@ -32,8 +32,6 @@ public class Page implements Serializable {
      
     private String pageType;
 
-    private String herosURL;
-
     private String parentsId;
          
     private long hostId;
@@ -225,12 +223,6 @@ public class Page implements Serializable {
 		this.hostName = hostName;
 	}
 
-	public String getHerosURL() {
-		return herosURL;
-	}
-
-
-	public void setHerosURL(String herosURL) {
-		this.herosURL = herosURL;
-	}
+   
+	
 }

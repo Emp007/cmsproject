@@ -33,9 +33,7 @@ public class HostController {
     public final static String ISSAVE = "issave";
     private final static String HOST_NEW_HOST = "admin/host_new";
     private final static String TEMPLET_VIEW_NAME = "admin/templet_view";
-
     public final static String HOST_CONFIG = "admin/host-config";
-
     
     @Autowired
     private HostService hostService;
@@ -45,7 +43,6 @@ public class HostController {
     
     @Autowired
     private TempletService templetService;
-
 
 	@RequestMapping(value = "config/{hostId}", method = RequestMethod.GET)
     public ModelAndView getHostConfig(@PathVariable("hostId") long hostId) {
