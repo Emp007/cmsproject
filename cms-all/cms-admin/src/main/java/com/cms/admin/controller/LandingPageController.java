@@ -22,10 +22,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cms.admin.Response;
 import com.cms.admin.service.FooterService;
 import com.cms.admin.service.HeaderService;
+
+import com.cms.admin.service.HostService;
+
 import com.cms.admin.service.LandingPageService;
 import com.cms.admin.service.MenuService;
 import com.cms.model.Footer;
 import com.cms.model.Header;
+
+import com.cms.model.Host;
+
 import com.cms.model.Menu;
 import com.cms.model.Page;
 import com.google.gson.Gson;
@@ -33,110 +39,131 @@ import com.google.gson.Gson;
 @Controller
 @RequestMapping(value = "OM", produces = MediaType.APPLICATION_JSON_VALUE)
 public class LandingPageController {
-	
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(LandingPageController.class);
 	private final static String PAGE_VIEW_NAME = "admin/landing_page";
+	private final static String PAGE_404 = "fragments/404";
+	private final static String PAGE_INACTIVE = "fragments/inactive";
 	
 	@Autowired
 	private LandingPageService landingPageService;
+
+	@Autowired
+    private HostService hostService;
 	
 	@Autowired
 	private MenuService menuService;
-	
+
 	@Autowired
 	@Qualifier("footerService")
 	private FooterService footerService;
-	
+
 	@Autowired
 	@Qualifier("headerService")
 	private HeaderService headerService;
-	
+
 	@RequestMapping(value = "{hostName}/{templetName}/{indexPageName}", method = RequestMethod.GET)
 	public ModelAndView getIndexPage(@PathVariable("hostName") String hostName,
-			@PathVariable("templetName") String templetName, @PathVariable("indexPageName") String indexPageName){
-		ModelAndView mav = new ModelAndView(PAGE_VIEW_NAME);
-		Map<String , String> pageMap = new HashMap<String ,String>();
-		Map<String , String> indexPage = new HashMap<String ,String>();
-		Map<String , String> herosURL = new HashMap<String ,String>();
+			@PathVariable("templetName") String templetName, @PathVariable("indexPageName") String indexPageName) {
+		ModelAndView mav = null;
+		Map<String, String> pageMap = new HashMap<String, String>();
+		Map<String, String> indexPage = new HashMap<String, String>();
 		List<Page> pages = new ArrayList<Page>();
-		String imagesURL="";
-		try{
-		pages = landingPageService.getIndexPage(hostName, templetName, indexPageName);
-		
-		Page page = null;
-		if(!CollectionUtils.isEmpty(pages))
-			page = (Page) pages.get(0);
-		
-		
-		long hostId = page.getHostId();
-		imagesURL = page.getHerosURL();
-		List<Header> headerList = new ArrayList<Header>();
-		Header headerFound = new Header();
 		try {
-			headerList = headerService.getAllHeaders();
-			if(headerList!= null){	 
-				headerFound = headerList.parallelStream()
-								.filter(header -> header.getHostId() == hostId)
-								.findAny()
+			Host host = hostService.getHost(hostName);
+			
+			/*checkout host is Found or not & if found then checkout host is Active Or not*/
+			if(( host != null) && (host.getHostConfig()!= null) && host.getHostConfig().isActive()){
+				
+				indexPageName = host.getHostConfig().getWelcomePage();
+				pages = landingPageService.getIndexPage(hostName, templetName, indexPageName);
+
+				Page page = null;
+				if (!CollectionUtils.isEmpty(pages))
+					page = (Page) pages.get(0);
+
+				long hostId = page.getHostId();
+
+				List<Header> headerList = new ArrayList<Header>();
+				/*Preparing Header*/
+				Header headerFound = new Header();
+				try {
+					headerList = headerService.getAllHeaders();
+					if (headerList != null) {
+						headerFound = headerList.parallelStream().filter(header -> header.getHostId() == hostId).findAny()
 								.orElse(null);
+					}
+				} catch (Exception e) {
+					LOGGER.error(e.getMessage(), e);
+				}
+
+				
+				/*Preparing Footer*/
+				List<Footer> footerList = new ArrayList<Footer>();
+				Footer footerFound = new Footer();
+				try {
+					footerList = footerService.getAllFooters();
+					if (footerList != null) {
+						footerFound = footerList.parallelStream().filter(footer -> footer.getHostId() == hostId).findAny()
+								.orElse(null);
+					}
+				} catch (Exception e) {
+					LOGGER.error(e.getMessage(), e);
+				}
+
+				if (!CollectionUtils.isEmpty(pages)) {
+					pageMap = landingPageService.arrangePages(pages);
+					indexPage = landingPageService.indexPageSetting(pages, indexPageName);
+					
+					/*checkout the requested page is Found or Not*/
+					if((indexPage.isEmpty())){
+						mav = new ModelAndView(PAGE_404);
+						
+				        mav.addObject("hostType", hostName);
+				        mav.addObject("hostName", hostName);
+				        mav.addObject("pageType", indexPageName);
+						return mav;
+					}
+					mav = new ModelAndView(PAGE_VIEW_NAME);
+					mav.addObject("pageList", pageMap);
+					mav.addObject("indexPageName", indexPageName);
+					mav.addObject("containt", indexPage.get(indexPageName));
+					mav.addObject("hostName", hostName);
+					mav.addObject("menu", menuService.getAllMenuByParentsId(0L));
+					mav.addObject("parentsMenus", menuService.getAllHostNameMenuName(hostName, "parents"));
+
+				}
+				mav.addObject("footer", footerFound);
+				mav.addObject("header", headerFound);
+				return mav;
+			}else{
+				if(( host != null) && ( host.getHostConfig() != null ) && !host.getHostConfig().isActive()){
+					mav = new ModelAndView(PAGE_INACTIVE);
+					mav.addObject("hostType", hostName);
+					return mav;
+				}
 			}
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			throw e;
 		}
+		mav = new ModelAndView(PAGE_404);
 		
-		mav.addObject("header", headerFound);
-		
-		List<Footer> footerList = new ArrayList<Footer>();
-		Footer footerFound = new Footer();
-		try {
-			footerList = footerService.getAllFooters();
-			if(footerList!= null){	 
-				footerFound = footerList.parallelStream()
-								.filter(footer -> footer.getHostId() == hostId)
-								.findAny()
-								.orElse(null);
-			}
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-			throw e;
-		}
-		
-		mav.addObject("footer", footerFound);
-		
-		
-		
-		if(!CollectionUtils.isEmpty(pages) ){
-			pageMap = landingPageService.arrangePages(pages);
-			herosURL =landingPageService.getHerosPagesURL(pages);
-			indexPage = landingPageService.indexPageSetting(pages, indexPageName);
-			mav.addObject("pageList", pageMap);
-			mav.addObject("indexPageName", indexPageName);
-			mav.addObject("containt", indexPage.get(indexPageName));
-			mav.addObject("hostName", hostName);
-			mav.addObject("menu" ,menuService.getAllMenuByParentsId(0L));
-			mav.addObject("parentsMenus",menuService.getAllHostNameMenuName(hostName,"parents"));
-			mav.addObject("imagesURL" ,imagesURL);
-			mav.addObject("pages" ,pages);
-			mav.addObject("herosURLS" ,herosURL);
-			
-			
-			
-		}
-		}catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-			throw e;
-		}
+        mav.addObject("hostType", hostName);
+        mav.addObject("hostName", hostName);
+        mav.addObject("pageType", indexPage);
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "sub-menu/{hostName}/{menuName}", method = RequestMethod.GET)
-	public ResponseEntity<Response<List<Menu>>> getMenusByPageId(@PathVariable("hostName") String hostName ,@PathVariable("menuName") String menuName) {
+	public ResponseEntity<Response<List<Menu>>> getMenusByPageId(@PathVariable("hostName") String hostName,
+			@PathVariable("menuName") String menuName) {
 		List<Menu> menus = null;
-		//List<Menu> subMenus = null;
+		// List<Menu> subMenus = null;
 		try {
-			menus = menuService.getAllHostNameMenuName(hostName,menuName);
-			//subMenus = menuService.getAllHostNameChildPage(hostName,menuName);
+			menus = menuService.getAllHostNameMenuName(hostName, menuName);
+			// subMenus =
+			// menuService.getAllHostNameChildPage(hostName,menuName);
+
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			throw e;
@@ -145,4 +172,5 @@ public class LandingPageController {
 				new Response<List<Menu>>(HttpStatus.OK.value(), "Menu list filter successfully", menus), HttpStatus.OK);
 
 	}
-	}
+}
+

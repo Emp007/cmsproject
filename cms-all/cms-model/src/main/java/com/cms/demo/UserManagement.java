@@ -328,6 +328,7 @@ public static void printarmstrongnumbers(){
 	 
 	public static void main(String [] args){
 	paskaltriangle();	
+
 	int input = 89652;	
 	int output = getReverseInt(input);
 	System.out.println("Reverse Int :" +output);

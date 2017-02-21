@@ -50,9 +50,11 @@ $( function() {
 				</div>
 				
 				<div class="hostname">
+
 				<span th:if="${host != null }" th:each="host : ${hosts}">
 					<a th:if="${host.hostName != null }" th:text="${host.hostName}"></a>
 				</span>
+
 				</div>
 				<div class="addhost hide">
 					<form id="siteform" method="POST" th:action="@{/admin/host/saveHost}" data-parsley-validate>
@@ -91,7 +93,9 @@ $( function() {
 						</div>
 						<div class="col-sm-6">
 						<div class="form-group">
+
 						<label>Start Date :</label>
+
 							<div class="input-append date form_datetime">
 								<input class="form-control" type="text" id="datepicker1" name="startDate" >
 							</div>

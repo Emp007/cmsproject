@@ -74,6 +74,7 @@ public class LandingPageService {
 		}
 		return pageMap;
 	}
+
 	
 	public Map<String, String> getHerosPagesURL(List<Page> pages) {
 
@@ -87,8 +88,6 @@ public class LandingPageService {
 		}
 		return pageMap;
 	}
-	
-	
 
 	public Map<String, String> indexPageSetting(List<Page> pages, String pageName) {
 

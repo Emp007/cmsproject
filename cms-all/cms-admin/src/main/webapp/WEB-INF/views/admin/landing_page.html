@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <title>Landing Page</title>
 <style>
+
 .dropdown-submenu {
 	position: relative;
 }
@@ -12,6 +13,7 @@
 	top: 0;
 	left: 100%;
 	margin-top: -1px;
+
 }
 </style>
 <script type="text/javascript" th:inline="javascript">
@@ -27,6 +29,7 @@
 	var m ="";
 	var subMenu2final="";
 	var count =0;
+
 	var images = new Array();
 	var imagesURLS;
 	
@@ -38,8 +41,10 @@
 		headereditor.find("#lsb-add-container,#rsb-add-container").remove();
 		headereditor.find(".addremoveDiv").remove();
 		headereditor.find(".add").remove();
+
 		headereditor.find("#img_preview").remove();
 		headereditor.find("#preview-singleimg").remove();
+
 		headereditor.find("#leftside,#rightside").removeClass("templet_style");
 		headereditor.find("[id^=container]").css("border","none");
 		headereditor.find("#leftside,#rightside").css("border","none");
@@ -52,8 +57,10 @@
 		editor.find("#lsb-add-container,#rsb-add-container").remove();
 		editor.find(".addremoveDiv").remove();
 		editor.find(".add").remove();
+
 		headereditor.find("#img_preview").remove();
 		headereditor.find("#preview-singleimg").remove();
+
 		editor.find("#leftside,#rightside").removeClass("templet_style");
 		editor.find("[id^=container]").css("border","none");
 		editor.find("#leftside,#rightside").css("border","none");
@@ -66,6 +73,7 @@
 	    var dynamicMenuList = [[${menu}]];
 	    var hostName = [[${hostName}]];
 	    var perentsList = [[${parentsMenus}]];
+
 	    var imagesURL = [[${imagesURL}]];
 	    imagesURLS =[[${herosURLS}]]
 	    if(imagesURL!=null){
@@ -124,6 +132,7 @@
 		globleVar = [[${pageList}]];
 		newUrl = menu;
 		for (var key in globleVar) {
+
 	 		   if(key==menu){
 	 			   var jHtmlObject = jQuery(globleVar[key]);
 	 			   putOnPage(jHtmlObject);
@@ -139,13 +148,16 @@
 	 		    	}
 	 		    		
 	 		    }
+
 	 		        break;
 	 		   }
 	 		}
 	}
 	
 	function putOnPage(data){
+
 			console.log(data);
+
 		var editor = jQuery("<p>").append(data);
 	    	editor.find("#lsb-add-container,#rsb-add-container").remove();
 	    	editor.find(".addremoveDiv").remove();
@@ -191,6 +203,7 @@
 				});
 			return result;
 	}
+
 	var x =0;
 	 function swapImage()
      {
@@ -202,6 +215,7 @@
              if(x < images.length - 1) x++; else x = 0;
 		        setTimeout("swapImage()",3000);
      }
+
 	
 </script>
 
@@ -214,11 +228,14 @@
 			<div class="col-sm-12">
 				<table>
 					<tr>
+
 						<td style="height: 100px; width: 1300px; position: relative;">
+
 							<div id="headerBody"></div>
 						</td>
 					</tr>
 					<tr>
+
 						<td style="height: auto; width: 1300px;; position: relative;">
 							<div id="body-content" class="div_style templet_style"
 								style="width: 100%"></div>
@@ -226,6 +243,7 @@
 					</tr>
 					<tr>
 						<td style="height: auto; width: 1300px; position:;">
+
 							<div id="footerBody" style="background-color: black;"></div>
 						</td>
 					</tr>

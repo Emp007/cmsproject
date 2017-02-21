@@ -42,6 +42,7 @@ public class Host implements Serializable {
     @NotNull
     private String indexpageURL;
     
+    private HostConfig hostConfig;
     
     public long getTempletcount() {
 		return templetcount;
@@ -176,6 +177,13 @@ public class Host implements Serializable {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+	public HostConfig getHostConfig() {
+		return hostConfig;
+	}
+
+	public void setHostConfig(HostConfig hostConfig) {
+		this.hostConfig = hostConfig;
 	}
 	
 }

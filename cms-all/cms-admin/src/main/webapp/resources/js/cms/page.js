@@ -2,7 +2,6 @@
 
 var imagepath = "http://localhost:10953/cms-rest/static/";
 
-
 var imageuploadurl = "/cms-admin/admin/page/fileupload";
 
 var templets = null;
@@ -154,6 +153,7 @@ $(document)
 											var myform = document.createElement("form");
 											myform.setAttribute("method","POST");
 											myform.setAttribute("id","vedioForm_adminsave" + btncnt);
+
 											myform.setAttribute("enctype","multipart/form-data");
 											
 											var vediofilechooser = document.createElement("input");
@@ -226,9 +226,11 @@ $(document)
 											adminDiv.appendChild(select);
 											
 										} else if (option.value == 'imagewithtext') {
+
 											var myform = document.createElement("form");
 											myform.setAttribute("method","POST");
 											myform.setAttribute("id","imagewithtextForm_" + btncnt);
+
 											myform.setAttribute("enctype","multipart/form-data");
 											
 											var imagewithtextimgchooser = document.createElement("input");
@@ -269,12 +271,15 @@ $(document)
 											adminDiv.appendChild(filechooser);
 									        adminDiv.appendChild(fileuploadtext);
 											}else if(option.value =='Menu'){
+
 											var menu= document.createElement('div');
 											menu.setAttribute('class',  'menu');
+
 										} else {
 											var myform = document.createElement("form");
 											myform.setAttribute("method","POST");
 											myform.setAttribute("id","imgForm_adminsave" + btncnt);
+
 											myform.setAttribute("enctype","multipart/form-data");
 											
 											var imagechooser = document.createElement("input");
@@ -402,6 +407,7 @@ function addcontainer(id) {
 }
 
 function showcontainer(id) {
+
 	var ele = $('#' + id).parent().attr('id');
 	var mainDiv = document.getElementById(ele);
 	var x = mainDiv.getElementsByTagName('div')[0].id;
@@ -463,6 +469,7 @@ function checkpagename() {
 }
 
 function upload(data ,hostId) {
+
      $.ajax({
          url : "/cms-admin/admin/page/fileupload?hostId="+hostId,
          data : data,
@@ -474,7 +481,7 @@ function upload(data ,hostId) {
              return data;
          },
          error : function(err) {
-            
+         	
          }
      });
 } 

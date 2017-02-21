@@ -35,7 +35,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-	/*  User user1 =new User();
+	 /* User user1 =new User();
 	  user1.setAuthorities("admin@gmail.com ,ROLE_ADMIN");
 	  user1.setEmail("admin@gmail.com");
 	  user1.setLoginId("admin@gmail.com");

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+
+<!-- created by Saud Ahmad -->
+<head>
+<title>MODAL PAGE</title>
+
+<meta charset="utf-8">
+<script src="../../resources/assets/1234.mp4"></script>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("select").change(function() {
+			$(this).find("option:selected").each(function() {
+				if ($(this).attr("value") == "Paragraph") {
+					$(".box").not(".red").hide();
+					$(".red").show();
+				} else if ($(this).attr("value") == "Image") {
+
+					$(".box").not(".green").hide();
+
+					$(".green").show();
+				} else if ($(this).attr("value") == "Slides") {
+					$(".box").not(".blue").hide();
+					$(".blue").show();
+				} else if ($(this).attr("value") == "Video") {
+
+					$(".box").not(".violet").hide();
+					$(".violet").show();
+
+				} else if ($(this).attr("value") == "Label") {
+					$(".box").not(".black").hide();
+					$(".black").show();
+
+				} else if ($(this).attr("value") == "Checkbox") {
+					$(".box").not(".white").hide();
+					$(".white").show();
+				} else if ($(this).attr("value") == "Radio") {
+					$(".box").not(".yellow").hide();
+					$(".yellow").show();
+				} else {
+					$(".box").hide();
+				}
+			});
+		}).change();
+	});
+	$(function() {
+		$('#button2').click(function(e) {
+			e.preventDefault();
+			$('#file').click();
+		});
+
+	});
+
+	function getImg() {
+
+		var imgVal = $('#fileInput').val();
+		var item = $('#container-select').val();
+
+		if (item == "Image") {
+
+			$("#myImage")
+					.append(
+							'<div id="abcd"><img src="/cms-admin/resources/assets/'+imgVal+'"></div>');
+		}
+
+		var video = $('#fileInput5').val();
+
+		if (item == "Video") {
+
+			$("#myImage")
+					.append(
+							'<div> <video width="700" height="450" controls="controls" preload="true">  <source src="/cms-admin/resources/assets/'+video+'" type="video/mp4" /> </video></div>');
+
+		}
+
+		if (item == "Paragraph") {
+
+			$("#myImage").append('<div><textarea></textarea></div>');
+
+		}
+
+		if (item == "Label") {
+
+			$("#myImage").append(
+					'<div><b><input type="text"></input type></b></div>');
+
+		}
+		if (item == "Checkbox") {
+
+			$("#myImage")
+					.append(
+							'<div><input type="checkbox"></input type><input type="text"></input type></div>');
+
+		}
+		if (item == "Radio") {
+
+			$("#myImage")
+					.append(
+							'<div><input type="radio"></input type><input type="text"></input type></div>');
+
+		}
+	}
+</script>
+<script>
+	$("#slideshow > div:gt(0)").hide();
+
+	setInterval(function() {
+		$('#slideshow > div:first').fadeOut(000).next().fadeIn(000).end()
+				.appendTo('#slideshow');
+	}, 1000);
+</script>
+
+
+<script>
+$("#uploadForm").submit(function(e) {
+    e.preventDefault();
+    var $form = $("#uploadForm");
+    var fd = new FormData($(this)[0]);
+    
+    var filename = $("#msg").val();
+
+    var extension = filename.replace(/^.*\./, '');
+    
+    var string = "pdf";
+    
+    var arr = string.split(',');
+    
+    if(filename == ''){
+    	alert("Select File First.");
+    }else{
+    	if($.inArray(extension, arr) > -1){
+        	myAjax($form,fd);
+        }else{
+        	alert('your File extension is wrong. It should be '+string);
+		      $("#msg").val("");
+        }	
+    }
+    
+    console.info(fd);
+   
+});
+
+function myAjax($form,fd){
+	 $.ajax({
+	        type : 'POST',
+	        url : '@{admin/container/ajaxtest}'',
+	        data : "df,hdkhbkh",
+	        cache : false,
+	        processData : false,
+	        contentType : false,
+	        success : function(response) {
+	        	 alert("File has been uploaded.");
+	            console.info(response);
+	        },
+	        error : function(XMLHttpRequest, textStatus, errorThrown) {
+	            console.info("Status: " + XMLHttpRequest);
+	    });
+}
+});
+</script>
+<style>
+.modal-content {
+	background-color: white;
+}
+
+.abcd {
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.mySlides {
+	display: none;
+}
+
+#slideshow {
+	margin: 50px auto;
+	position: relative;
+	width: 380px;
+	height: 240px;
+	padding: 10px;
+	background-color: white;
+}
+
+#slideshow>div {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	right: 10px;
+	bottom: 10px;
+}
+</style>
+
+</head>
+<body>
+
+
+	<div class="container">
+		<h2>INPUT PAGE</h2>
+		<!-- Trigger the modal with a button -->
+		<button type="button" class="btn btn-primary btn-lg"
+			data-toggle="modal" data-target="#myModal">ADD COMPONENT</button>
+		<div id="myImage"></div>
+
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+						<h4 class="modal-title">SELECT ELEMENT</h4>
+					</div>
+					<div class="modal-body">
+						<div class="col-sm-4">ELEMENT:-</div>
+						<div style="margin-bottom: 40px" class="col-sm-8">
+							<select class="btn btn-default dropdown-toggle"
+								id="container-select" name="type">
+								<option value="0">--Select--</option>
+								<option value="Paragraph">PARAGRAPH</option>
+								<option value="Image">IMAGE</option>
+								<option value="Slides">SLIDES</option>
+								<option value="Video">VIDEO</option>
+								<option value="Label">LABEL</option>
+								<option value="Checkbox">CHECKBOX + TEXT</option>
+								<option value="Radio">RADIO + TEXT</option>
+							</select>
+						</div>
+						<div>
+							<form action="admin/container" method="post">
+								<div class="green box">
+									<input type="file" accept="image/*" name="file" id="fileInput">
+								</div>
+								<div class="blue box">
+									<input type="file" accept="image/*" name="file" id="fileInput1">
+									<input type="file" accept="image/*" name="file" id="fileInput2">
+									<input type="file" accept="image/*" name="file" id="fileInput3">
+								</div>
+								<div class="violet box">
+									<input type="file" accept="video/*" name="file" id="fileInput5">
+								</div>
+
+							</form>
+						</div>
+					</div>
+					<b>
+						<button type="button" style="float: right;" class="btn btn-info"
+							data-dismiss="modal">Close</button>
+					</b>
+					<button type="button" class="btn btn-info" id="button2"
+						onclick="getImg();">Apply</button>
+				</div>
+				<div></div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- <div th:replace="/fragments/component :: cms-footer" /> -->
+</body>
+</html>
+

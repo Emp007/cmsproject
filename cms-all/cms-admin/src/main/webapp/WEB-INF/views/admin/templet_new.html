@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <title>CMS Dashboard</title>
+
 <object th:include="/fragments/header :: cms-head" th:remove="tag" ></object>
+
 <style>
 .mySlides {
 	display: none;
@@ -13,7 +15,7 @@
 <script type="text/javascript" th:inline="javascript">
 		var myIndex = 0;
 		var images = [];
-		
+
 		var i = 0;
         var path = new Array();
         
@@ -40,6 +42,7 @@
 							var list = document.getElementById("hostid-select");
 							for(var i in hosts) {
 								if(hosts[i].id == host){
+
 									$('#host-name').val(hosts[i].hostName);
 									$('#host-id').val(hosts[i].id);
 								}
@@ -67,6 +70,7 @@
 							lDiv.className = 'min-height-100';
 							lDiv.appendChild(lrow);
 
+
 							var mainDiv = document
 									.getElementById('body-content');
 							lDiv.style.cssText = 'width: 100%;';
@@ -76,7 +80,9 @@
 									.change(
 											function() {
 												if ($(this).is(':checked')) {
+
 													$("#header").css("display","block");
+
 													document
 															.getElementById('isContainsHeader').value = "1";
 												} else {
@@ -90,32 +96,38 @@
 									.change(
 											function() {
 												if ($(this).is(':checked')) {
+
 													$("#footer").css("display","block");
 													document.getElementById('isContainsFooter').value = "1";
 												} else {
 													$("#footer").css("display","none");
 													document.getElementById('isContainsFooter').value = "0";
+
 												}
 											});
 							$('#heropanel-check')
 									.change(
 											function() {
 												if ($(this).is(':checked')) {
+
 													$("#imagetype-select").css("display", "block");
 													document.getElementById('isContainsFooter').value = "1";
 												} else {
 													$("#imagetype-select").css("display", "none");
 													document.getElementById('isContainsFooter').value = "0";
+
 												}
 											});
 
 							$('.tab')
 									.click(
 											function() {
+
                                                 swapImage(); 
 												var ativetab = $(this).attr(
 														'id');
 												if (ativetab == 'tab2') {
+
 													if ($("#header-check").is(':checked')) {
 														$("#preview-header").css("display","block");
 													} else {
@@ -321,9 +333,10 @@
 												<img id="preview-img" src="#" alt="your image"
 													width="100%" height="100px" />
 											</div>
+
 											  <div id="img_preview" style="height:20%;width:100%">
                                             </div> 
-                                            
+
 										</div>
 										<div id="preview-body-content"
 											style="min-height: 400px; height: 70%"></div>

@@ -4,7 +4,9 @@ import com.cms.admin.CMSAdminException;
 import com.cms.admin.util.RestServiceUtil;
 import com.cms.admin.util.CMSConstant;
 import com.cms.admin.util.URLConstants;
+import com.cms.model.EditableInfo;
 import com.cms.model.Host;
+import com.cms.model.HostConfig;
 import com.cms.model.Templet;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,6 +27,39 @@ public class HostService {
 	@Autowired
 	private RestServiceUtil restServiceUtil;
 
+	public void hostConfig(Host hostConfig){
+		if(hostConfig!=null){
+			Host host = getHost(hostConfig.getId());
+			HostConfig hostConfig2 = host.getHostConfig();
+			EditableInfo editableInfo = null;
+			if(hostConfig2 == null){
+				editableInfo = new EditableInfo();
+				editableInfo.setCreatedAt();
+				editableInfo.setCreatedBy("User-Name");
+				hostConfig2 = new HostConfig();
+			}else{
+				editableInfo = hostConfig2.getEditableInfo();
+			}
+			editableInfo.setUpdatedAt();
+			editableInfo.setUpdatedBy("User-Name");
+			
+			hostConfig2.setEditableInfo(editableInfo);
+			
+			if((hostConfig.getHostConfig().getStatusName()).equals("active")){
+				hostConfig2.setActive(true);
+				hostConfig2.setActiveAt(System.currentTimeMillis());
+				hostConfig2.setWelcomePage(hostConfig.getHostConfig().getWelcomePage());
+			}else{
+				hostConfig2.setActive(false);
+				hostConfig2.setInactiveAt(System.currentTimeMillis());
+			}
+			hostConfig2.setActiveInactivePeriod(1000L);
+			
+			host.setHostConfig(hostConfig2);
+			Update(host);
+		}
+	}
+	
 	public List<Host> getAllHosts() {
 
 		int status = 0;

@@ -1,6 +1,8 @@
 
 /*templet.js*/
+
 var imagepath = "http://localhost:8989/cms-rest/static/";
+
 
 $(document)
 		.ready(
@@ -40,6 +42,7 @@ function readURL(input) {
 				$('#img').attr('src', '/assets/no_preview.png');
 			}
 		}
+
 		var seperator ="";
 		function readURLs(input) {
 			var ext = input.files[0]['name'].substring(
@@ -51,6 +54,7 @@ function readURL(input) {
 				reader.onload = function(e) {
 					images.push(e.target.result);
 				}
+
 				 var imageId = input.id;
 			     var formData = new FormData();
                  var image = document.getElementById(imageId).files[0];
@@ -62,12 +66,13 @@ function readURL(input) {
                  textPath+=seperator+URL;
                  seperator="~";
                  $("#herosURL").val(textPath);
+
 				reader.readAsDataURL(input.files[0]);
 			} else {
 				$('#img').attr('src', '/assets/no_preview.png');
 			}
 		}
-		
+
 		function upload(data ,hostId) {
 			   // hostId=hostId.trim();
 			     $.ajax({

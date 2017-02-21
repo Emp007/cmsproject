@@ -29,7 +29,6 @@ public class Templet implements Serializable {
     
     private String herosURL;
     
-    
     public long getCount() {
 		return count;
 	}
@@ -200,9 +199,5 @@ public class Templet implements Serializable {
 
 	public void setHerosURL(String herosURL) {
 		this.herosURL = herosURL;
-	}
-	
-	
-	
-    
+	}    
 }

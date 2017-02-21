@@ -33,6 +33,9 @@ public class HostController {
     public final static String ISSAVE = "issave";
     private final static String HOST_NEW_HOST = "admin/host_new";
     private final static String TEMPLET_VIEW_NAME = "admin/templet_view";
+
+    public final static String HOST_CONFIG = "admin/host-config";
+
     
     @Autowired
     private HostService hostService;
@@ -43,6 +46,39 @@ public class HostController {
     @Autowired
     private TempletService templetService;
 
+
+	@RequestMapping(value = "config/{hostId}", method = RequestMethod.GET)
+    public ModelAndView getHostConfig(@PathVariable("hostId") long hostId) {
+
+        ModelAndView mav = new ModelAndView(HOST_CONFIG);
+        Host host = null;
+        List<Page> pages = null;
+        try {
+        	host = hostService.getHost(hostId);
+        	pages = pageService.getAllPages();
+        } catch (Exception e) {
+        	logger.error(e.getMessage(), e);
+        }
+        mav.addObject("host", host);
+        mav.addObject("pages", pages);
+        mav.addObject("hostType", host);
+        mav.addObject("hostName", host);
+        mav.addObject("pageType", host);
+        return mav;
+    }
+	
+	@RequestMapping(value = "saveHostConfig", method = RequestMethod.POST)
+    public ModelAndView saveHostConfig(@ModelAttribute("host") Host host,Model model) {
+        
+        Boolean bool = true;
+        try {
+        	 hostService.hostConfig(host);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return new ModelAndView("redirect:" + "getallhost?success=" + bool);
+    }
+    
     @RequestMapping(value = "getallhost", method = RequestMethod.GET)
     public ModelAndView getClientView(@RequestParam(required = false) boolean success) {
         ModelAndView mav = new ModelAndView(HOST_VIEW_NAME);
