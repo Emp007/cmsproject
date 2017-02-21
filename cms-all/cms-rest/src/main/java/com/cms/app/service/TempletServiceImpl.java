@@ -24,7 +24,7 @@ public class TempletServiceImpl implements TempletService {
 	
 	@Override
 	public Templet get(long id) {
-		// TODO Auto-generated method stub
+		
 		return templetDao.findOne(id);
 	}
 

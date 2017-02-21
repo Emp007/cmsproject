@@ -21,32 +21,32 @@ public class PageServiceImpl implements PageService {
 
 	@Override
 	public Page get(long id) {
-		// TODO Auto-generated method stub
+		
 		return pageDao.findOne(id);
 	}
 
 	@Override
 	public Page save(Page entity) {
-		// TODO Auto-generated method stub
+		
 		pageDao.save(entity);
 		return entity;
 	}
 
 	@Override
 	public Page update(long id, Page entity) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public List<Page> getAll() {
-		// TODO Auto-generated method stub
+		
 		return pageDao.findAll(new Sort(Sort.Direction.DESC, "id"));
 	}
 
 	@Override
 	public long count() {
-		// TODO Auto-generated method stub
+		
 		return pageDao.count()+1;
 	}
 
@@ -58,7 +58,7 @@ public class PageServiceImpl implements PageService {
 
 	@Override
 	public Page findByPageName(String pageName,long hostId) {
-		// TODO Auto-generated method stub
+		
 		return pageDao.getAllPageByPageNameAndhostId(pageName, hostId);	
 	}
 	
