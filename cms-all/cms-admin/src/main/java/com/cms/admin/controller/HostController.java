@@ -52,12 +52,16 @@ public class HostController {
         List<Page> pages = null;
         try {
         	host = hostService.getHost(hostId);
-        	pages = pageService.getAllPages();
+        	pages = pageService.getPagesByHostId(hostId);
         } catch (Exception e) {
         	logger.error(e.getMessage(), e);
         }
         mav.addObject("host", host);
         mav.addObject("pages", pages);
+        if(pages.size() > 0)
+        	mav.addObject("pageStatus", true);
+        else
+        	mav.addObject("pageStatus", false);
         mav.addObject("hostType", host);
         mav.addObject("hostName", host);
         mav.addObject("pageType", host);

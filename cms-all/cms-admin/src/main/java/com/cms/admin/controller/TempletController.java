@@ -3,6 +3,7 @@ package com.cms.admin.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cms.admin.service.HostService;
+import com.cms.admin.service.PageService;
 import com.cms.admin.service.TempletService;
 import com.cms.model.Host;
 import com.cms.model.Page;
@@ -34,6 +36,10 @@ public class TempletController {
 
 	@Autowired
 	private TempletService templetService;
+	
+	@Autowired
+	@Qualifier("pageService")
+	private PageService pageService;
 
 	@Autowired
 	private HostService hostService;
@@ -195,7 +201,7 @@ public class TempletController {
 		ModelAndView mav = new ModelAndView(PAGE_VIEW_NAME);
 		List<Page> pageList = null;
 		try {
-			pageList = templetService.getPagesByHostId(id);
+			pageList = pageService.getPagesByHostId(id);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw e;
@@ -209,7 +215,7 @@ public class TempletController {
 		ModelAndView mav = new ModelAndView(PAGE_VIEW_NAME);
 		List<Page> pageList = null;
 		try {
-			pageList = templetService.getPagesByHostId(id);
+			pageList = pageService.getPagesByHostId(id);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw e;

@@ -57,6 +57,28 @@ public class PageServiceImpl implements PageService {
 		}
 	}
 	
+	@Override
+	public List<Page> getPagesByHostId(long id) {
+
+		int status = 0;
+		String url = String.format(URLConstants.GET_PAGE_BY_HOST_ID, id);
+		try {
+			JsonNode response = restServiceUtil.makeRequest(url, null, null, HttpMethod.GET);
+			status = response.get(CMSConstant.STATUS_CODE).intValue();
+			if (status != 200) {
+				throw new CMSAdminException(
+						String.format("API not responded while fetching all page  details.",
+								status));
+			}
+			String data = response.get(CMSConstant.DATA).toString();
+			return OBJECT_MAPPER.readValue(data,new TypeReference<List<Page>>() {
+					});
+		} catch (Exception e) {
+			logger.error("Error while fetching all page details", e);
+			throw new CMSAdminException("Error while fetching all page details", e);
+		}
+	}
+	
 	public Page getPage(long id) {
 		
 		int status = 0;
@@ -77,7 +99,7 @@ public class PageServiceImpl implements PageService {
 		}
 	}
 	
-public Page getPage(String pageName, long hostId) {
+	public Page getPage(String pageName, long hostId) {
 		
 		int status = 0;
 		String url = String.format(URLConstants.GET_PAGE_BY_PAGE_NAME, pageName,hostId);

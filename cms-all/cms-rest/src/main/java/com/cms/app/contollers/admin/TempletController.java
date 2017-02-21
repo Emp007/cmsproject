@@ -136,20 +136,6 @@ public class TempletController {
 	 
 	  }
 	  
-	  @RequestMapping(value="getPageByHostId/{id}",method = RequestMethod.GET)
-	  public ResponseEntity<Response<List<Page>>> getPageByHostId(@PathVariable("id") long id) {
-		  List<Page> pages = new ArrayList<Page>();
-		  try{
-				LOGGER.debug("Process start to fetch page by host id");
-				pages =  pageServiceImpl.findByHostId(id);
-			}catch(Exception e){
-				e.printStackTrace();
-				throw new CMSException("Error find while fetching Page data in TempletController with host id :"  ,e);
-			}
-			  return ResponseEntity.ok(new Response<List<Page>>(HttpStatus.OK.value(), "Page fetched successfully", pages));
-	 
-	  }
-	  
 	  @RequestMapping(value="getTempletCount/{id}",method = RequestMethod.GET)
 	  public ResponseEntity<Response<Templet>> getPageCount(@PathVariable("id") long id) {
 		 Templet templet = new Templet();

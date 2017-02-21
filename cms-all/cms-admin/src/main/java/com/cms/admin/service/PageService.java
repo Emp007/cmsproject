@@ -20,4 +20,6 @@ public interface PageService {
 	public Page update(Page page);
 	
 	void uploadDocument(MultipartFile multipartFile, long hostId);
+
+	public List<Page> getPagesByHostId(long id);
 }

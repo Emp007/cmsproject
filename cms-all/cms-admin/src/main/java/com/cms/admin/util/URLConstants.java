@@ -33,7 +33,7 @@ public class URLConstants {
     public final static String GET_PAGE_BY_PAGE_ID = "page/byPageId/%d";
     public final static String GET_PAGE_BY_PAGE_NAME = "page/byPageName/%s/hostId/%d";
     public final static String SAVE_PAGE_BY_PAGE_ID = "page/insert";
-    public final static String GET_PAGE_BY_HOST_ID = "templet/getPageByHostId/%d";
+    public final static String GET_PAGE_BY_HOST_ID = "page/getPageByHostId/%d";
     public final static String UPDATE_PAGE_BY_PAGE_ID = "page/update";
     public final static String PAGE_COUNT = "page/getPageCount/%d";
     

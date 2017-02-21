@@ -1,5 +1,6 @@
 package com.cms.app.contollers.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class PageController {
 
 	@Autowired
 	@Qualifier("pageServiceImpl")
-	private PageServiceImpl pageService;
+	private PageService pageService;
 
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public ResponseEntity<Response<Page>> save(@RequestBody Page page) {
@@ -67,6 +68,20 @@ public class PageController {
 		}
 		return ResponseEntity.ok(new Response<Page>(HttpStatus.OK.value(), "Page saved successfully", page));
 	}
+	
+	@RequestMapping(value="getPageByHostId/{id}",method = RequestMethod.GET)
+	  public ResponseEntity<Response<List<Page>>> getPageByHostId(@PathVariable("id") long id) {
+		  List<Page> pages = new ArrayList<Page>();
+		  try{
+				LOGGER.debug("Process start to fetch page by host id");
+				pages =  pageService.findByHostId(id);
+			}catch(Exception e){
+				e.printStackTrace();
+				throw new CMSException("Error find while fetching Page data in TempletController with host id :"  ,e);
+			}
+			  return ResponseEntity.ok(new Response<List<Page>>(HttpStatus.OK.value(), "Page fetched successfully", pages));
+	 
+	  }
 
 	@RequestMapping(value = "all-pages", method = RequestMethod.GET)
 	public ResponseEntity<Response<List<Page>>> getAll() {
