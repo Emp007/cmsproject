@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cms.admin.CMSAdminException;
 import com.cms.admin.service.HostService;
 import com.cms.admin.service.PageService;
-import com.cms.admin.service.TempletService;
+import com.cms.admin.service.TemplateService;
 import com.cms.model.Host;
 import com.cms.model.Page;
 import com.cms.model.Templet;
@@ -32,77 +33,31 @@ public class TempletController {
 	private final static String TEMPLET_UPDATE_NAME = "admin/templet_update";
 	public final static String ISSAVE = "issave";
 	private final static String TEMPLET_NEW_TEMPLET = "admin/templet_new";
-	private final static String PAGE_VIEW_NAME = "admin/page_view";
+
 
 	@Autowired
-	private TempletService templetService;
+	@Qualifier("templateService")
+	private TemplateService templateService;
 	
 	@Autowired
 	@Qualifier("pageService")
 	private PageService pageService;
 
 	@Autowired
+	@Qualifier("hostService")
 	private HostService hostService;
 
-	@RequestMapping(value = "getalltemplet", method = RequestMethod.GET)
-	public ModelAndView getClientView(@RequestParam(required = false) boolean success) {
-		ModelAndView mav = new ModelAndView(TEMPLET_VIEW_NAME);
-		List<Templet> templetList = null;
-		try {
-			templetList = templetService.getAllTemplets();
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw e;
-		}
-		mav.addObject(ISSAVE, success);
-		mav.addObject("templets", templetList);
-		return mav;
-	}
-
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ModelAndView getTempletById(@PathVariable("id") long id) {
-
-		ModelAndView mav = new ModelAndView(TEMPLET_UPDATE_NAME);
-		Host host = null;   
-		Templet template = null;
-		try {
-			template = templetService.getTemplet(id);
-			host = hostService.getHost(template.getHostId());
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw e;
-		}
-		mav.addObject("template", template);
-		mav.addObject("host", host);
-
-		return mav;
-	}
-
-	/*@RequestMapping(value = "newtemplet", method = RequestMethod.GET)
-	public ModelAndView addNew(@RequestParam(required = false) boolean success) {
-		ModelAndView mav = new ModelAndView(TEMPLET_NEW_TEMPLET);
-		List<Host> hostList = null;
-		try {
-			hostList = hostService.getAllHosts();
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw e;
-		}
-		mav.addObject(ISSAVE, success);
-		mav.addObject("hosts", hostList);
-		return mav;
-	}
-*/
-	@RequestMapping(value = "newtemplet/{hostid}", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "create/{hostid}", method = RequestMethod.GET)
 	public ModelAndView addNewTemplet(@RequestParam(required = false) boolean success,
 			@PathVariable("hostid") long hostid) {
 		ModelAndView mav = new ModelAndView(TEMPLET_NEW_TEMPLET);
 		List<Host> hostList = null;
 		try {
 			hostList = hostService.getAllHosts();
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Template Creation");
 		}
 		mav.addObject(ISSAVE, success);
 		mav.addObject("host", hostid);
@@ -110,7 +65,8 @@ public class TempletController {
 		return mav;
 	}
 
-	@RequestMapping(value = "savenewtemplet", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public ModelAndView save(@RequestParam("id") Long id, @RequestParam("hostId") long hostId,
 			@RequestParam("templetName") String templetName, @RequestParam("description") String description,
 			@RequestParam("isContainsHeader") String isContainsHeader,
@@ -127,111 +83,95 @@ public class TempletController {
 		templet.setTempletContent(templetContent);
 		System.out.println("Templet Detail : " + new Gson().toJson(templet));
 		try {
-			Templet saveTemplet = templetService.Save(templet);
+			Templet saveTemplet = templateService.save(templet);
 			if (saveTemplet != null) {
 				bool = true;
 			}
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Tempalte Save");
 		}
 		mav.addObject("templets", templet);
 		return new ModelAndView("redirect:" + "/admin/host/getallhost?success=" + bool);
 	}
 
-	/*@RequestMapping(value = "update", method = RequestMethod.POST)
-	public ModelAndView update(@RequestParam("id") Long id, @RequestParam("templetName") String templetName,
-			@RequestParam("description") String description) {
-		ModelAndView mav = new ModelAndView(TEMPLET_VIEW_NAME);
-		Templet prevtemplet = new Templet();
-		List<Templet> templet;
-		Boolean bool = false;
-
-		try {
-			prevtemplet = templetService.getTemplet(id);
-			prevtemplet.setTempletName(templetName);
-			prevtemplet.setDescription(description);
-
-			Templet saveTemplet = templetService.Update(prevtemplet);
-			templet = templetService.getAllTemplets();
-			if (saveTemplet != null) {
-				bool = true;
-			}
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw e;
-		}
-		mav.addObject("templets", templet);
-		return new ModelAndView("redirect:" + "getalltemplet?success=" + bool);
-	}*/
-     
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public ModelAndView update(@ModelAttribute("template") Templet template,Model model) {
-		ModelAndView mav = new ModelAndView(TEMPLET_VIEW_NAME);
 		Boolean bool = false;
 	    try {
-			Templet saveTemplet = templetService.Update(template);
-			if (saveTemplet != null) {
+			Templet saveTemplet = templateService.update(template);
+			if (saveTemplet != null)
 				bool = true;
-		}
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Template Update");
 		}
 		return new ModelAndView("redirect:" + "gettempletlist/" + template.getHostId());
 	}
-	
 
-	@RequestMapping(value = "gettempletlist/{id}", method = RequestMethod.GET)
-	public ModelAndView getAllTempletBYHostId(@PathVariable("id") long id) {
+	
+	@RequestMapping(value = "getalltemplet", method = RequestMethod.GET)
+	public ModelAndView getClientView(@RequestParam(required = false) boolean success) {
 		ModelAndView mav = new ModelAndView(TEMPLET_VIEW_NAME);
 		List<Templet> templetList = null;
 		try {
-			templetList = hostService.getTempletsByHostId(id);
-		} catch (Exception e) {
+			templetList = templateService.getAllTemplets();
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Template List");
 		}
+		mav.addObject(ISSAVE, success);
 		mav.addObject("templets", templetList);
 		return mav;
 	}
 
-	@RequestMapping(value = "getpagelist/{id}", method = RequestMethod.GET)
-	public ModelAndView getAllPageByTempletId(@PathVariable("id") long id) {
-		ModelAndView mav = new ModelAndView(PAGE_VIEW_NAME);
-		List<Page> pageList = null;
+	@RequestMapping(value = "getTemplate/{templateId}", method = RequestMethod.GET)
+	public ModelAndView getTempletById(@PathVariable("templateId") long templateId) {
+
+		ModelAndView mav = new ModelAndView(TEMPLET_UPDATE_NAME);
+		Host host = null;   
+		Templet template = null;
 		try {
-			pageList = pageService.getPagesByHostId(id);
-		} catch (Exception e) {
+			template = templateService.getTemplet(templateId);
+			host = hostService.getHost(template.getHostId());
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Template By Host Id ");
 		}
-		mav.addObject("pages", pageList);
+		mav.addObject("template", template);
+		mav.addObject("host", host);
+
 		return mav;
 	}
 
-	@RequestMapping(value = "getpagecount/{id}", method = RequestMethod.GET)
-	public ModelAndView getPageCount(@PathVariable("id") long id) {
-		ModelAndView mav = new ModelAndView(PAGE_VIEW_NAME);
-		List<Page> pageList = null;
-		try {
-			pageList = pageService.getPagesByHostId(id);
-		} catch (Exception e) {
+
+	@RequestMapping(value = "gettempletlist/{hostId}", method = RequestMethod.GET)
+    public ModelAndView getTemplateListBYHostId(@PathVariable("hostId") long hostId ) {
+        ModelAndView mav = new ModelAndView(TEMPLET_VIEW_NAME);
+        List<Templet> templetList = null;
+        try {
+        	templetList = templateService.getTempletsByHostId(hostId);
+        }catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Template List By Host Id");
 		}
-		mav.addObject("pages", pageList);
-		return mav;
-	}
+        mav.addObject("hostid",hostId);
+        mav.addObject("templets", templetList);
+        return mav;
+    }
+
 	
 	@RequestMapping(value = "checktempletname/{templetName}/hostId/{hostId}", method = RequestMethod.GET)
 	public @ResponseBody String getHostByHostName(@PathVariable("templetName") String templetName,@PathVariable("hostId") long hostId) {
 		try {
 			System.out.println("Templet Nmae : "+templetName +" :: Host Id : "+hostId);
-			if(templetService.getTemplet(templetName,hostId) != null)
+			if(templateService.getTemplet(templetName,hostId) != null)
 				return "FOUND";
 			
-		} catch (Exception e) {}
+		}catch (CMSAdminException e) {
+			logger.error(e.getMessage(), e);
+			throw new CMSAdminException("Error in Checking Template Name");
+		}
 		return "NOT-FOUND";
 	}
 

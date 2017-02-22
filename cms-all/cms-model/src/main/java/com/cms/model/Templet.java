@@ -37,13 +37,21 @@ public class Templet implements Serializable {
 	}
 
 	private String description;
+	
     private String isContainsHeader;
+    
     private String headerType;
+    
     private String isContainsFooter;
+    
     private String footerType;
+    
     private String bodyRowNo;
+    
     private String bodyRowType;
+    
     private String templetContent;
+    
     private long count;
     
     @DateTimeFormat(iso=ISO.DATE_TIME)

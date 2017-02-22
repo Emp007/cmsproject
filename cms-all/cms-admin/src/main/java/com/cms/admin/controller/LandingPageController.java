@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cms.admin.CMSAdminException;
 import com.cms.admin.Response;
 import com.cms.admin.service.FooterService;
 import com.cms.admin.service.HeaderService;
@@ -45,9 +46,11 @@ public class LandingPageController {
 	private LandingPageService landingPageService;
 
 	@Autowired
+	@Qualifier("hostService")
     private HostService hostService;
 	
 	@Autowired
+	@Qualifier("menuService")
 	private MenuService menuService;
 
 	@Autowired
@@ -89,8 +92,9 @@ public class LandingPageController {
 						headerFound = headerList.parallelStream().filter(header -> header.getHostId() == hostId).findAny()
 								.orElse(null);
 					}
-				} catch (Exception e) {
+				} catch (CMSAdminException e) {
 					LOGGER.error(e.getMessage(), e);
+					throw new CMSAdminException("Error in getting Header List");
 				}
 
 				
@@ -103,8 +107,10 @@ public class LandingPageController {
 						footerFound = footerList.parallelStream().filter(footer -> footer.getHostId() == hostId).findAny()
 								.orElse(null);
 					}
-				} catch (Exception e) {
+				} catch (CMSAdminException e) {
 					LOGGER.error(e.getMessage(), e);
+					throw new CMSAdminException("Error in getting Footer List");
+
 				}
 
 				if (!CollectionUtils.isEmpty(pages)) {
@@ -139,8 +145,9 @@ public class LandingPageController {
 					return mav;
 				}
 			}
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			LOGGER.error(e.getMessage(), e);
+			throw new CMSAdminException("Error in getting Page List");
 		}
 		mav = new ModelAndView(PAGE_404);
 		
@@ -154,14 +161,11 @@ public class LandingPageController {
 	public ResponseEntity<Response<List<Menu>>> getMenusByPageId(@PathVariable("hostName") String hostName,
 			@PathVariable("menuName") String menuName) {
 		List<Menu> menus = null;
-		// List<Menu> subMenus = null;
 		try {
 			menus = menuService.getAllHostNameMenuName(hostName, menuName);
-			// subMenus =
-			// menuService.getAllHostNameChildPage(hostName,menuName);
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			LOGGER.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in getting Menu by page id");
 		}
 		return new ResponseEntity<Response<List<Menu>>>(
 				new Response<List<Menu>>(HttpStatus.OK.value(), "Menu list filter successfully", menus), HttpStatus.OK);

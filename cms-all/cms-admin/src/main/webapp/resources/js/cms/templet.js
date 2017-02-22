@@ -109,7 +109,6 @@ function readURL(input) {
 		function gettemplettype(sel) {
 			var mainDiv = document.getElementById('body-content');
 			
-			
 			var row = document.createElement('div');
 			row.className = 'row';
 			

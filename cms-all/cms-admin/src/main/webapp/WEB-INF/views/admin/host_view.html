@@ -45,7 +45,7 @@ $( function() {
 						</form>
 					</div>	
 					<div class="col-sm-3">
-					<a  class="btn btn-primary pull-right" th:href="@{/admin/host/newHost}" style="text-decoration: none;float:left"data-toggle="tooltip" title="Add host" >Add Host</a>
+					<a  class="btn btn-primary pull-right" th:href="@{/admin/host/create}" style="text-decoration: none;float:left"data-toggle="tooltip" title="Add host" >Add Host</a>
 					</div>			
 				</div>
 				
@@ -163,13 +163,13 @@ $( function() {
 						<div class="col-sm-4">
 							<div class="data bg-info padding-10">
 							<span class="label label-info">Templets</span>
-							<h3><a th:href="@{/admin/host/gettempletlist/}+${host.id}" th:text="${host.templetcount}"></a></h3>
+							<h3><a th:href="@{/admin/templet/gettempletlist/}+${host.id}" th:text="${host.templetcount}"></a></h3>
 							</div>
 						</div>
 						<div class="col-sm-4">
 							<div class="data bg-info padding-10">
 							<span class="label label-info">Pages</span>
-							 <h3> <a th:href="@{/admin/templet/getpagelist/}+${host.id}" th:text="${host.pagecount}"></a></h3> 
+							 <h3> <a th:href="@{/admin/page/getpagelist/}+${host.id}" th:text="${host.pagecount}"></a></h3> 
 							</div>
 						</div>
 					</div>
@@ -201,9 +201,9 @@ $( function() {
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu">
-							    <li><a th:href="@{/admin/host/}+${host.id}"><i class=" fa fa-pencil-square-o"></i> Edit Host</a></li>
-							   <li class="a"> <a th:if="${host.templetcount > 0 }" th:href="@{/admin/page/newpage/}+${host.id}"><i class=" fa fa-plus"></i> Add Page</a></li>
-							    <li><a th:href="@{/admin/templet/newtemplet/}+${host.id}"><i class=" fa fa-plus"></i> Add Template</a></li>
+							    <li><a th:href="@{/admin/host/getHost/}+${host.id}"><i class=" fa fa-pencil-square-o"></i> Edit Host</a></li>
+							   <li class="a"> <a th:if="${host.templetcount > 0 }" th:href="@{/admin/page/create/}+${host.id}"><i class=" fa fa-plus"></i> Add Page</a></li>
+							    <li><a th:href="@{/admin/templet/create/}+${host.id}"><i class=" fa fa-plus"></i> Add Template</a></li>
 							      <li><a th:if="${host.templetcount > 0 }" th:href="@{/admin/header/newheader/}+${host.id}"><i class=" fa fa-plus"></i> Add Header</a></li>
 							    <li><a th:if="${host.templetcount > 0 }" th:href="@{/admin/footer/newfooter/}+${host.id}"><i class=" fa fa-plus"></i> Add Footer</a></li>
 							    <li role="separator" class="divider"></li>

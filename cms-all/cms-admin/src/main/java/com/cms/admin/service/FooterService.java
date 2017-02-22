@@ -12,7 +12,7 @@ public interface FooterService {
 	
 	public Footer getFooter(String footerName,long hostId);
 	
-	public Footer Save(Footer footer);
+	public Footer save(Footer footer);
 	
 	public Footer update(Footer footer);
 

@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -16,14 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cms.admin.CMSAdminException;
 import com.cms.admin.Response;
 import com.cms.admin.service.HostService;
 import com.cms.admin.service.MenuService;
-import com.cms.admin.service.TempletService;
+import com.cms.admin.service.PageService;
+import com.cms.admin.service.TemplateService;
 import com.cms.model.Host;
 import com.cms.model.Menu;
 import com.cms.model.Page;
-import com.google.gson.Gson;
 import org.springframework.http.HttpStatus;
 
 @Controller
@@ -37,9 +39,15 @@ public class MenuController {
 	private HostService hostService;
 
 	@Autowired
-	private TempletService templetService;
+	@Qualifier("templateService")
+	private TemplateService templateService;
+	
+	@Autowired
+	@Qualifier("pageService")
+	private PageService pageService;
 
 	@Autowired
+	@Qualifier("menuService")
 	private MenuService menuService;
 
 	@RequestMapping(value = "menu-setting", method = RequestMethod.GET)
@@ -50,9 +58,9 @@ public class MenuController {
 			hostList = hostService.getAllHosts();
 			mav.addObject("hosts", hostList);
 			mav.addObject(ISSAVE, success);
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in menu setting");
 		}
 		return mav;
 	}
@@ -62,14 +70,14 @@ public class MenuController {
 		List<Page> pageList = null;
 		List<Menu> menus = new ArrayList<Menu>();
 		try {
-			pageList = templetService.getPagesByHostId(id);
+			pageList = pageService.getPagesByHostId(id);
 			menus = menuService.getAllMenuByHostId(id);
 			if (!CollectionUtils.isEmpty(menus)) {
 				pageList = filterMenu(menus, pageList);
 			}
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Page List by Host Id");
 		}
 		return new ResponseEntity<Response<List<Page>>>(
 				new Response<List<Page>>(HttpStatus.OK.value(), "page list filter successfully", pageList),
@@ -82,9 +90,9 @@ public class MenuController {
 		List<Menu> menus = null;
 		try {
 			menus = menuService.getAllMenuByHostId(hostId);
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Menus by Host Id");
 		}
 		return new ResponseEntity<Response<List<Menu>>>(
 				new Response<List<Menu>>(HttpStatus.OK.value(), "Menu list filter successfully", menus), HttpStatus.OK);
@@ -96,9 +104,9 @@ public class MenuController {
 		List<Menu> menus = null;
 		try {
 			menus = menuService.getAllMenuByHostName(hostName);
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Menus by Host Name");
 		}
 		return new ResponseEntity<Response<List<Menu>>>(
 				new Response<List<Menu>>(HttpStatus.OK.value(), "Menu list filter successfully", menus), HttpStatus.OK);
@@ -110,9 +118,9 @@ public class MenuController {
 		List<Menu> menus = null;
 		try {
 			menus = menuService.getAllMenuByPageId(pageId);
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Menus by Page Id");
 		}
 		return new ResponseEntity<Response<List<Menu>>>(
 				new Response<List<Menu>>(HttpStatus.OK.value(), "Menu list filter successfully", menus), HttpStatus.OK);
@@ -124,9 +132,9 @@ public class MenuController {
 		List<Menu> menus = null;
 		try {
 			menus = menuService.getAllMenuByPageName(pageName);
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Menus by Page Name");
 		}
 		return new ResponseEntity<Response<List<Menu>>>(
 				new Response<List<Menu>>(HttpStatus.OK.value(), "Menu list filter successfully", menus), HttpStatus.OK);
@@ -138,9 +146,9 @@ public class MenuController {
 		List<Menu> menus = null;
 		try {
 			menus = menuService.getAllMenuByParentsId(parentsId);
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Menus by Parant Id");
 		}
 		return new ResponseEntity<Response<List<Menu>>>(
 				new Response<List<Menu>>(HttpStatus.OK.value(), "Menu list filter successfully", menus), HttpStatus.OK);
@@ -152,9 +160,9 @@ public class MenuController {
 		List<Menu> menus = null;
 		try {
 			menus = menuService.getAllMenuByChildId(childId);
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Menus by Child Id");
 		}
 		return new ResponseEntity<Response<List<Menu>>>(
 				new Response<List<Menu>>(HttpStatus.OK.value(), "Menu list filter successfully", menus), HttpStatus.OK);
@@ -167,9 +175,9 @@ public class MenuController {
 		List<Menu> menus = null;
 		try {
 			menus = menuService.getAllMenuByPatentsIdAndChildId(parentsId, childId);
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Menus by Parant Id and Child Id");
 		}
 		return new ResponseEntity<Response<List<Menu>>>(
 				new Response<List<Menu>>(HttpStatus.OK.value(), "Menu list filter successfully", menus), HttpStatus.OK);
@@ -201,9 +209,9 @@ public class MenuController {
 				menu.setPageName(parentsMenuName);
 			menuService.save(menu);
 			bool = true;
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Saving Menu");
 		}
 		return new ModelAndView("redirect:" + "/admin/menu/menu-setting?success=" + bool);
 	}
@@ -213,9 +221,9 @@ public class MenuController {
 
 		try {
 			menuService.save(menu);
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Saving Menu");
 		}
 		return new ResponseEntity<Response<Menu>>(
 				new Response<Menu>(HttpStatus.OK.value(), "Menu update successfully", menu), HttpStatus.OK);

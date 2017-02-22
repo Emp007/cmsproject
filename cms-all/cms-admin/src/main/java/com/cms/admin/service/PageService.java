@@ -6,7 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cms.model.Page;
 
-
 public interface PageService {
 
 	public List<Page> getAllPages();
@@ -22,4 +21,6 @@ public interface PageService {
 	void uploadDocument(MultipartFile multipartFile, long hostId);
 
 	public List<Page> getPagesByHostId(long id);
+	
+	public Page getPageCount(long id);
 }

@@ -139,28 +139,28 @@ $('.tab').click(function(){
                                       
 								<form id="pageform" method="POST"
 									th:action="@{/admin/page/save}" data-parsley-validate
-									class="">
-                                          <input type="hidden" name="id" id="id" />
-									 <input type="hidden" id="pagecontent" name="pageContent"> 
-								     <input type="hidden" id="templetid" name="templetid" th:value ="${templetid}">
-									 <input type="hidden" id="hostid" name="hostid" th:value = "${hostid}">
+									th:object="${page}">
+                                     <input type="hidden" name="id" id="id" th:field="*{id}"/>
+									 <input type="hidden" id="pagecontent" name="pageContent" th:field="*{pageContent}"> 
+								     <input type="hidden" id="templetid" name="templetid" >
+									 <input type="hidden" id="hostid" name="hostid" th:field="*{hostId}">
 									
 									<DIV class="form-group">
 									<label>Name</label>
 										<input id="page-name" type="text" class="form-control"
-											name="pageName" placeholder="Page Name" required onblur="checkpagename()">
+											name="pageName" placeholder="Page Name" required onblur="checkpagename()" th:field="*{pageName}">
 											<span id="namealert"></span>
 									</DIV>
 									<DIV class="form-group">
 									<label>URL</label>
 										<input id="URL" type="text" class="form-control"
-											name="URL" placeholder="Page URL" required>
+											name="URL" placeholder="Page URL" required th:field="*{pageURL}"> 
 									</DIV>
 									<DIV id="body-column-select_0">
 										<div class="form-group" id="bodyrow">
 										<label>Templet</label>
 										<select class="selectpicker form-control" id="bodyrow-select"
-											name="templetId" onchange="getval(this);">
+											name="templetId" onchange="getval(this);" th:field ="*{templetId}">
 											
 										</select>
 										</div>
@@ -171,11 +171,7 @@ $('.tab').click(function(){
 											 <input id="host-name" type="text" class="form-control"
 													name="hostName" disabled="disabled">
 											 <input id="host-id" type="hidden" class="form-control"
-													name="hostId">
-												<!-- <select class="selectpicker form-control" id="hostid-select"
-													name="hostId" onchange="getval(this);">
-													
-												</select> -->
+													name="hostId" th:field="*{hostId}">
 										</div>
 									</DIV>
 									<DIV class="form-group">

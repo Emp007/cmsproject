@@ -3,6 +3,7 @@ package com.cms.admin.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.cms.admin.CMSAdminException;
 import com.cms.admin.service.HostService;
 import com.cms.admin.service.PageService;
-import com.cms.admin.service.TempletService;
+import com.cms.admin.service.TemplateService;
 import com.cms.model.Host;
 import com.cms.model.Page;
 import com.cms.model.Templet;
@@ -32,50 +33,49 @@ public class HostController {
     private final static String HOST_UPDATE_NAME = "admin/host_update";
     public final static String ISSAVE = "issave";
     private final static String HOST_NEW_HOST = "admin/host_new";
-    private final static String TEMPLET_VIEW_NAME = "admin/templet_view";
     public final static String HOST_CONFIG = "admin/host-config";
     
     @Autowired
+    @Qualifier("hostService")
     private HostService hostService;
     
     @Autowired
+    @Qualifier("pageService")
     private PageService pageService;
     
     @Autowired
-    private TempletService templetService;
+    @Qualifier("templateService")
+    private TemplateService templateService;
 
 	@RequestMapping(value = "config/{hostId}", method = RequestMethod.GET)
     public ModelAndView getHostConfig(@PathVariable("hostId") long hostId) {
-
         ModelAndView mav = new ModelAndView(HOST_CONFIG);
         Host host = null;
         List<Page> pages = null;
-        try {
-        	host = hostService.getHost(hostId);
-        	pages = pageService.getPagesByHostId(hostId);
-        } catch (Exception e) {
-        	logger.error(e.getMessage(), e);
-        }
+        host = hostService.getHost(hostId);
+        pages = pageService.getPagesByHostId(hostId);
+        
         mav.addObject("host", host);
         mav.addObject("pages", pages);
-        if(pages.size() > 0)
-        	mav.addObject("pageStatus", true);
-        else
-        	mav.addObject("pageStatus", false);
-        mav.addObject("hostType", host);
-        mav.addObject("hostName", host);
-        mav.addObject("pageType", host);
+        
+        if(pages!=null){
+        	if(pages.size() > 0)
+            	mav.addObject("pageStatus", true);
+            else
+            	mav.addObject("pageStatus", false);
+        }
+        
         return mav;
     }
 	
 	@RequestMapping(value = "saveHostConfig", method = RequestMethod.POST)
     public ModelAndView saveHostConfig(@ModelAttribute("host") Host host,Model model) {
-        
         Boolean bool = true;
         try {
         	 hostService.hostConfig(host);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+        } catch (CMSAdminException e) {
+        	 logger.error(e.getMessage(), e);
+             throw new CMSAdminException("Error in Host Config");            
         }
         return new ModelAndView("redirect:" + "getallhost?success=" + bool);
     }
@@ -87,12 +87,12 @@ public class HostController {
         List<Templet> templets = null;
 		List<Page> pages = null;
         try {
-        	templets = templetService.getAllTemplets();
+        	templets = templateService.getAllTemplets();
         	pages = pageService.getAllPages();
             hostList = hostService.getAllHosts();
-        } catch (Exception e) {
+        } catch (CMSAdminException e) {
             logger.error(e.getMessage(), e);
-            throw e;
+            throw new CMSAdminException("Error in getting all host");
         }
         mav.addObject(ISSAVE, success);
         mav.addObject("hosts", hostList);
@@ -101,57 +101,46 @@ public class HostController {
         return mav;
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public ModelAndView getUserById(@PathVariable("id") long id) {
-
+    @RequestMapping(value = "getHost/{hostId}", method = RequestMethod.GET)
+    public ModelAndView getUserById(@PathVariable("hostId") long hostId) {
         ModelAndView mav = new ModelAndView(HOST_UPDATE_NAME);
         Host host = null;
         try {
-        	host = hostService.getHost(id);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            try {
-				throw e;
-			} catch (Exception e1) {
-				e1.printStackTrace();
+        	host = hostService.getHost(hostId);
+        	System.out.println(host.getAlias());
+        } catch (CMSAdminException e) {
+	            logger.error(e.getMessage(), e);
+	            throw new CMSAdminException("Error in getting host by Host Id");
 			}
-        }
         mav.addObject("host", host);
         return mav;
     }
 
-    @RequestMapping(value = "newHost", method = RequestMethod.GET)
+    @RequestMapping(value = "create", method = RequestMethod.GET)
     public ModelAndView addNewUser(@RequestParam(required = false) boolean success) {
         ModelAndView mav = new ModelAndView(HOST_NEW_HOST);
-        try {
-      
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            throw e;
-        }
         mav.addObject("host", new Host());
         return mav;
     }
 
-    
-    @RequestMapping(value = "saveHost", method = RequestMethod.POST)
+    @RequestMapping(value = "save", method = RequestMethod.POST)
     public ModelAndView save(@ModelAttribute("host") Host host,Model model) {
         ModelAndView mav = new ModelAndView(HOST_VIEW_NAME);
         Boolean bool = false;
         try {
-        	Host saveHost = hostService.Save(host);
-            if (saveHost != null) {
+        	Host savedhost = hostService.save(host);
+            if (savedhost != null) {
                 bool = true;
             }
-        } catch (Exception e) {
+        } catch (CMSAdminException e) {
             logger.error(e.getMessage(), e);
-            throw e;
+            throw new CMSAdminException("Error in Saving Host");
         }
         mav.addObject("hosts", host);
         return new ModelAndView("redirect:" + "getallhost?success=" + bool);
     }
     
-    @RequestMapping(value = "updateHost", method = RequestMethod.POST)
+    @RequestMapping(value = "update", method = RequestMethod.POST)
     public ModelAndView update(@ModelAttribute("host") Host host,Model model ) {
         Host prevhost = new Host();
         Boolean bool = false;
@@ -166,31 +155,17 @@ public class HostController {
         	prevhost.setAlias(host.getAlias());
         	prevhost.setIndexpageURL(host.getIndexpageURL());
         	
-        	Host saveHost = hostService.Update(prevhost);
+        	Host saveHost = hostService.update(prevhost);
             if (saveHost != null) {
                 bool = true;
             }
-        } catch (Exception e) {
+        } catch (CMSAdminException e) {
             logger.error(e.getMessage(), e);
-            throw e;
+            throw new CMSAdminException("Error in Updating Host");
         }
         return new ModelAndView("redirect:" + "getallhost?success=" + bool);
     }
-    
-    @RequestMapping(value = "gettempletlist/{id}", method = RequestMethod.GET)
-    public ModelAndView getAllTempletBYHostId(@PathVariable("id") long id ) {
-        ModelAndView mav = new ModelAndView(TEMPLET_VIEW_NAME);
-        List<Templet> templetList = null;
-        try {
-        	templetList = hostService.getTempletsByHostId(id);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            throw e;
-        }
-        mav.addObject("hostid",id);
-        mav.addObject("templets", templetList);
-        return mav;
-    }
+   
 
     @RequestMapping(value = "checkhostname/{hostName}", method = RequestMethod.GET)
 	public @ResponseBody String getHostByHostName(@PathVariable("hostName") String hostName) {
@@ -198,7 +173,10 @@ public class HostController {
 			if(hostService.getHost(hostName) != null)
 				return "FOUND";
 			
-		} catch (Exception e) {}
+		} catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new CMSAdminException("Error in Checking Host Name");
+		}
 		return "NOT-FOUND";
 	}
 }

@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cms.admin.service.HostService;
+import com.cms.admin.service.TemplateService;
+import com.cms.admin.CMSAdminException;
 import com.cms.admin.service.FooterService;
-import com.cms.admin.service.TempletService;
 import com.cms.model.Host;
 import com.cms.model.Footer;
-import com.cms.model.Header;
 import com.cms.model.Templet;
 
 @Controller
@@ -28,7 +28,6 @@ import com.cms.model.Templet;
 public class FooterController {
 	private final static Logger logger = LoggerFactory.getLogger(HostController.class);
 	private final static String FOOTER_VIEW_NAME = "admin/footer_view";
-	private final static String FOOTER_UPDATE_NAME = "admin/footer_update";
 	public final static String ISSAVE = "issave";
 	private final static String FOOTER_NEW_FOOTER = "admin/footer_new";
 	private final static String FOOTER_VIEW = "admin/footer_view_data"; 	
@@ -41,9 +40,11 @@ public class FooterController {
 	private FooterService footerService;
 
 	@Autowired
-	private TempletService templetService;
+	@Qualifier("templateService")
+	private TemplateService templateService;
 	
 	@Autowired
+	@Qualifier("hostService")
 	private HostService hostService;
 
 	@RequestMapping(value = "getallfooter", method = RequestMethod.GET)
@@ -52,10 +53,9 @@ public class FooterController {
 		List<Footer> footerList = new ArrayList<Footer>();
 		try {
 			footerList = footerService.getAllFooters();
-
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Footer List");
 		}
 		mav.addObject(ISSAVE, success);
 		mav.addObject("footers", footerList);
@@ -76,9 +76,9 @@ public class FooterController {
 								.findAny()
 								.orElse(null);
 			}
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Footer List By Host Id");
 		}
 		mav.addObject(ISSAVE, success);
 		mav.addObject("footer", footerFound);
@@ -91,11 +91,10 @@ public class FooterController {
 		ModelAndView mav = new ModelAndView(FOOTER_NEW_FOOTER);
 		List<Host> hosts = null;
 		try {
-			//templets = templetService.getAllTemplets();
 			hosts = hostService.getAllHosts();
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Footer Creation");
 		}
 		mav.addObject(ISSAVE, success);
 		mav.addObject("hosts", hosts);
@@ -108,11 +107,11 @@ public class FooterController {
 		List<Templet> templets = null;
 		List<Host> hosts = null;
 		try {
-			templets = hostService.getTempletsByHostId(hostId);
+			templets = templateService.getTempletsByHostId(hostId);
 			hosts = hostService.getAllHosts();
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Footer Creation");
 		}
 		mav.addObject(ISSAVE, success);
 		mav.addObject("hostId", hostId);
@@ -132,17 +131,16 @@ public class FooterController {
 		footer.setFooterName(footerName);
 		footer.setTempletId(templetId);
 		footer.setHostId(hostId);
-		
-		System.out.println("Sample HTML = "+footerContent);
+	
 		footer.setFooterContent(footerContent);
 		try {
-			Footer saveFooter = footerService.Save(footer);
+			Footer saveFooter = footerService.save(footer);
 			if (saveFooter != null) {
 				bool = true;
 			}
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Footer Saving");
 		}
 
 		mav.addObject("footers", footer);
@@ -157,9 +155,9 @@ public class FooterController {
 			footer = footerService.getFooter(footerId);
 
 			System.out.println(footerId);
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Footer View");
 		}
 		mav.addObject("footer", footer);
 		return mav;
@@ -172,9 +170,9 @@ public class FooterController {
 		Footer footer = new Footer();
 		try {
 			footer = footerService.getFooter(footerId);
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Footer Edit");
 		}
 		mav.addObject("footer", footer);
 		return mav;
@@ -187,10 +185,8 @@ public class FooterController {
 		Boolean bool = false;
 		Footer footer = new Footer();
 		footer.setFooterName(footerName);
-		
 		footer.setId(id);
 		footer.setFooterContent(templateContent);
-		
 		footer.setFooterContent(templateContent);
 
 		try {
@@ -201,9 +197,9 @@ public class FooterController {
 			if (saveFooter != null) {
 				bool = true;
 			}
-		} catch (Exception e) {
+		} catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Footer Update");
 		}
 
 		mav.addObject("footers", footer);
@@ -213,11 +209,13 @@ public class FooterController {
 	@RequestMapping(value = "checkfootername/{footerName}/hostId/{hostId}", method = RequestMethod.GET)
 	public @ResponseBody String getHostByHostName(@PathVariable("footerName") String footerName,@PathVariable("hostId") long hostId) {
 		try {
-			System.out.println("Footer Name : "+footerName +" :: Host Id : "+hostId);
 			if(footerService.getFooter(footerName,hostId) != null)
 				return "FOUND";
 			
-		} catch (Exception e) {}
+		} catch (CMSAdminException e) {
+			logger.error(e.getMessage(), e);
+			throw new CMSAdminException("Error in Checking Footer Name");
+		}
 		return "NOT-FOUND";
 	}
 	

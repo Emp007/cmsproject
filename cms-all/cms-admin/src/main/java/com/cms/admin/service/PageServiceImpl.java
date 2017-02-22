@@ -163,6 +163,25 @@ public class PageServiceImpl implements PageService {
 		}
 	}
 	
+	public Page getPageCount(long id) {
+
+		int status = 0;
+		String url = String.format(URLConstants.PAGE_COUNT, id);
+		try {
+			JsonNode response = restServiceUtil.makeRequest(url, null, null, HttpMethod.GET);
+			status = response.get(CMSConstant.STATUS_CODE).intValue();
+			if (status != 200) {
+				throw new CMSAdminException(String.format("API not responded while fetching page count ", status));
+			}
+			String data = response.get(CMSConstant.DATA).toString();
+			return OBJECT_MAPPER.readValue(data, new TypeReference<List<Page>>() {
+			});
+		} catch (Exception e) {
+			logger.error("Error while fetching page count", e);
+			throw new CMSAdminException("Error while fetching page count", e);
+		}
+	}
+	
 	@Override
 	public void uploadDocument(MultipartFile multipartFile, long hostId) {
 

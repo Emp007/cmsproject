@@ -93,7 +93,7 @@ public Footer getFooter(String pageName, long hostId) {
 	}
 	
 	@Override
-	public Footer Save(Footer footer) {
+	public Footer save(Footer footer) {
 		
 		if(footer==null){
 			throw new CMSAdminException(String.format("footer cannot be null ",footer.getId()));

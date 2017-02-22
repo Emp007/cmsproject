@@ -43,7 +43,7 @@
 							<td th:if="${page.pageName != null }" th:text="${page.pageName}"></td>
 							<td th:if="${page.pageURL != null }" th:text="${page.pageURL}"></td>
 							<td></td>
-							<td th:if="${page.templateContent != null }" >
+							<td th:if="${page.pageContent != null }" >
 								<a class="btn btn-default btn-xs" th:href="@{/admin/page/pageedit/}+${page.id}" data-toggle="tooltip" title="edit host">
 								<i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
 

@@ -42,7 +42,7 @@
 								class="alert alert-danger col-sm-12"></div>
 
 							<form id="siteform" method="POST"
-								th:action="@{/admin/host/updateHost}" data-parsley-validate
+								th:action="@{/admin/host/update}" data-parsley-validate
 								class="form-horizontal" enctype="multipart/form-data" th:object="${host}">
 								<input type="hidden" name="id" id="id" th:field="*{id}" />
 

@@ -12,7 +12,7 @@ public interface HeaderService {
 	
 	public Header getHeader(String headerName,long hostId);
 	
-	public Header Save(Header header);
+	public Header save(Header header);
 	
 	public Header update(Header header);
 

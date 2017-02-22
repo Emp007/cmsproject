@@ -6,11 +6,11 @@
 <object th:include="/fragments/header :: head" th:remove="tag" />
 
 <script type="text/javascript" th:inline="javascript">
-	var templets= null;
+	var page= null;
 	$(document).ready(function() {
-		template = [[${page}]];
+		page = [[${page}]];
 		
-		var html = template.templateContent;
+		var html = page.pageContent;
 		
 		var jHtmlObject = jQuery(html);
     	var editor = jQuery("<p>").append(jHtmlObject);

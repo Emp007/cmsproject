@@ -16,23 +16,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cms.admin.service.HostService;
+import com.cms.admin.service.TemplateService;
+import com.cms.admin.CMSAdminException;
 import com.cms.admin.service.HeaderService;
-import com.cms.admin.service.TempletService;
 import com.cms.model.Host;
 import com.cms.model.Header;
 import com.cms.model.Templet;
-import com.google.gson.Gson;
 
 @Controller
 @RequestMapping(value = "admin/header")
 public class HeaderController {
 	private final static Logger logger = LoggerFactory.getLogger(HostController.class);
 	private final static String HEADER_VIEW_NAME = "admin/header_view";
-	private final static String HEADER_UPDATE_NAME = "admin/header_update";
 	public final static String ISSAVE = "issave";
 	private final static String HEADER_NEW_HEADER = "admin/header_new";
 	private final static String HEADER_VIEW = "admin/header_view_data"; 	
-	
 	private final static String HEADER_UPDATE = "admin/header_update";
 	
 
@@ -41,9 +39,11 @@ public class HeaderController {
 	private HeaderService headerService;
 
 	@Autowired
-	private TempletService templetService;
+	@Qualifier("templateService")
+	private TemplateService templateService;
 	
 	@Autowired
+	@Qualifier("hostService")
 	private HostService hostService;
 
 	@RequestMapping(value = "getallheader", method = RequestMethod.GET)
@@ -53,9 +53,9 @@ public class HeaderController {
 		try {
 			headerList = headerService.getAllHeaders();
 
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Header List");
 		}
 		mav.addObject(ISSAVE, success);
 		mav.addObject("headers", headerList);
@@ -75,9 +75,9 @@ public class HeaderController {
 								.findAny()
 								.orElse(null);
 			}
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Getting Header By Host Id");
 		}
 		mav.addObject(ISSAVE, success);
 		mav.addObject("header", headerFound);
@@ -89,11 +89,10 @@ public class HeaderController {
 		ModelAndView mav = new ModelAndView(HEADER_NEW_HEADER);
 		List<Host> hosts = null;
 		try {
-			//templets = templetService.getAllTemplets();
 			hosts = hostService.getAllHosts();
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Header Creation");
 		}
 		mav.addObject(ISSAVE, success);
 		mav.addObject("hosts", hosts);
@@ -106,11 +105,11 @@ public class HeaderController {
 		List<Templet> templets = null;
 		List<Host> hosts = null;
 		try {
-			templets = hostService.getTempletsByHostId(hostId);
+			templets = templateService.getTempletsByHostId(hostId);
 			hosts = hostService.getAllHosts();
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Header Creation");
 		}
 		mav.addObject(ISSAVE, success);
 		mav.addObject("hostId", hostId);
@@ -125,22 +124,19 @@ public class HeaderController {
 		ModelAndView mav = new ModelAndView(HEADER_VIEW_NAME);
 
 		Boolean bool = false;
-		System.out.println(headerContent);
 		Header header = new Header();
 		header.setHeaderName(headerName);
 		header.setTempletId(templetId);
 		header.setHostId(hostId);
-		
-		System.out.println("Sample HTML = "+headerContent);
 		header.setHeaderContent(headerContent);
 		try {
-			Header saveHeader = headerService.Save(header);
+			Header saveHeader = headerService.save(header);
 			if (saveHeader != null) {
 				bool = true;
 			}
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Header Save");
 		}
 
 		mav.addObject("headers", header);
@@ -155,9 +151,9 @@ public class HeaderController {
 			header = headerService.getHeader(headerId);
 
 			System.out.println(headerId);
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Header View");
 		}
 		mav.addObject("header", header);
 		return mav;
@@ -170,9 +166,9 @@ public class HeaderController {
 		Header header = new Header();
 		try {
 			header = headerService.getHeader(headerId);
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Header Edit");
 		}
 		mav.addObject("header", header);
 		
@@ -186,23 +182,19 @@ public class HeaderController {
 		Boolean bool = false;
 		Header header = new Header();
 		header.setHeaderName(headerName);
-		
 		header.setId(id);
 		header.setHeaderContent(templateContent);
-		
 		header.setHeaderContent(templateContent);
-
 		try {
 			Header updateHeader = headerService.getHeader(header.getId());
 			updateHeader.setHeaderContent(header.getHeaderContent());
 			Header saveHeader = headerService.update(updateHeader);
-			
 			if (saveHeader != null) {
 				bool = true;
 			}
-		} catch (Exception e) {
+		}catch (CMSAdminException e) {
 			logger.error(e.getMessage(), e);
-			throw e;
+			throw new CMSAdminException("Error in Header Update");
 		}
 
 		mav.addObject("headers", header);
@@ -216,7 +208,10 @@ public class HeaderController {
 			if(headerService.getHeader(headerName,hostId) != null)
 				return "FOUND";
 			
-		} catch (Exception e) {}
+		}catch (CMSAdminException e) {
+			logger.error(e.getMessage(), e);
+			throw new CMSAdminException("Error in Checking Header Name");
+		}
 		return "NOT-FOUND";
 	}
 	

@@ -40,7 +40,7 @@ public class Page implements Serializable {
     
     private long templetId;
      
-    private String templateContent;
+    private String pageContent;
     
     private long count;
     
@@ -204,13 +204,13 @@ public class Page implements Serializable {
 	}
 
 
-	public String getTemplateContent() {
-		return templateContent;
+	public String getPageContent() {
+		return pageContent;
 	}
 
 
-	public void setTemplateContent(String templateContent) {
-		this.templateContent = templateContent;
+	public void setPageContent(String pageContent) {
+		this.pageContent = pageContent;
 	}
 
 

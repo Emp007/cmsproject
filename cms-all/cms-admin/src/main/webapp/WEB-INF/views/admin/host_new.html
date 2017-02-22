@@ -57,7 +57,7 @@
 								class="alert alert-danger col-sm-12"></div>
 
 							<form id="siteform" method="POST" 
-							    th:action="@{/admin/host/saveHost}" data-parsley-validate
+							    th:action="@{/admin/host/save}" data-parsley-validate
 								class="form-horizontal" th:object="${host}">
 								<input type="hidden" name="id" id="id" th:field="*{id}"/>
 
