@@ -208,21 +208,11 @@ $( function() {
 							    <li><a th:if="${host.templetcount > 0 }" th:href="@{/admin/footer/newfooter/}+${host.id}"><i class=" fa fa-plus"></i> Add Footer</a></li>
 							    <li role="separator" class="divider"></li>
 							    <li>
-							    	<a th:if="${host.templetcount > 0 and host.hostConfig == null }" th:href="@{/admin/host/config/}+${host.id}">
-							    		<i class="glyphicon glyphicon-wrench"></i>
+							    	<a th:href="@{/admin/host/config/}+${host.id}">
+							    		<i th:if="${host.templetcount > 0 and host.hostConfig == null }" class="glyphicon glyphicon-wrench"></i>
+							    		<i th:if="${ host.templetcount > 0 and host.hostConfig != null and host.hostConfig.isActive() }" class=" glyphicon glyphicon-hand-down"></i>
+							    		<i th:if="${ host.templetcount > 0 and host.hostConfig != null and !host.hostConfig.isActive() }" class=" glyphicon glyphicon-hand-up"></i>	
 							    			Configure Host	
-							    	</a>
-							    </li>
-							    <li>
-							    	<a th:if="${ host.templetcount > 0 and host.hostConfig != null and host.hostConfig.isActive() }" th:href="@{/admin/host/config/}+${host.id}">
-							    		<i class=" glyphicon glyphicon-hand-down"></i>
-							    			Configure Host
-							    	</a>
-							    </li>
-							    <li>
-							    	<a th:if="${ host.templetcount > 0 and host.hostConfig != null and !host.hostConfig.isActive() }" th:href="@{/admin/host/config/}+${host.id}">
-							    		<i class=" glyphicon glyphicon-hand-up"></i>
-							    			Configure Host
 							    	</a>
 							    </li>
 							  </ul>
