@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>META</title>
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+<script type="text/javascript" th:inline="javascript">
+	
+$(document)
+.ready(
+		function() {
+			hosts = [[${hosts}]];
+		      hostid = [[${hostid}]];
+		      
+		       for (var i = 0; i < hosts.length; i++){
+		    	   if(hosts[i].id == hostid){
+		    		 document.getElementById('host-name').value = hosts[i].hostName;
+					 document.getElementById('host-id').value = hosts[i].id;
+		    	   }
+		        }
+		       pages = [[${pages}]];
+			     
+			      
+		       for (var i = 0; i < pages.length; i++){
+		    	   var option = document.createElement("option");
+		    	   option.text = pages[i].pageName;
+		    	   option.value = pages[i].pageName;
+		    	   var select = document.getElementById("pageName");
+		    	   select.appendChild(option);
+		    	  
+		        }
+		      
+		       
+		});
+	
+</script>
+
+</head>
+<body>
+<body style="background-color: #fff;">
+	<div class="main-wrapper">
+		<div class="" id="app">
+			<div th:replace="/fragments/component :: cms-header" />
+			<div class="container">
+				<div style="margin-top: 50px;"
+					class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<!-- <div id="loginbox" style="margin-top: 50px;" class=""> -->
+							<div class="panel-title" style="color: black;">
+								<b>Meta Menu</b>
+							</div>
+							<div
+								style="float: right; font-size: 80%; position: relative; top: -10px">
+							</div>
+						</div>
+						<div style="padding-top: 30px" class="panel-body">
+							<div style="display: none" id="login-alert"
+								class="alert alert-danger col-sm-12"></div>
+
+							<form id="siteform" method="POST"
+								th:action="@{/admin/page/savemeta}" data-parsley-validate
+								class="form-horizontal">
+
+								<div class="col-sm-3 mb20px">
+									<label style="color: black;">Host</label>
+								</div>
+								<div class="col-sm-6 mb20px">
+									<input id="host-name" type="text" class="form-control"
+										name="hostName" disabled="disabled" /> <input id="host-id"
+										type="hidden" class="form-control" name="hostId" />
+								</div>
+
+								<div class="clearfix"></div>
+
+								<div class="col-sm-3 mb20px">
+									<label style="color: black;">Pages Name</label>
+								</div>
+								<div class="col-sm-6 mb20px">
+									<select class="form-control" id="pageName" name="pageName">
+										<option>Select Pages</option>
+									</select>
+								</div>
+
+								<div class="clearfix"></div>
+
+								<div class="col-sm-3 mb20px">
+									<label style="color: black;">Description</label>
+								</div>
+								<div class="col-sm-6 mb20px">
+									<textarea cols="45" rows="15" name="discription"
+										id="discription">
+                                        <meta name="description"
+											content="Free Web tutorials">
+                                        <meta name="keywords"
+											content="HTML,CSS,XML,JavaScript">
+                                        <meta name="author"
+											content="John Doe">
+                                        <meta name="viewport"
+											content="width=device-width, initial-scale=1.0"></textarea>
+								</div>
+								<div class="clearfix"></div>
+								<div class="col-sm-3 mb20px">
+									<label style="color: black;">Page Title</label>
+								</div>
+
+								<div class="col-sm-6 mb20px">
+									<input type="text" id="title" name="title" />
+
+								</div>
+
+
+								<div class="clearfix"></div>
+								<div class="col-sm-12 mb20px">
+									<div class="form-group">
+										<div class="col-md-12 control">
+											<div
+												style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
+												<button class="btn btn-primary">Apply</button>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+							</form>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div th:replace="/fragments/header :: cms-footer" /> -->
+</body>
+</html>
+

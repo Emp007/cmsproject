@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>CMS Page List</title>
+<object th:include="/fragments/header :: cms-head" th:remove="tag"></object>
+</head>
+<body>
+<body style="background-color: #3B8FAD;">
+	<div class="main-wrapper">
+		<div class="app" id="app">
+			<div th:replace="/fragments/component :: cms-header"></div>
+			<div>
+				<div id="loginbox" style="margin-top: 50px;" class="">
+				<div class="row">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-1">
+							Host-ID : <span style="color: #f0f3f4;" id="hostIdSpan" ></span>
+						</div>
+						<div class="col-sm-10">
+							Header-Name : <span style="color: #f0f3f4;" id="headerNameSpan" ></span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+						<table>
+							<tr>
+								<td style="height:150px;width:100%; border: 1em solid; position: fixed;">
+									<div id="headerBody"></div>
+								</td>
+							</tr>
+						</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</script>
+	<script th:inline="javascript">
+		var hostAddress = "http://localhost:8989/cmsapp";
+		$(document).ready(function() {
+				var content = /*[[${header.headerContent}]]*/'hello';
+				var hostId = /*[[${header.hostId}]]*/'hello';
+				var headerName = /*[[${header.headerName}]]*/'hello';
+		    	var jHtmlObject = jQuery(content);
+		    	var editor = jQuery("<p>").append(jHtmlObject);
+		    	editor.find("#lsb-add-container,#rsb-add-container").remove();
+		    	editor.find(".addremoveDiv").remove();
+		    	editor.find(".add").remove();
+		    	editor.find("#leftside,#rightside").removeClass("templet_style");
+		    	editor.find("[id^=container]").css("border","none");
+		    	editor.find("#leftside,#rightside").css("border","none");
+		    	var newHtml = editor.html();
+				$("#headerBody").html(newHtml);
+				
+				$("#hostIdSpan").html(hostId);
+				$("#headerNameSpan").html(headerName);
+				
+			});
+	</script>
+</body>
+</html>

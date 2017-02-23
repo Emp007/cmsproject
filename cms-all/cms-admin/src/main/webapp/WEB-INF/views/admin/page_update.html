@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Update-Page</title>
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+
+<script type="text/javascript" th:inline="javascript">
+	var page = null;
+	$(document).ready(function() {	
+		page = [[${page}]];
+		var html = page.pageContent;
+		var jHtmlObject = jQuery(html);
+    	var editor = jQuery("<p>").append(jHtmlObject);
+    	var newHtml = editor.html();
+    	$('#host-id').val(page.hostId);
+        $("#body-content").html(html);
+        btncnt = $('#body-content input:hidden').length;
+        controlcnt = $('#body-content input:hidden').length;
+        
+        $("#id").val(page.id);
+        $("#pageName").val(page.pageName);
+        $("#templetContent").val(html);
+        $("#URL").val(page.pageURL);
+        
+        $( "#savepage" ).click(function() {
+    		var html1 = document.getElementById('body-content').innerHTML;
+    	    document.getElementById('templetContent').value = html1;
+    		$("#templetform").submit();
+    	});
+        carousel();
+	});
+	
+	function applyMCE() {
+		tinyMCE
+				.init({
+					plugins : [ 'autolink lists link image save emoticons textcolor colorpicker textpattern' ],
+					mode : "textareas",
+					theme : 'modern',
+					skin: 'light',
+					menubar : false,
+					statusbar : false,
+					toolbar1 : 'bold italic | alignleft aligncenter alignright alignjustify | bullist | link | forecolor backcolor emoticons',
+					editor_selector : "text"
+				});
+	}
+</script>
+
+</head>
+<body>
+	
+	<div id="preview">
+		<div id="preview-header">
+			<i th:replace="/fragments/header :: preview-header"></i>
+		</div>
+		<input type="hidden" name="host-id" id="host-id" />
+		<div id="body-content" class="div_style templet_style"
+				style="width: 100%">		
+		</div>
+		<!-- <div th:replace="/fragments/component :: myModal" /> -->
+		<div th:replace="/fragments/component :: contentModal" /></div>
+		<form id="templetform" method="POST" th:action="@{/admin/page/update}" data-parsley-validate class="form-horizontal">
+											
+			<input type="hidden" name="id" id="id" />
+			<input type="hidden" name="pageName" id="pageName" />
+			<input type="hidden" name="templetContent" id="templetContent" />
+			<input type="hidden" name="URL" id="URL" />
+			
+		<div class="row">
+			<div class="col-sm-5"></div>
+			<div class="col-sm-7">
+				<div id="savepage" class="btn btn-success">
+				  Update
+				</div>
+			</div>
+		</div>
+			
+		</form>
+		<div id="preview-footer">
+			<i th:replace="/fragments/component :: preview-footer"></i>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Site List</title>
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+<script type="text/javascript" th:inline="javascript">
+$( function() {
+	
+	var hostListByName = [];
+	var hostListByAlias = []; 
+	
+	hostList = [[${hosts}]];
+	for(var i=0;i<hostList.length;i++){
+		hostListByName.push(hostList[i].hostName);
+		hostListByAlias.push(hostList[i].alias);
+	}
+	
+    $( "#searchByHostName" ).autocomplete({
+      source: hostListByName
+    });
+    $( "#searchByAlias" ).autocomplete({
+        source: hostListByAlias
+     });
+  } );
+</script>
+</head>
+<body>
+<body>
+	<div class="main-wrapper">
+		<div class="app" id="app">
+			<div th:replace="/fragments/component :: cms-header" />
+			<div>
+			
+			<div class="container dashbourd">	
+			
+			<div class="search">
+				<div class="row">
+					<div class="col-sm-9">
+						<form class="form">
+						  <div class="form-group">
+						    <input type="text" class="form-control" id="searchByHostName" placeholder="Host Name">
+						    <button type="submit" class="btn btn-default">Search</button>
+						  </div>						  
+						</form>
+					</div>	
+					<div class="col-sm-3">
+					<a  class="btn btn-primary pull-right" th:href="@{/admin/host/create}" style="text-decoration: none;float:left"data-toggle="tooltip" title="Add host" >Add Host</a>
+					</div>			
+				</div>
+				
+				<div class="hostname">
+					<a href="">test1</a>
+					<a href="">test2</a>
+					<a href="">test3</a>
+					<a href="">test4</a>
+					<a href="">test5</a>
+					<a href="">test1</a>
+					<a href="">test2</a>
+					<a href="">test3</a>
+					<a href="">test4</a>
+					<a href="">test5</a>
+					<a href="">test6</a>
+					<a href="">test6</a>
+				</div>
+				<div class="addhost hide">
+					<form id="siteform" method="POST" th:action="@{/admin/host/saveHost}" data-parsley-validate>
+						<input type="hidden" name="id" id="id"/>
+					<div class="row">
+						<div class="col-sm-6">
+						<div class="form-group">
+						<label>Host Name :</label>
+							<input id="hostName" type="text" class="form-control"
+								name="hostName" placeholder="site name" required onblur="checkhostname();">
+								<span id="namealert"></span>
+						</div>
+						</div>
+						<div class="col-sm-6">
+						<div class="form-group">
+						<label>Status</label>
+							<select class="selectpicker form-control" id="status"
+								name="status" required>
+								<option value="">Select</option>
+								<option value="Active">Active</option>
+								<option value="Deactive">Deactive</option>
+							</select>
+						</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+						<div class="form-group">
+						<label>Type :</label>
+							<select class="selectpicker form-control" id="type" name="type" required>
+								<option value="">Select</option>
+								<option value="Trial">Trial</option>
+								<option value="Licence">Licence</option>
+							</select>
+						</div>
+						</div>
+						<div class="col-sm-6">
+						<div class="form-group">
+						<label>Strat Date :</label>
+							<div class="input-append date form_datetime">
+								<input class="form-control" type="text" id="datepicker1" name="startDate" >
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+						<div class="form-group">
+						<label>Expire Date :</label>
+							<div class="input-append date form_datetime">
+								<input class="form-control" type="text" id="datepicker2" name="expireDate" >
+							</div>
+						</div>
+						</div>
+						<div class="col-sm-6">
+						<div class="form-group">
+						<label>Alias:</label>
+							<input id="alias" type="text" class="form-control" name="alias" 
+								 placeholder="alias">
+						</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+						<div class="form-group">
+						<label>IndexpageURL :</label>
+							<input id="indexpageURL" type="text" class="form-control"
+								name="indexpageURL" placeholder="indexpageURL" required>
+						</div>
+						</div>
+						<div class="col-sm-6"></div>
+					</div>
+					
+						<div class="form-group">
+						<input type="submit" class="btn btn-success" value="Add" />									
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4" th:if="${host != null }" th:each="host : ${hosts}">
+				<div class="box">
+					<div class="bg-primary padding-10">
+						<div class="row">
+						 <div class="col-sm-8"><p>Host Name:</p> <span class="font-big" th:if="${host.hostName != null }" th:text="${host.hostName}"></span></div>
+						 <div class="col-sm-4 text-right"><p>Allas:</p> <span class="font-big" th:if="${host.alias != null }" th:text="${host.alias}"></span></div>					
+						</div>
+					</div>
+					
+					<div class="col-sm-12">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="data bg-info padding-10">
+							<span class="label label-info">Type</span>
+							<h3 th:if="${host.type !=null}" th:text="${host.type}"></h3>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="data bg-info padding-10">
+							<span class="label label-info">Templets</span>
+							<h3><a th:href="@{/admin/templet/gettempletlist/}+${host.id}" th:text="${host.templetcount}"></a></h3>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="data bg-info padding-10">
+							<span class="label label-info">Pages</span>
+							 <h3> <a th:href="@{/admin/page/getpagelist/}+${host.id}" th:text="${host.pagecount}"></a></h3> 
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">						
+						<div class="col-sm-6">
+							<div class="data bg-info padding-10">
+							<span class="label label-info">Start Date</span>
+							<h4 th:if="${host.startDate != null }" th:text="${host.startDate}"></h4>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="data bg-info padding-10">
+							<span class="label label-info">Expire Date</span>
+							<h4 th:if="${host.expireDate != null }" th:text="${host.expireDate}"></h4>
+							</div>
+						</div>
+					</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="bg-danger padding-10">
+						<div class="row">
+						 <div class="col-sm-3"><h3 class="margin-0"><span class="label label-primary" th:if="${host.status != null}" th:text="${host.status}"></span></h3></div>
+						 <div class="col-sm-9 text-right">
+						 	<div class="btn-group">
+							  <button type="button" class="btn btn-default">Action</button>
+							  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <span class="caret"></span>
+							    <span class="sr-only">Toggle Dropdown</span>
+							  </button>
+							  <ul class="dropdown-menu">
+							    <li><a th:href="@{/admin/host/getHost/}+${host.id}"><i class=" fa fa-pencil-square-o"></i> Edit Host</a></li>
+							   <li class="a"> <a th:if="${host.templetcount > 0 }" th:href="@{/admin/page/create/}+${host.id}"><i class=" fa fa-plus"></i> Add Page</a></li>
+							    <li><a th:href="@{/admin/templet/create/}+${host.id}"><i class=" fa fa-plus"></i> Add Template</a></li>
+							      <li><a th:if="${host.templetcount > 0 }" th:href="@{/admin/header/newheader/}+${host.id}"><i class=" fa fa-plus"></i> Add Header</a></li>
+							    <li><a th:if="${host.templetcount > 0 }" th:href="@{/admin/footer/newfooter/}+${host.id}"><i class=" fa fa-plus"></i> Add Footer</a></li>
+							     <li><a th:if="${host.templetcount > 0 }"	 th:href="@{/admin/page/meta/}+${host.id}"><i class=" fa fa-plus"></i> Add Meta</a></li>
+							    <li role="separator" class="divider"></li>
+							    <li>
+							    	<a th:if="${host.templetcount > 0 and host.hostConfig == null }" th:href="@{/admin/host/config/}+${host.id}">
+							    		<i class="glyphicon glyphicon-wrench"></i>
+							    			Configure Host	
+							    	</a>
+							    </li>
+							    <li>
+							    	<a th:if="${ host.templetcount > 0 and host.hostConfig != null and host.hostConfig.isActive() }" th:href="@{/admin/host/config/}+${host.id}">
+							    		<i class=" glyphicon glyphicon-hand-down"></i>
+							    			Configure Host
+							    	</a>
+							    </li>
+							    <li>
+							    	<a th:if="${ host.templetcount > 0 and host.hostConfig != null and !host.hostConfig.isActive() }" th:href="@{/admin/host/config/}+${host.id}">
+							    		<i class=" glyphicon glyphicon-hand-up"></i>
+							    			Configure Host
+							    	</a>
+							    </li>
+							  </ul>
+							</div>		
+						 </div>					
+						</div>
+					</div>
+				</div>
+			</div>				
+			</div>
+			</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="/fragments/header :: footer" />
+</body>
+</html>

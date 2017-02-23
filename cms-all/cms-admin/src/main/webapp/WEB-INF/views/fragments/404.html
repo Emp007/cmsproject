@@ -1,0 +1,24 @@
+<!DOCTYPE div PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<div th:replace="fragments/header :: cssLive404Load"></div>	
+</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="error-template">
+						<h1>Oops!</h1>
+						<h2>404 Not Found</h2>
+						<div class="error-details">Sorry, an error has occured,
+							Requested page not found!</div>
+						<div class="error-actions">
+							<span th:if="${hostType != null}">Host <b th:text="${hostType}">local</b> not Found !<br/></span>
+							<span th:if="${pageType != null}">Page <b th:text="${pageType}">local</b> not Found on <b th:text="${hostName}">local</b> Host ! </span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

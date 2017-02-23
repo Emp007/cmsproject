@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<title th:text ="${meta.title}"></title>
+ <meta charset="UTF-8"  id= "meta"   /> 
+<style>
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+}
+</style>
+<script type="text/javascript" th:inline="javascript">
+	var templets= null;
+	var globleVar = null;
+	var menuHeader='<ul class="nav navbar-nav">';
+	var menuBody;
+	var menuFooter;
+	var sumMenu;
+	var menu;
+	var sumMenuHeader ="";
+	var sumMenuFooter ="";
+	var m ="";
+	var subMenu2final="";
+	var count =0;
+
+
+	var images = new Array();
+	var imagesURLS;
+
+	
+	function add(){
+		
+		
+		var uri =[[${meta.discription}]];
+	    var uri_enc = encodeURIComponent(uri);
+	    var uri_dec = decodeURIComponent(uri_enc);
+	    var res =   uri_dec;
+	    document.getElementById("meta").innerHTML = res;
+		
+		var headerContent = /*[[${header.headerContent}]]*/'hello';
+		var headerjHtmlObject = jQuery(headerContent);
+		var headereditor = jQuery("<p>").append(headerjHtmlObject);
+		headereditor.find("#lsb-add-container,#rsb-add-container").remove();
+		headereditor.find(".addremoveDiv").remove();
+		headereditor.find(".add").remove();
+		headereditor.find("#leftside,#rightside").removeClass("templet_style");
+		headereditor.find("[id^=container]").css("border","none");
+		headereditor.find("#leftside,#rightside").css("border","none");
+		var headernewHtml = headereditor.html();
+		$("#headerBody").html(headernewHtml);
+
+		var content = /*[[${footer.footerContent}]]*/'hello';
+		var jHtmlObject = jQuery(content);
+		var editor = jQuery("<p>").append(jHtmlObject);
+		editor.find("#lsb-add-container,#rsb-add-container").remove();
+		editor.find(".addremoveDiv").remove();
+		editor.find(".add").remove();
+		editor.find("#leftside,#rightside").removeClass("templet_style");
+		editor.find("[id^=container]").css("border","none");
+		editor.find("#leftside,#rightside").css("border","none");
+		var newHtml = editor.html();
+		$("#footerBody").html(newHtml);
+		
+		
+		var arr = new Array();
+	    globleVar = [[${pageList}]];
+	    var dynamicMenuList = [[${menu}]];
+	    var hostName = [[${hostName}]];
+	    var perentsList = [[${parentsMenus}]];
+	    
+	    menuBody ="";
+	   if(dynamicMenuList!=null && dynamicMenuList.length>0){
+ 		for (var key in perentsList) {
+ 		    			menuBody='<li class=""><a class="dropdown-toggle" data-toggle="dropdown" href="#" id='+perentsList[key].childPageName+' target="" onclick="getDetail(this.id);" >'+perentsList[key].childPageName+' <span class="caret"></span></a>';
+ 		    			//var url = "/cms-admin/OM/sub-menu/"+hostName+"/"+ perentsList[key].childPageName;
+ 		    			var result = subMenuList(hostName,perentsList[key].childPageName);
+ 		    			if(result.length>0){
+ 		    				var sumMenuBody ="";
+ 		    			sumMenuHeader='<ul class="dropdown-menu">';	
+ 		    			for(var obj in result){
+ 		    				sumMenuBody+='<li class="dropdown-submenu" ><a tabindex="-1" href="#" id='+result[obj].childPageName+' target="" onclick="getDetail(this.id);">'+result[obj].childPageName+'</a></li>';
+ 		    			}
+ 		    			sumMenuBody+="</ul>";
+ 		    			m += menuBody+sumMenuHeader +sumMenuBody+"</li>";
+ 		    			}else{
+ 		    				m += menuBody+"</li>";
+ 		    			}
+ 		    			
+ 		    }
+ 			 
+ 			 
+ 		
+	   }else{
+		   for (var key in globleVar) {
+			  menuBody +='<li><a class="dropdown-toggle" data-toggle="dropdown" href="#" id='+key+' target="" onclick="getDetail(this.id);">'+key+' </li>';
+	    }
+		  m = menuBody;
+	   }
+	   menuFooter ="</ul>";
+	   menu = menuHeader + m + menuFooter;
+	  // document.write(menu);
+	   console.log(menu);
+		 $(".menu").html(menu);
+		    template = [[${containt}]];
+			var jHtmlObject = jQuery(template);
+			 putOnPage(jHtmlObject);
+			 
+			 meta = [[${meta}]];
+			 alert(meta.discription);
+			 alert(meta.title);
+
+	}
+	
+	
+	
+	function  getDetail(menu){
+		globleVar = [[${pageList}]];
+		newUrl = menu;
+		for (var key in globleVar) {
+			  console.log(key);
+	 		   if(key==menu){
+	 			  
+	 			   var jHtmlObject = jQuery(globleVar[key]);
+	 			   putOnPage(jHtmlObject);
+	 			  history.pushState({}, null, newUrl);
+	 		        break;
+	 		   }
+	 		}
+	}
+	
+	function putOnPage(data){
+		var editor = jQuery("<p>").append(data);
+	    	editor.find("#lsb-add-container,#rsb-add-container").remove();
+	    	editor.find(".addremoveDiv").remove();
+	    	editor.find(".add").remove();
+	    	editor.find("#leftside,#rightside").removeClass("templet_style");
+	    	editor.find("[id^=container]").css("border","none");
+	    	editor.find("[id^=adminelement]").css("display","none");
+	    	editor.find("#leftside,#rightside").css("border","none");
+	    	var newHtml = editor.html();
+	        $("#body-content").html(newHtml);
+	      //carousel(); 
+	}
+	
+	function subMenuList(hostName,menuName){
+		var url = "/cms-admin/OM/sub-menu/"+hostName+"/"+ menuName;
+		var result = "";
+		var sumMenuBody="";
+		$.ajax({
+					type : "GET",
+					url : url,
+					async : false,
+					success : function(response) {
+						var status = response['status'];
+						if (status == 200) {
+								result = response['data'];
+								if(response['data']!='undefined'){
+	   								result = response['data'];
+								}
+						} else {
+							showAlert("Error while fetching clients by industry.",
+									"Error");
+						}
+					},
+					failure : function() {
+						showAlert("Error while fetching clients by industry",
+								"Error");
+						return;
+					},
+					error : function() {
+						showAlert("Error while fetching industry details.", "Error");
+						return;
+					}
+				});
+			return result;
+	}
+	
+</script>
+
+<object th:include="/fragments/header :: cms-head" th:remove="tag" />
+</head>
+<body onload="add();">
+
+	<div id="preview">
+		<div class="row">
+			<div class="col-sm-12">
+				<table>
+					<tr>
+						<td style="height:100px;width:1300px; position: relative;">
+							<div id="headerBody"></div>
+						</td>
+					</tr>
+					<tr>
+						<td style="height:auto;width:1300px;; position: relative;">
+							<div id="body-content" class="div_style templet_style"
+									style="width: 100%">
+							</div>
+						</td>
+					</tr>
+					<tr >
+						<td style="height:auto;width:1300px;  position: ;">
+							<div id="footerBody" style="background-color: black;"></div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

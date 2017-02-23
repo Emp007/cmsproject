@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>CMS Dashboard</title>
+<object th:include="/fragments/header :: head" th:remove="tag" />
+
+<script type="text/javascript" th:inline="javascript">
+	var page= null;
+	$(document).ready(function() {
+		page = [[${page}]];
+		
+		var html = page.pageContent;
+		
+		var jHtmlObject = jQuery(html);
+    	var editor = jQuery("<p>").append(jHtmlObject);
+    	editor.find("#lsb-add-container,#rsb-add-container").remove();
+    	editor.find(".addremoveDiv").remove();
+    	editor.find(".add").remove();
+    	editor.find("#leftside,#rightside").removeClass("templet_style");
+    	editor.find("	").css("border","none");
+    	editor.find("#leftside,#rightside").css("border","none");
+    	
+    	
+    	var newHtml = editor.html();
+        $("#body-content").html(newHtml);
+        
+        carousel();
+	});
+	
+</script>
+
+</head>
+<body style="background-color:#3B8FAD; ">
+	<div id="preview">
+		<div id="preview-header">
+			<i th:replace="/fragments/header :: preview-header"></i>
+		</div>
+
+		<div id="body-content" class="div_style templet_style"
+			style="width: 100%">
+					
+		</div>
+
+		<div id="preview-footer">
+			<i th:replace="/fragments/component :: preview-footer"></i>
+		</div>
+	</div>
+</body>
+</html>
