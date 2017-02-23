@@ -1,5 +1,7 @@
 package com.cms.admin.service;
+
 import com.cms.model.Page;
+
 import com.cms.model.Templet;
 
 import org.springframework.stereotype.Component;
@@ -24,6 +26,8 @@ public interface TemplateService {
 
 	public List<Templet> getTempletsByHostId(long id);
 
+
 	public List<Page> getPagesByHostId(long hostid);
+
 
 }

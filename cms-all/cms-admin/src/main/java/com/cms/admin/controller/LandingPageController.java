@@ -30,7 +30,9 @@ import com.cms.model.Footer;
 import com.cms.model.Header;
 import com.cms.model.Host;
 import com.cms.model.Menu;
+
 import com.cms.model.Meta;
+
 import com.cms.model.Page;
 import com.google.gson.Gson;
 
@@ -134,8 +136,10 @@ public class LandingPageController {
 					mav.addObject("hostName", hostName);
 					mav.addObject("menu", menuService.getAllMenuByParentsId(0L));
 					mav.addObject("parentsMenus", menuService.getAllHostNameMenuName(hostName, "parents"));
+
 					Meta metadesc = landingPageService.indexPageName(pages, indexPageName).getMeta();
 					mav.addObject("meta" ,metadesc);
+
 
 				}
 				mav.addObject("footer", footerFound);
@@ -174,5 +178,5 @@ public class LandingPageController {
 				new Response<List<Menu>>(HttpStatus.OK.value(), "Menu list filter successfully", menus), HttpStatus.OK);
 
 	}
-	
+
 }

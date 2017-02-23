@@ -12,7 +12,9 @@ public interface LandingPageService {
 	public Map<String, String> arrangePages(List<Page> pages);
 	
 	public Map<String, String> indexPageSetting(List<Page> pages, String pageName);
+
 	
 	public Page indexPageName(List<Page> pages, String pageName);
+
 
 }

@@ -5,7 +5,9 @@ import com.cms.admin.util.RestServiceUtil;
 import com.cms.admin.util.CMSConstant;
 import com.cms.admin.util.URLConstants;
 import com.cms.model.Constants;
+
 import com.cms.model.Meta;
+
 import com.cms.model.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -224,6 +226,7 @@ public class PageServiceImpl implements PageService {
 			throw new CMSAdminException("API responded with error code while updating macro trend.");
 		}
 	}
+
 	@Override
 	public Meta Save(Meta meta) {
 		if(meta==null){
@@ -244,5 +247,6 @@ public class PageServiceImpl implements PageService {
 			throw new CMSAdminException("Error while saving page by page id", e);
 		}
 }
+
 
 }

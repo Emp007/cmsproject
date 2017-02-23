@@ -13,7 +13,9 @@ import com.cms.admin.CMSAdminException;
 import com.cms.admin.util.CMSConstant;
 import com.cms.admin.util.RestServiceUtil;
 import com.cms.admin.util.URLConstants;
+
 import com.cms.model.Page;
+
 import com.cms.model.Templet;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -142,15 +144,19 @@ public class TemplateServiceImpl implements TemplateService {
 	}
 
 	@Override
+
 	public List<Templet> getTempletsByHostId(long hostid) {
 		int status = 0;
 		String url = String.format(URLConstants.GET_TEMPLET_BY_HOSTID, hostid);
+
 		try {
 			JsonNode response = restServiceUtil.makeRequest(url, null, null, HttpMethod.GET);
 			status = response.get(CMSConstant.STATUS_CODE).intValue();
 			if (status != 200) {
 				throw new CMSAdminException(
+
 						String.format("API not responded while fetching all templet details by host id.", hostid));
+
 			}
 			String data = response.get(CMSConstant.DATA).toString();
 			return OBJECT_MAPPER.readValue(data, new TypeReference<List<Templet>>() {
@@ -160,6 +166,7 @@ public class TemplateServiceImpl implements TemplateService {
 			throw new CMSAdminException("Error while fetching all templet details by host id", e);
 		}
 	}
+
 	
 	public List<Page> getPagesByHostId(long hostid) {
 
@@ -181,6 +188,7 @@ public class TemplateServiceImpl implements TemplateService {
 			throw new CMSAdminException("Error while fetching all page details", e);
 		}
 	}
+
 
 
 	@Override

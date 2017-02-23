@@ -41,6 +41,7 @@ public class Page implements Serializable {
     private long templetId;
      
     private String pageContent;
+
     private Meta Meta;
     
     public Meta getMeta() {
@@ -54,6 +55,7 @@ public class Page implements Serializable {
 
 
 	private long count;
+
     
     public long getCount() {
 		return count;

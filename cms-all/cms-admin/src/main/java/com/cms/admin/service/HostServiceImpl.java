@@ -129,7 +129,9 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public Host save(Host host) {
 		if (host == null) {
-			throw new CMSAdminException(String.format("Host cannot be null ", host.getHostName()));
+
+			throw new CMSAdminException(String.format("Host cannot be null ", host.getId()));
+
 		}
 		int status = 0;
 		try {
@@ -179,6 +181,7 @@ public class HostServiceImpl implements HostService {
 		// TODO Auto-generated method stub
 		
 	}
+
 	public List<Templet> getTempletsByHostId(long hostid) {
 
 		int status = 0;
@@ -198,5 +201,6 @@ public class HostServiceImpl implements HostService {
 			throw new CMSAdminException("Error while fetching all templet details by host id", e);
 		}
 	}
+
 
 }

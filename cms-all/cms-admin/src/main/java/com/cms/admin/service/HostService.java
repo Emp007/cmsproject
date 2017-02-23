@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cms.model.Host;
+
 import com.cms.model.Templet;
+
+
 
 public interface HostService {
 
@@ -23,6 +26,8 @@ public interface HostService {
 	
 	void uploadDocument(MultipartFile multipartFile, long hostId);
 
+
 	public List<Templet> getTempletsByHostId(long hostid);
+
 
 }

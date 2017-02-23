@@ -32,7 +32,9 @@ import com.cms.admin.service.TemplateService;
 import com.cms.model.Footer;
 import com.cms.model.Header;
 import com.cms.model.Host;
+
 import com.cms.model.Meta;
+
 import com.cms.model.Page;
 import com.cms.model.Templet;
 
@@ -44,8 +46,10 @@ public class PageController {
 	private final static String PAGE_UPDATE_NAME = "admin/page_update";
 	public final static String ISSAVE = "issave";
 	private final static String PAGE_NEW_PAGE = "admin/page_new";
+
 	private final static String META = "admin/Meta";
 	private final static String META_SAVE = "admin/host_view";
+
 	private final static String PAGE_VIEW = "admin/page_view_data"; 	
 	private final static String PAGE_UPDATE = "admin/page_update";
 	
@@ -302,6 +306,7 @@ public class PageController {
         return new ResponseEntity<Response<Boolean>>(new Response<Boolean>(HttpStatus.OK.value(),
                "cms document url updated successfully.", documentUrlUpdated), HttpStatus.OK);
     } 
+
 	@RequestMapping(value = "meta/{hostid}", method = RequestMethod.GET)
 	public ModelAndView addMeta(@RequestParam(required = false) boolean success,@PathVariable("hostid") long hostid) {
 		ModelAndView mav = new ModelAndView(META);
@@ -357,4 +362,5 @@ public class PageController {
 	}
 	
 	
+
 }

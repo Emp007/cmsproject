@@ -206,6 +206,7 @@ $( function() {
 							    <li><a th:href="@{/admin/templet/create/}+${host.id}"><i class=" fa fa-plus"></i> Add Template</a></li>
 							      <li><a th:if="${host.templetcount > 0 }" th:href="@{/admin/header/newheader/}+${host.id}"><i class=" fa fa-plus"></i> Add Header</a></li>
 							    <li><a th:if="${host.templetcount > 0 }" th:href="@{/admin/footer/newfooter/}+${host.id}"><i class=" fa fa-plus"></i> Add Footer</a></li>
+
 							     <li><a th:if="${host.templetcount > 0 }"	 th:href="@{/admin/page/meta/}+${host.id}"><i class=" fa fa-plus"></i> Add Meta</a></li>
 							    <li role="separator" class="divider"></li>
 							    <li>
@@ -226,6 +227,7 @@ $( function() {
 							    			Configure Host
 							    	</a>
 							    </li>
+
 							  </ul>
 							</div>		
 						 </div>					

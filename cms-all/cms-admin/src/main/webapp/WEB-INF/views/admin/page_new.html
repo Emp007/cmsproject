@@ -19,9 +19,15 @@ $(document).ready(function() {
 			"submit",
 			function() {
 				var html = document.getElementById('body-content').innerHTML;
-			    document.getElementById('pagecontent').value = html;
+
+				
+		    	var jHtmlObject = jQuery(html);
+		    	var editor = jQuery("<p>").append(jHtmlObject);
+		    	editor.find("[id^=container]").removeClass("greybg");
+		    	editor.find("[id^=container]").removeClass("sub-container");
+		    	var newHtml = editor.html();
+			    document.getElementById('pagecontent').value = newHtml;
 			})
-	
 	
 $('.tab').click(function(){
 	    var ativetab = $(this).attr('id');

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cms.model.Meta;
+
 import com.cms.model.Page;
 
 public interface PageService {
@@ -17,6 +18,8 @@ public interface PageService {
 	
 	public Page Save(Page page);
 	public Meta Save(Meta meta);
+
+
 	
 	public Page update(Page page);
 	

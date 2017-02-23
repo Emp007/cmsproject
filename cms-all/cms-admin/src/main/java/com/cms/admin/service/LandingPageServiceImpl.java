@@ -68,7 +68,9 @@ public class LandingPageServiceImpl implements LandingPageService{
 		Map<String, String> pageMap = new HashMap<String, String>();
 		try {
 			pages.forEach(page -> {
-				pageMap.put(page.getPageName(), page.getPageContent());
+
+				pageMap.put(page.getPageName(), page.getTemplateContent());
+
 			});
 		} catch (Exception e) {
 			throw new CMSAdminException(e.getMessage(), e);
@@ -83,7 +85,9 @@ public class LandingPageServiceImpl implements LandingPageService{
 		try {
 			pages.forEach(page -> {
 				if (page.getPageName().equals(pageName)) {
-					pageMap.put(page.getPageName(), page.getPageContent());
+
+					pageMap.put(page.getPageName(), page.getTemplateContent());
+
 				}
 			});
 		} catch (Exception e) {
@@ -91,6 +95,7 @@ public class LandingPageServiceImpl implements LandingPageService{
 		}
 		return pageMap;
 	}
+
 	public Page indexPageName(List<Page> pages, String pageName) {
 
 		try {
@@ -104,4 +109,5 @@ public class LandingPageServiceImpl implements LandingPageService{
 		}
 		return null;
 	}
+
 }

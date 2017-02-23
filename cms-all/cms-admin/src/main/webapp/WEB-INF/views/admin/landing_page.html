@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="www.thymeleaf.org">
 <head>
+
 <title th:text ="${meta.title}"></title>
  <meta charset="UTF-8"  id= "meta"   /> 
+
 <style>
 
 .dropdown-submenu {
@@ -36,6 +38,7 @@
 	
 	function add(){
 		
+
 		
 		var uri =[[${meta.discription}]];
 	    var uri_enc = encodeURIComponent(uri);
@@ -43,6 +46,7 @@
 	    var res =   uri_dec;
 	    document.getElementById("meta").innerHTML = res;
 		
+
 		var headerContent = /*[[${header.headerContent}]]*/'hello';
 		var headerjHtmlObject = jQuery(headerContent);
 		var headereditor = jQuery("<p>").append(headerjHtmlObject);
@@ -110,10 +114,12 @@
 		    template = [[${containt}]];
 			var jHtmlObject = jQuery(template);
 			 putOnPage(jHtmlObject);
+
 			 
 			 meta = [[${meta}]];
 			 alert(meta.discription);
 			 alert(meta.title);
+
 
 	}
 	
