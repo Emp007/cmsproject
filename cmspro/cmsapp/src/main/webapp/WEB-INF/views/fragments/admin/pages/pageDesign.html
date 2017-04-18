@@ -114,6 +114,16 @@
 					
 				});
 				
+				$(document).on('click','.addMenu',function(event) {
+					var makeId = ((event.target.id).substring(0,(event.target.id).indexOf("btnmenu"))) + "template";
+					
+					$("#" + makeId).append("<div id='menuData' class='menu'></div>");
+				});
+				
+				$(document).on('click','.removeMenu',function(event) {
+					var makeId = ((event.target.id).substring(0,(event.target.id).indexOf("btnrmenu"))) + "template";
+					$(".menu").remove();
+				});
 				
 				/*Adding Container in Template*/
 				/*$(".addtemplateContainer").bind("click", function(event){*/
@@ -128,53 +138,52 @@
 					count = max + rowsCount;
 					rowsCount++;
 					
+					var makeId = ((event.target.id).substring(0,(event.target.id).indexOf("btn"))) + "template";
+					$("#" + makeId).append(
+									"<div class='row' id='"+count+"content'>"
+										+ "<div class='col-sm-12 templateborder  full-border'>"
+											+ "<div class='rmadmin'>"
+												+ "<div class='row'>"
+													+ "<div class='col-sm-6'>"
+														+"<div id='"+count+"insert' class='insertElement btn btn-sm btn-success'>INSERT</div>"
+													+ "</div>"
+													+ "<div class='col-sm-6 text-right'>"
+														+ "<div id='"+count+"contentRemoveAction' class='contentRemoveAction btn btn-sm btn-danger glyphicon glyphicon-remove'></div>"
+													+ "</div>"
+												+ "</div>"
+												+"<div id='"+count+"elementArea' class='row templateborder full-border'>"
+													+ "<div id='"+count+"elementDataArea' class='col-sm-11' >"
+														+ "<textarea id='"+count+"elementData' rows='20' cols='50'>"
+																	+ "Enter text here...</textarea>"
+													+ "</div>"
+													+ "<div class='col-sm-1'>"
+														+ "<div id='"+count+"selectBoxApply' class='selectBoxApply btn btn-sm btn-warning'>Apply</div>"
+													+ "</div>"
+												+ "</div>"
+											+ "</div>"
+											+"<div id='"+count+"applyElementData'></div>"
+										+ "</div>"
+									+ "</div>");
 					
-									var makeId = ((event.target.id).substring(0,(event.target.id).indexOf("btn"))) + "template";
-									$("#" + makeId).append(
-													"<div class='row' id='"+count+"content'>"
-														+ "<div class='col-sm-12 templateborder  full-border'>"
-															+ "<div class='rmadmin'>"
-																+ "<div class='row'>"
-																	+ "<div class='col-sm-6'>"
-																		+"<div id='"+count+"insert' class='insertElement btn btn-sm btn-success'>INSERT</div>"
-																	+ "</div>"
-																	+ "<div class='col-sm-6 text-right'>"
-																		+ "<div id='"+count+"contentRemoveAction' class='contentRemoveAction btn btn-sm btn-danger glyphicon glyphicon-remove'></div>"
-																	+ "</div>"
-																+ "</div>"
-																+"<div id='"+count+"elementArea' class='row templateborder full-border'>"
-																	+ "<div id='"+count+"elementDataArea' class='col-sm-11' >"
-																		+ "<textarea id='"+count+"elementData' rows='20' cols='50'>"
-																					+ "Enter text here...</textarea>"
-																	+ "</div>"
-																	+ "<div class='col-sm-1'>"
-																		+ "<div id='"+count+"selectBoxApply' class='selectBoxApply btn btn-sm btn-warning'>Apply</div>"
-																	+ "</div>"
-																+ "</div>"
-															+ "</div>"
-															+"<div id='"+count+"applyElementData'></div>"
-														+ "</div>"
-													+ "</div>");
-									
-									/* tiinymce initilization */
-									tinymce.init({
-										selector : 'textarea',
-										plugins : [
-									           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-									           'searchreplace wordcount visualblocks visualchars code fullscreen',
-									           'insertdatetime media nonbreaking save table contextmenu directionality table',
-									           'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc' 
-									           ],
-										toolbar1: 'table | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-											    toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
-												image_advtab: true,
-												mode : "textareas",
-												menubar : false,
-												statusbar : false
-											});
-									
-									count++;
-								});
+					/* tiinymce initilization */
+					tinymce.init({
+						selector : 'textarea',
+						plugins : [
+					           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+					           'searchreplace wordcount visualblocks visualchars code fullscreen',
+					           'insertdatetime media nonbreaking save table contextmenu directionality table',
+					           'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc' 
+					           ],
+						toolbar1: 'table | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+							    toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+								image_advtab: true,
+								mode : "textareas",
+								menubar : false,
+								statusbar : false
+							});
+					
+					count++;
+				});
 				
 				/*Apply the all element on div*/
 				$(document).on('click','.selectBoxApply',function(event) {

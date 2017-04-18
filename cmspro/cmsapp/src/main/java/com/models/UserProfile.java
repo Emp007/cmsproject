@@ -1,4 +1,4 @@
-package com.requestModels;
+package com.models;
 
 public class UserProfile {
 

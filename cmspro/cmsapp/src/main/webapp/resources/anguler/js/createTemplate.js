@@ -96,6 +96,8 @@ $(document).ready(function(){
 								'<div id="'+counter+'container" class="row templateborder templateborder full-border text-center" >' +
 								'<div id="'+counter+'template" class="col-sm-12 text-center " >'+
 								  		'<div id="'+counter+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+counter+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+counter+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 								  	'</div>'+
 								  '</div>');
 		}
@@ -111,9 +113,13 @@ $(document).ready(function(){
 							 '<div id="'+colCounter1+'container" class="row templateborder full-border text-center" >' +
 								'<div id="'+colCounter1+'template" class="col-sm-4 text-center templateborder full-border" >'+
 								  		'<div id="'+colCounter1+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 								  	'</div>'+
 								  	'<div id="'+colCounter2+'template" class="col-sm-8 text-center " >'+
 							  			'<div id="'+colCounter2+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 							  		'</div>'+
 							  '</div>');
 		}
@@ -129,9 +135,13 @@ $(document).ready(function(){
 								'<div id="'+colCounter1+'container" class="row templateborder full-border text-center" >' +
 								'<div id="'+colCounter1+'template" class="col-sm-8 text-center templateborder full-border" >'+
 								  		'<div id="'+colCounter1+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 								  	'</div>'+
 								  	'<div id="'+colCounter2+'template" class="col-sm-4 text-center " >'+
 							  			'<div id="'+colCounter2+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 							  		'</div>'+
 							  '</div>');
 			
@@ -151,12 +161,18 @@ $(document).ready(function(){
 								'<div id="'+colCounter1+'container" class="row templateborder full-border text-center" >' +
 								'<div id="'+colCounter1+'template" class="col-sm-4 text-center templateborder full-border" >'+
 								  		'<div id="'+colCounter1+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 								  	'</div>'+
 								  	'<div id="'+colCounter2+'template" class="col-sm-4 text-center templateborder full-border" >'+
 							  			'<div id="'+colCounter2+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 							  		'</div>'+
 							  		'<div id="'+colCounter3+'template" class="col-sm-4 text-center" >'+
 						  				'<div id="'+colCounter3+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+						  				'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter3+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+						  				'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter3+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 						  			'</div>'+
 							  '</div>');
 			
@@ -173,9 +189,13 @@ $(document).ready(function(){
 								'<div id="'+colCounter1+'container" class="row templateborder full-border text-center" >' +
 								'<div id="'+colCounter1+'template" class="col-sm-3 text-center templateborder full-border" >'+
 								  		'<div id="'+colCounter1+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 								  	'</div>'+
 								  	'<div id="'+colCounter2+'template" class="col-sm-9 text-center " >'+
 							  			'<div id="'+colCounter2+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 							  		'</div>'+
 							  '</div>');
 		}
@@ -191,9 +211,13 @@ $(document).ready(function(){
 								'<div id="'+colCounter1+'container" class="row templateborder full-border text-center" >' +
 								'<div id="'+colCounter1+'template" class="col-sm-9 text-center templateborder full-border" >'+
 								  		'<div id="'+colCounter1+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 								  	'</div>'+
 								  	'<div id="'+colCounter2+'template" class="col-sm-3 text-center " >'+
 							  			'<div id="'+colCounter2+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 							  		'</div>'+
 							  '</div>');
 		}
@@ -209,9 +233,13 @@ $(document).ready(function(){
 							 '<div id="'+colCounter1+'container" class="row templateborder full-border text-center" >' +
 								  	'<div id="'+colCounter1+'template" class="col-sm-6 text-center templateborder full-border" >'+
 								  		'<div id="'+colCounter1+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 								  	'</div>'+
 								  	'<div id="'+colCounter2+'template" class="col-sm-6 text-center " >'+
 							  			'<div id="'+colCounter2+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 							  		'</div>'+
 							  '</div>');
 			
@@ -233,21 +261,26 @@ $(document).ready(function(){
 							  '<div id="'+colCounter1+'container" class="row templateborder full-border text-center " >' +
 								  	'<div id="'+colCounter1+'template" class="col-sm-3 templateborder text-center full-border" >'+
 								  		'<div id="'+colCounter1+'btn" class="btn btn-sm btn-info  rmadmin addtemplateContainer">Add-container</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+								  		'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter1+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 								  	'</div>'+
 								  	'<div id="'+colCounter2+'template" class="col-sm-3 templateborder text-center full-border" >'+
 							  			'<div id="'+colCounter2+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+							  			'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter2+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 							  		'</div>'+
 							  		'<div id="'+colCounter3+'template" class="col-sm-3 templateborder text-center full-border" >'+
 						  				'<div id="'+colCounter3+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+						  				'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter3+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+						  				'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter3+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 						  			'</div>'+
 						  			'<div id="'+colCounter4+'template" class="col-sm-3 templateborder text-center full-border " >'+
 					  					'<div id="'+colCounter4+'btn" class="btn btn-sm btn-info rmadmin addtemplateContainer">Add-container</div>'+
+					  					'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter4+'btnmenu" class="addMenu btn btn-sm btn-warning rmadmin">Menu</div>'+
+					  					'&nbsp;&nbsp;&nbsp;&nbsp;<div id="'+colCounter4+'btnrmenu" class="removeMenu btn btn-sm btn-danger rmadmin">R-Menu</div>'+
 					  				'</div>'+
-							  '</div>');
-			
+							  '</div>');	
 		}
-		
-		
 		}); 
 	
 	/*Make view in adminMode*/
